@@ -23,8 +23,23 @@ export function AppHeader() {
 
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
-            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 md:pe-8">
+            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 ps-4 md:pe-8">
                 <div className='flex items-center gap-2 md:gap-0'>
+                    <button
+                        // onClick={toggleSidebar}
+                        className="p-2 rounded hover:bg-muted focus:outline-none"
+                        aria-label="Toggle sidebar"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                     <Link to="/">
                         <AppLogo />
                     </Link>
