@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from "@/components/ui/button"
+import { BrowserRouter, HashRouter } from 'react-router'
+import { ThemeProvider } from './context/ThemeContext'
+import Router from './Router'
 
-function App() {
-  const [count, setCount] = useState(0)
+const AppRouter = import.meta.env.VITE_USE_HASH_ROUTE === 'true' ? HashRouter : BrowserRouter
 
-  return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-  )
+export default function App() {
+    return (
+        <ThemeProvider>
+            <AppRouter>
+                <Router />
+            </AppRouter>
+        </ThemeProvider>
+    )
 }
-
-export default App
