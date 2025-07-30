@@ -16,15 +16,15 @@ import { AppSidebar } from './app-sidebar'
 import { Button, buttonVariants } from './ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import GitHub from './icons/github'
+import { ModeToggle } from './mode-toggle'
 
 export function AppHeader() {
     const location = useLocation()
 
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
-            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 px-4 md:px-8">
+            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 md:pe-8">
                 <div className='flex items-center gap-2 md:gap-0'>
-                    {/* <AppSidebar /> */}
                     <Link to="/">
                         <AppLogo />
                     </Link>
@@ -97,6 +97,9 @@ export function AppHeader() {
                             <GitHub />
                             <span className="sr-only">GitHub</span>
                         </a>
+                        <div className="hidden md:block">
+                            <ModeToggle />
+                        </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
