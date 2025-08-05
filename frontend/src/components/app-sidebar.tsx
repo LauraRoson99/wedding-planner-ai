@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom'
-import { Home, ListCheck, Calendar, Wallet } from 'lucide-react'
+import { Home, ListCheck, Calendar, Wallet, UsersRound } from 'lucide-react'
 
 const navItems = [
   { to: "/", icon: <Home className="size-5" />, label: "Inicio" },
   { to: "/tasks", icon: <ListCheck className="size-5" />, label: "Tareas" },
+  { to: "/guests", icon: <UsersRound className="size-5" />, label: "Invitados" },
   { to: "/agenda", icon: <Calendar className="size-5" />, label: "Agenda" },
   { to: "/budget", icon: <Wallet className="size-5" />, label: "Presupuesto" },
 ]

@@ -5,13 +5,15 @@ import Sample from './pages/Sample'
 import ComingSoon from './pages/ComingSoon'
 import Home from './pages/Home'
 import Tasks from './pages/Tasks'
+import Guests from './pages/Guests'
 
 export default function Router() {
     return (
         <Routes>
             <Route element={<AppLayout />}>
-                <Route path="" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/guests" element={<Guests />} />
                 <Route path="pages">
                     <Route path="sample" element={<Sample />} />
                     <Route path="feature" element={<ComingSoon />} />

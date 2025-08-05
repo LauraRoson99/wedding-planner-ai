@@ -58,67 +58,69 @@ export default function TasksPage() {
     }
 
     return (
-        <div className="max-w-3xl mx-auto py-10 px-4">
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-2xl">Tareas de la boda</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex gap-2 mb-4">
-                        <Input
-                            placeholder="Añadir nueva tarea..."
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-                        />
-                        <Button onClick={handleAdd}>Añadir</Button>
-                    </div>
+        <div className="min-h-screen bg-background text-foreground">
+            <div className="max-w-3xl mx-auto py-10 px-4">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl">Tareas de la boda</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex gap-2 mb-4">
+                            <Input
+                                placeholder="Añadir nueva tarea..."
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+                            />
+                            <Button onClick={handleAdd}>Añadir</Button>
+                        </div>
 
-                    <Tabs value={tab} onValueChange={setTab} className="w-full">
-                        <TabsList className="mb-4">
-                            <TabsTrigger value="all">Todas</TabsTrigger>
-                            <TabsTrigger value="pending">Pendientes</TabsTrigger>
-                            <TabsTrigger value="completed">Completadas</TabsTrigger>
-                        </TabsList>
+                        <Tabs value={tab} onValueChange={setTab} className="w-full">
+                            <TabsList className="mb-4">
+                                <TabsTrigger value="all">Todas</TabsTrigger>
+                                <TabsTrigger value="pending">Pendientes</TabsTrigger>
+                                <TabsTrigger value="completed">Completadas</TabsTrigger>
+                            </TabsList>
 
-                        <TabsContent value={tab}>
-                            <ul className="space-y-2">
-                                {filteredTasks.length === 0 && (
-                                    <p className="text-muted-foreground">No hay tareas.</p>
-                                )}
-                                {filteredTasks.map((task) => (
-                                    <li
-                                        key={task.id}
-                                        className={`flex items-center justify-between p-3 rounded-md border bg-background transition-all ${task.completed ? "opacity-70" : ""
-                                            }`}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <input
-                                                type="checkbox"
-                                                checked={task.completed}
-                                                onChange={() => toggleTask(task.id)}
-                                            />
-                                            <span
-                                                className={`text-sm ${task.completed ? "line-through text-muted-foreground" : ""
-                                                    }`}
-                                            >
-                                                {task.title}
-                                            </span>
-                                        </div>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => deleteTask(task.id)}
+                            <TabsContent value={tab}>
+                                <ul className="space-y-2">
+                                    {filteredTasks.length === 0 && (
+                                        <p className="text-muted-foreground">No hay tareas.</p>
+                                    )}
+                                    {filteredTasks.map((task) => (
+                                        <li
+                                            key={task.id}
+                                            className={`flex items-center justify-between p-3 rounded-md border bg-background transition-all ${task.completed ? "opacity-70" : ""
+                                                }`}
                                         >
-                                            <Trash2 className="size-4" />
-                                        </Button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </TabsContent>
-                    </Tabs>
-                </CardContent>
-            </Card>
+                                            <div className="flex items-center gap-3">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={task.completed}
+                                                    onChange={() => toggleTask(task.id)}
+                                                />
+                                                <span
+                                                    className={`text-sm ${task.completed ? "line-through text-muted-foreground" : ""
+                                                        }`}
+                                                >
+                                                    {task.title}
+                                                </span>
+                                            </div>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => deleteTask(task.id)}
+                                            >
+                                                <Trash2 className="size-4" />
+                                            </Button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </TabsContent>
+                        </Tabs>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     )
 }
