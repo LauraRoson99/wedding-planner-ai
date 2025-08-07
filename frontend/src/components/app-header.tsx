@@ -23,7 +23,7 @@ export function AppHeader() {
 
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
-            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 ps-4 md:pe-8">
+            <div className="w-full ~max-w-7xl mx-auto flex items-center gap-2 h-14 mt-2 ps-4 md:pe-8">
                 <div className='flex items-center gap-2 md:gap-0'>
                     <button
                         // onClick={toggleSidebar}

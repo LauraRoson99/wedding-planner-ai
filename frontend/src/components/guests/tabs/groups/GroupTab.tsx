@@ -13,10 +13,10 @@ import { Trash2, Pencil } from "lucide-react"
 type Group = {
   id: number
   name: string
-  guestsCount: number // nuevo campo mockeado
+  guestsCount: number
 }
 
-export default function GroupList() {
+export default function GroupTab() {
   const [groups, setGroups] = useState<Group[]>([
     { id: 1, name: "Amigos de la novia", guestsCount: 5 },
     { id: 2, name: "Familia del novio", guestsCount: 8 },
@@ -24,27 +24,30 @@ export default function GroupList() {
 
   const [newGroupName, setNewGroupName] = useState("")
   const [editingGroup, setEditingGroup] = useState<Group | null>(null)
+  const [search, setSearch] = useState("")
 
-  // Añadir nuevo grupo
+  // 🔍 Filtro por búsqueda
+  const filteredGroups = groups.filter((group) =>
+    group.name.toLowerCase().includes(search.toLowerCase())
+  )
+
   const handleAddGroup = () => {
     if (!newGroupName.trim()) return
 
     const newGroup: Group = {
       id: Date.now(),
       name: newGroupName.trim(),
-      guestsCount: 0, // por defecto
+      guestsCount: 0,
     }
 
     setGroups((prev) => [...prev, newGroup])
     setNewGroupName("")
   }
 
-  // Eliminar grupo
   const handleDeleteGroup = (id: number) => {
     setGroups((prev) => prev.filter((g) => g.id !== id))
   }
 
-  // Guardar edición
   const handleUpdateGroup = () => {
     if (!editingGroup || !editingGroup.name.trim()) return
 
@@ -61,7 +64,6 @@ export default function GroupList() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">Grupos</h3>
-
         <Dialog>
           <DialogTrigger asChild>
             <Button>Añadir grupo</Button>
@@ -82,8 +84,15 @@ export default function GroupList() {
         </Dialog>
       </div>
 
+      {/* 🔍 Buscador */}
+      <Input
+        placeholder="Buscar grupo..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
       <ul className="space-y-2">
-        {groups.map((group) => (
+        {filteredGroups.map((group) => (
           <li
             key={group.id}
             className="flex justify-between items-center p-3 rounded border bg-background shadow-sm"
@@ -115,6 +124,10 @@ export default function GroupList() {
           </li>
         ))}
       </ul>
+
+      {filteredGroups.length === 0 && (
+        <p className="text-sm text-muted-foreground italic">Sin resultados.</p>
+      )}
 
       {/* Diálogo para editar */}
       {editingGroup && (
