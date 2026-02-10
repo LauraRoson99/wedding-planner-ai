@@ -22,3 +22,28 @@ export * from './enums';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Wedding
+ * 
+ */
+export type Wedding = Prisma.WeddingModel
+/**
+ * Model Guest
+ * 
+ */
+export type Guest = Prisma.GuestModel
+/**
+ * Model Group
+ * 
+ */
+export type Group = Prisma.GroupModel
+/**
+ * Model Table
+ * 
+ */
+export type Table = Prisma.TableModel
+/**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel

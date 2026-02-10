@@ -15,4 +15,87 @@ model User {
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  weddings Wedding[]
+}
+
+model Wedding {
+  id        String    @id @default(cuid())
+  name      String
+  date      DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  guests Guest[]
+  groups Group[]
+  tables Table[]
+  events Event[]
+
+  @@index([ownerId])
+}
+
+model Guest {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  groupId String?
+  group   Group?  @relation(fields: [groupId], references: [id], onDelete: SetNull)
+
+  tableId String?
+  table   Table?  @relation(fields: [tableId], references: [id], onDelete: SetNull)
+
+  @@index([weddingId])
+  @@index([groupId])
+  @@index([tableId])
+}
+
+model Group {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  guests Guest[]
+
+  @@index([weddingId])
+}
+
+model Table {
+  id        String   @id @default(cuid())
+  name      String
+  seats     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  guests Guest[]
+
+  @@index([weddingId])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  @@index([weddingId])
 }

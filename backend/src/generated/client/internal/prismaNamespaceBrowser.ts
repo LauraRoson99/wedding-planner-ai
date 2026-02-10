@@ -49,7 +49,12 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Wedding: 'Wedding',
+  Guest: 'Guest',
+  Group: 'Group',
+  Table: 'Table',
+  Event: 'Event'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,6 +83,67 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const WeddingScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  ownerId: 'ownerId'
+} as const
+
+export type WeddingScalarFieldEnum = (typeof WeddingScalarFieldEnum)[keyof typeof WeddingScalarFieldEnum]
+
+
+export const GuestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weddingId: 'weddingId',
+  groupId: 'groupId',
+  tableId: 'tableId'
+} as const
+
+export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
+
+
+export const GroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weddingId: 'weddingId'
+} as const
+
+export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
+export const TableScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  seats: 'seats',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weddingId: 'weddingId'
+} as const
+
+export type TableScalarFieldEnum = (typeof TableScalarFieldEnum)[keyof typeof TableScalarFieldEnum]
+
+
+export const EventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  date: 'date',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weddingId: 'weddingId'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
 
 
 export const SortOrder = {
