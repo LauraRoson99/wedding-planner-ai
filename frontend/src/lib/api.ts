@@ -53,3 +53,21 @@ export async function apiDelete(path: string): Promise<void> {
     throw new Error(text || `DELETE ${path} failed (${res.status})`);
   }
 }
+
+export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || `PATCH ${path} failed (${res.status})`);
+  }
+  return res.json();
+}
