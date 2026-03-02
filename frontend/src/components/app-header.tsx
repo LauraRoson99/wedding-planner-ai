@@ -1,6 +1,7 @@
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { mainMenu } from '@/config/menu'
+import { Link, useLocation } from 'react-router-dom'
 import { appConfig, baseUrl } from '@/config/app'
+import { useNavigate } from "react-router-dom";
+import { logout } from "@/lib/auth";
 import { cn } from '@/lib/utils'
 import {
     DropdownMenu,
@@ -10,9 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronDown } from 'lucide-react'
 import { AppLogo } from './app-logo'
-import { AppSidebar } from './app-sidebar'
 import { Button, buttonVariants } from './ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import GitHub from './icons/github'
@@ -21,7 +20,12 @@ import Countdown from './navbar/Countdown'
 
 export function AppHeader() {
     const location = useLocation()
+    const nav = useNavigate();
 
+    function handleLogout() {
+        logout();
+        nav("/login", { replace: true });
+    }
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
             <div className="w-full ~max-w-7xl mx-auto flex justify-between items-center gap-2 h-14 mt-2 ps-4 md:pe-8">
@@ -90,7 +94,7 @@ export function AppHeader() {
                                 </div>
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Log out</DropdownMenuItem>
+                            <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </nav>
