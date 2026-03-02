@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Trash2, Pencil } from "lucide-react"
+import { Trash2, Pencil, UsersRound } from "lucide-react"
 import { apiDelete, apiGet, apiPost, apiPatch } from "@/lib/api"
 import type { GroupDto } from "@/features/groups/types"
 
@@ -95,7 +95,10 @@ export default function GroupTab() {
         <h3 className="text-xl font-semibold">Grupos</h3>
         <Dialog>
           <DialogTrigger asChild>
-            <Button>Añadir grupo</Button>
+            <Button>
+              <UsersRound className="size-4 mr-2" />
+              Añadir grupo
+            </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
