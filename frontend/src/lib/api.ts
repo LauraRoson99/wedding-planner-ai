@@ -54,6 +54,24 @@ export async function apiDelete(path: string): Promise<void> {
   }
 }
 
+export async function apiPut<T>(path: string, body: unknown): Promise<T> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || `PUT ${path} failed (${res.status})`);
+  }
+  return res.json();
+}
+
 export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
   const token = getToken();
   const res = await fetch(`${API_URL}${path}`, {

@@ -135,6 +135,74 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumGuestRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.GuestRole | Prisma.EnumGuestRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel> | $Enums.GuestRole
+}
+
+export type EnumRsvpStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.RsvpStatus | Prisma.EnumRsvpStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel> | $Enums.RsvpStatus
+}
+
+export type EnumDietTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietType | Prisma.EnumDietTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietTypeFilter<$PrismaModel> | $Enums.DietType
+}
+
+export type EnumAgeGroupFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgeGroup | Prisma.EnumAgeGroupFieldRefInput<$PrismaModel>
+  in?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel> | $Enums.AgeGroup
+}
+
+export type EnumGuestRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GuestRole | Prisma.EnumGuestRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGuestRoleWithAggregatesFilter<$PrismaModel> | $Enums.GuestRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel>
+}
+
+export type EnumRsvpStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RsvpStatus | Prisma.EnumRsvpStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRsvpStatusWithAggregatesFilter<$PrismaModel> | $Enums.RsvpStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel>
+}
+
+export type EnumDietTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietType | Prisma.EnumDietTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietTypeWithAggregatesFilter<$PrismaModel> | $Enums.DietType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDietTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDietTypeFilter<$PrismaModel>
+}
+
+export type EnumAgeGroupWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgeGroup | Prisma.EnumAgeGroupFieldRefInput<$PrismaModel>
+  in?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgeGroupWithAggregatesFilter<$PrismaModel> | $Enums.AgeGroup
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel>
+}
+
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -294,6 +362,74 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumGuestRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.GuestRole | Prisma.EnumGuestRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel> | $Enums.GuestRole
+}
+
+export type NestedEnumRsvpStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.RsvpStatus | Prisma.EnumRsvpStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel> | $Enums.RsvpStatus
+}
+
+export type NestedEnumDietTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietType | Prisma.EnumDietTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietTypeFilter<$PrismaModel> | $Enums.DietType
+}
+
+export type NestedEnumAgeGroupFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgeGroup | Prisma.EnumAgeGroupFieldRefInput<$PrismaModel>
+  in?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel> | $Enums.AgeGroup
+}
+
+export type NestedEnumGuestRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GuestRole | Prisma.EnumGuestRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GuestRole[] | Prisma.ListEnumGuestRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGuestRoleWithAggregatesFilter<$PrismaModel> | $Enums.GuestRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGuestRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumRsvpStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RsvpStatus | Prisma.EnumRsvpStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RsvpStatus[] | Prisma.ListEnumRsvpStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRsvpStatusWithAggregatesFilter<$PrismaModel> | $Enums.RsvpStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRsvpStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDietTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietType | Prisma.EnumDietTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietType[] | Prisma.ListEnumDietTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietTypeWithAggregatesFilter<$PrismaModel> | $Enums.DietType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDietTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDietTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumAgeGroupWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgeGroup | Prisma.EnumAgeGroupFieldRefInput<$PrismaModel>
+  in?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgeGroup[] | Prisma.ListEnumAgeGroupFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgeGroupWithAggregatesFilter<$PrismaModel> | $Enums.AgeGroup
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAgeGroupFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

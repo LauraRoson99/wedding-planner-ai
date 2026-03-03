@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 export function listGuests(weddingId: string) {
   return prisma.guest.findMany({
     where: { weddingId },
-    include: { group: true, table: true },
+    include: {
+      group: true,
+      table: true,
+      companions: true,
+    },
     orderBy: { name: "asc" },
   });
 }
@@ -28,6 +32,55 @@ export function createGuest(
       weddingId,
       groupId: groupId || null,
     },
+  });
+}
+
+export async function createGuestWithCompanions(
+  weddingId: string,
+  payload: any
+) {
+  const {
+    name,
+    groupId,
+    tableId,
+    companions = [],
+    ...rest
+  } = payload;
+
+  return prisma.$transaction(async (tx) => {
+    const primary = await tx.guest.create({
+      data: {
+        weddingId,
+        name: name.trim(),
+        role: "PRIMARY",
+        groupId: groupId ?? null,
+        tableId: tableId ?? null,
+        allergies: rest.allergies ?? [],
+        ...rest,
+      },
+    });
+
+    if (companions.length) {
+      await tx.guest.createMany({
+        data: companions.map((c: any) => ({
+          weddingId,
+          parentId: primary.id,
+          role: "COMPANION",
+          name: c.name.trim(),
+          ageGroup: c.ageGroup ?? "ADULT",
+          rsvp: c.rsvp ?? "PENDING",
+          diet: c.diet ?? "NONE",
+          dietNotes: c.dietNotes ?? null,
+          allergies: c.allergies ?? [],
+          notes: c.notes ?? null,
+        })),
+      });
+    }
+
+    return tx.guest.findUnique({
+      where: { id: primary.id },
+      include: { group: true, table: true, companions: true },
+    });
   });
 }
 

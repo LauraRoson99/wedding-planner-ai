@@ -9,7 +9,39 @@
 * 🟢 You can import this file directly.
 */
 
+export const RsvpStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  DECLINED: 'DECLINED'
+} as const
+
+export type RsvpStatus = (typeof RsvpStatus)[keyof typeof RsvpStatus]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const DietType = {
+  NONE: 'NONE',
+  VEGETARIAN: 'VEGETARIAN',
+  VEGAN: 'VEGAN',
+  HALAL: 'HALAL',
+  KOSHER: 'KOSHER',
+  OTHER: 'OTHER'
+} as const
+
+export type DietType = (typeof DietType)[keyof typeof DietType]
+
+
+export const GuestRole = {
+  PRIMARY: 'PRIMARY',
+  COMPANION: 'COMPANION'
+} as const
+
+export type GuestRole = (typeof GuestRole)[keyof typeof GuestRole]
+
+
+export const AgeGroup = {
+  ADULT: 'ADULT',
+  CHILD: 'CHILD',
+  BABY: 'BABY'
+} as const
+
+export type AgeGroup = (typeof AgeGroup)[keyof typeof AgeGroup]

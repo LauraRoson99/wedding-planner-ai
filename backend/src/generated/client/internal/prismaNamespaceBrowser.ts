@@ -104,7 +104,17 @@ export const GuestScalarFieldEnum = {
   updatedAt: 'updatedAt',
   weddingId: 'weddingId',
   groupId: 'groupId',
-  tableId: 'tableId'
+  tableId: 'tableId',
+  role: 'role',
+  rsvp: 'rsvp',
+  diet: 'diet',
+  dietNotes: 'dietNotes',
+  allergies: 'allergies',
+  notes: 'notes',
+  ageGroup: 'ageGroup',
+  phone: 'phone',
+  email: 'email',
+  parentId: 'parentId'
 } as const
 
 export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]

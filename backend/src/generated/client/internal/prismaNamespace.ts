@@ -929,7 +929,17 @@ export const GuestScalarFieldEnum = {
   updatedAt: 'updatedAt',
   weddingId: 'weddingId',
   groupId: 'groupId',
-  tableId: 'tableId'
+  tableId: 'tableId',
+  role: 'role',
+  rsvp: 'rsvp',
+  diet: 'diet',
+  dietNotes: 'dietNotes',
+  allergies: 'allergies',
+  notes: 'notes',
+  ageGroup: 'ageGroup',
+  phone: 'phone',
+  email: 'email',
+  parentId: 'parentId'
 } as const
 
 export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
@@ -1026,6 +1036,62 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'GuestRole'
+ */
+export type EnumGuestRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GuestRole'>
+    
+
+
+/**
+ * Reference to a field of type 'GuestRole[]'
+ */
+export type ListEnumGuestRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GuestRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RsvpStatus'
+ */
+export type EnumRsvpStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RsvpStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RsvpStatus[]'
+ */
+export type ListEnumRsvpStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RsvpStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DietType'
+ */
+export type EnumDietTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DietType'>
+    
+
+
+/**
+ * Reference to a field of type 'DietType[]'
+ */
+export type ListEnumDietTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DietType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AgeGroup'
+ */
+export type EnumAgeGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgeGroup'>
+    
+
+
+/**
+ * Reference to a field of type 'AgeGroup[]'
+ */
+export type ListEnumAgeGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgeGroup[]'>
     
 
 
