@@ -9,6 +9,7 @@ const IdParamSchema = z.object({
 const QueryWeddingSchema = z.object({ weddingId: z.string().min(1) });
 
 const CompanionSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1),
   ageGroup: z.enum(["ADULT", "CHILD", "BABY"]).optional(),
   rsvp: z.enum(["PENDING", "CONFIRMED", "DECLINED"]).optional(),
@@ -35,10 +36,22 @@ const CreateGuestSchema = z.object({
   companions: z.array(CompanionSchema).optional(),
 });
 
-const UpdateGuestSchema = CreateGuestSchema
-  .omit({ companions: true })
-  .partial()
-  .strict();
+const UpdateGuestSchema = z.object({
+  name: z.string().min(1).optional(),
+  groupId: z.string().nullable().optional(),
+  tableId: z.string().nullable().optional(),
+
+  rsvp: z.enum(["PENDING", "CONFIRMED", "DECLINED"]).optional(),
+  diet: z.enum(["NONE", "VEGETARIAN", "VEGAN", "HALAL", "KOSHER", "OTHER"]).optional(),
+  dietNotes: z.string().optional(),
+  allergies: z.array(z.string()).optional(),
+  notes: z.string().optional(),
+  ageGroup: z.enum(["ADULT", "CHILD", "BABY"]).optional(),
+  phone: z.string().optional(),
+  email: z.string().optional(),
+
+  companions: z.array(CompanionSchema).optional(),
+}).strict();
 
 export async function getGuests(req: Request, res: Response, next: NextFunction) {
   try {
@@ -76,7 +89,7 @@ export async function putGuest(req: Request, res: Response, next: NextFunction) 
   try {
     const { id } = IdParamSchema.parse(req.params);
     const data = UpdateGuestSchema.parse(req.body);
-    const guest = await svc.updateGuest(id, data);
+    const guest = await svc.updateGuestWithCompanions(id, data);
     res.json(guest);
   } catch (e) {
     next(e);

@@ -17,6 +17,8 @@ export type GuestDto = {
   id: string;
   name: string;
   rsvp?: RsvpStatus;
+  allergies?: string[];
+  notes?: string | null;
   group?: Pick<GroupDto, "id" | "name"> | null;
   companions?: CompanionDto[];
   table?: { id: string; name: string } | null;

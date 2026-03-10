@@ -15,6 +15,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Trash2, Pencil, UserPlus, UsersRound, Plus, X } from "lucide-react";
 
@@ -33,7 +42,13 @@ type GuestFormState = {
   rsvp: RsvpStatus;
   allergies: string[];
   notes: string;
-  companions: Array<{ name: string; ageGroup: "ADULT" | "CHILD" | "BABY" }>;
+  companions: Array<{
+    id?: string;
+    name: string;
+    ageGroup: "ADULT" | "CHILD" | "BABY";
+    allergies: string[];
+    allergyInput?: string;
+  }>;
 };
 
 const DEFAULT_FORM: GuestFormState = {
@@ -144,8 +159,11 @@ export default function GuestTab() {
       allergies: (guest as any).allergies ?? [], // si aún no lo tienes en DTO, no pasa nada
       notes: (guest as any).notes ?? "",
       companions: ((guest.companions ?? []) as CompanionDto[]).map((c) => ({
+        id: c.id,
         name: c.name,
         ageGroup: (c.ageGroup ?? "ADULT") as "ADULT" | "CHILD" | "BABY",
+        allergies: c.allergies ?? [],
+        allergyInput: "",
       })),
     });
 
@@ -187,7 +205,10 @@ export default function GuestTab() {
   function addCompanion() {
     setForm((prev) => ({
       ...prev,
-      companions: [...prev.companions, { name: "", ageGroup: "ADULT" }],
+      companions: [
+        ...prev.companions,
+        { name: "", ageGroup: "ADULT", allergies: [], allergyInput: "" },
+      ],
     }));
   }
 
@@ -205,6 +226,89 @@ export default function GuestTab() {
     }));
   }
 
+  function updateCompanionAllergyInput(idx: number, value: string) {
+    setForm((prev) => ({
+      ...prev,
+      companions: prev.companions.map((c, i) =>
+        i === idx ? { ...c, allergyInput: value } : c
+      ),
+    }));
+  }
+
+  function addCompanionAllergy(idx: number) {
+    setForm((prev) => {
+      const target = prev.companions[idx];
+      if (!target) return prev;
+
+      const tag = normalizeTag(target.allergyInput ?? "");
+      if (!tag) return prev;
+
+      const exists = target.allergies.some(
+        (a) => a.toLowerCase() === tag.toLowerCase()
+      );
+      if (exists) {
+        return {
+          ...prev,
+          companions: prev.companions.map((c, i) =>
+            i === idx ? { ...c, allergyInput: "" } : c
+          ),
+        };
+      }
+
+      return {
+        ...prev,
+        companions: prev.companions.map((c, i) =>
+          i === idx
+            ? {
+              ...c,
+              allergies: [...c.allergies, tag],
+              allergyInput: "",
+            }
+            : c
+        ),
+      };
+    });
+  }
+
+  function removeCompanionAllergy(idx: number, tag: string) {
+    setForm((prev) => ({
+      ...prev,
+      companions: prev.companions.map((c, i) =>
+        i === idx
+          ? {
+            ...c,
+            allergies: c.allergies.filter((a) => a !== tag),
+          }
+          : c
+      ),
+    }));
+  }
+
+  function toggleCompanionAllergy(idx: number, tag: string) {
+    setForm((prev) => ({
+      ...prev,
+      companions: prev.companions.map((c, i) => {
+        if (i !== idx) return c;
+
+        const exists = c.allergies.some(
+          (a) => a.toLowerCase() === tag.toLowerCase()
+        );
+
+        return exists
+          ? {
+            ...c,
+            allergies: c.allergies.filter(
+              (a) => a.toLowerCase() !== tag.toLowerCase()
+            ),
+          }
+          : {
+            ...c,
+            allergies: [...c.allergies, tag],
+          };
+      }),
+    }));
+  }
+
   async function submitGuest() {
     if (!weddingId) {
       setError("Falta weddingId en localStorage.");
@@ -212,9 +316,13 @@ export default function GuestTab() {
     }
     if (!form.name.trim()) return;
 
-    // companions: solo los que tengan nombre
     const companionsClean = form.companions
-      .map((c) => ({ ...c, name: c.name.trim() }))
+      .map((c) => ({
+        id: c.id,
+        name: c.name.trim(),
+        ageGroup: c.ageGroup,
+        allergies: c.allergies,
+      }))
       .filter((c) => c.name.length > 0);
 
     const payload = {
@@ -222,15 +330,13 @@ export default function GuestTab() {
       groupId: form.groupId || undefined,
       rsvp: form.rsvp,
       allergies: form.allergies,
-      notes: form.notes.trim() || undefined
+      notes: form.notes.trim(),
+      companions: companionsClean,
     };
 
     try {
       if (mode === "create") {
-        await apiPost(`/guests?weddingId=${encodeURIComponent(weddingId)}`, {
-          ...payload,
-          companions: companionsClean
-        });
+        await apiPost(`/guests?weddingId=${encodeURIComponent(weddingId)}`, payload);
       } else {
         if (!editingId) return;
         await apiPut(`/guests/${encodeURIComponent(editingId)}`, payload);
@@ -302,31 +408,43 @@ export default function GuestTab() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
                   <Label>Grupo</Label>
-                  <select
-                    className="h-10 w-full rounded-md border bg-background px-3 text-sm"
-                    value={form.groupId}
-                    onChange={(e) => setForm((p) => ({ ...p, groupId: e.target.value }))}
+                  <Select
+                    value={form.groupId || "none"}
+                    onValueChange={(value) =>
+                      setForm((p) => ({ ...p, groupId: value === "none" ? "" : value }))
+                    }
                   >
-                    <option value="">Sin grupo</option>
-                    {groups.map((g) => (
-                      <option key={g.id} value={g.id}>
-                        {g.name}
-                      </option>
-                    ))}
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona grupo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">Sin grupo</SelectItem>
+                      {groups.map((g) => (
+                        <SelectItem key={g.id} value={g.id}>
+                          {g.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="space-y-2">
                   <Label>RSVP</Label>
-                  <select
-                    className="h-10 w-full rounded-md border bg-background px-3 text-sm"
+                  <Select
                     value={form.rsvp}
-                    onChange={(e) => setForm((p) => ({ ...p, rsvp: e.target.value as RsvpStatus }))}
+                    onValueChange={(value) =>
+                      setForm((p) => ({ ...p, rsvp: value as RsvpStatus }))
+                    }
                   >
-                    <option value="PENDING">{rsvpLabel("PENDING")}</option>
-                    <option value="CONFIRMED">{rsvpLabel("CONFIRMED")}</option>
-                    <option value="DECLINED">{rsvpLabel("DECLINED")}</option>
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado RSVP" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="PENDING">Pendiente</SelectItem>
+                      <SelectItem value="CONFIRMED">Confirmado</SelectItem>
+                      <SelectItem value="DECLINED">No viene</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -378,7 +496,7 @@ export default function GuestTab() {
                 {allergySuggestions.length > 0 && (
                   <div className="space-y-2">
                     <div className="text-xs text-muted-foreground">
-                      Sugerencias{allergyInput.trim() ? " (filtradas)" : ""} — clic para añadir/quitar
+                      Sugerencias{allergyInput.trim() ? " (filtradas)" : ""} — click para añadir/quitar
                     </div>
 
                     {filteredAllergySuggestions.length === 0 ? (
@@ -438,35 +556,139 @@ export default function GuestTab() {
                     Si viene con pareja/niños, añádelos aquí para tener su info por separado.
                   </p>
                 ) : (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {form.companions.map((c, idx) => (
-                      <div key={idx} className="flex gap-2 items-center">
-                        <Input
-                          placeholder={`Acompañante ${idx + 1} (nombre)`}
-                          value={c.name}
-                          onChange={(e) => updateCompanion(idx, { name: e.target.value })}
-                        />
-                        <select
-                          className="h-10 rounded-md border bg-background px-2 text-sm"
-                          value={c.ageGroup}
-                          onChange={(e) =>
-                            updateCompanion(idx, { ageGroup: e.target.value as any })
-                          }
-                        >
-                          <option value="ADULT">Adulto</option>
-                          <option value="CHILD">Niño</option>
-                          <option value="BABY">Bebé</option>
-                        </select>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => removeCompanion(idx)}
-                          className="text-destructive hover:bg-destructive/10"
-                          title="Quitar"
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
+                      <div
+                        key={c.id ?? idx}
+                        className="rounded-xl border bg-muted/20 p-3 space-y-3"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm font-medium">
+                            Acompañante {idx + 1}
+                          </div>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeCompanion(idx)}
+                            className="text-destructive hover:bg-destructive/10"
+                            title="Quitar"
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-[1fr_140px] gap-2">
+                          <Input
+                            placeholder="Nombre del acompañante"
+                            value={c.name}
+                            onChange={(e) => updateCompanion(idx, { name: e.target.value })}
+                          />
+
+                          <Select
+                            value={c.ageGroup}
+                            onValueChange={(value) =>
+                              updateCompanion(idx, {
+                                ageGroup: value as "ADULT" | "CHILD" | "BABY",
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="ADULT">Adulto</SelectItem>
+                              <SelectItem value="CHILD">Niño</SelectItem>
+                              <SelectItem value="BABY">Bebé</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label className="text-xs text-muted-foreground">
+                            Alergias / intolerancias
+                          </Label>
+
+                          <div className="flex gap-2">
+                            <Input
+                              placeholder="Ej: gluten"
+                              value={c.allergyInput ?? ""}
+                              onChange={(e) => updateCompanionAllergyInput(idx, e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  addCompanionAllergy(idx);
+                                }
+                              }}
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => addCompanionAllergy(idx)}
+                            >
+                              Añadir
+                            </Button>
+                          </div>
+
+                          {c.allergies.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {c.allergies.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs"
+                                >
+                                  {tag}
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      removeCompanionAllergy(idx, tag);
+                                    }}
+                                    className="text-muted-foreground hover:text-foreground"
+                                    aria-label={`Quitar ${tag}`}
+                                  >
+                                    <X className="size-3" />
+                                  </button>
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {allergySuggestions.length > 0 && (
+                            <div className="space-y-2">
+                              <div className="text-xs text-muted-foreground">
+                                Sugerencias — click para añadir/quitar
+                              </div>
+
+                              <div className="flex flex-wrap gap-2">
+                                {allergySuggestions.slice(0, 10).map((s) => {
+                                  const selected = c.allergies.some(
+                                    (a) => a.toLowerCase() === s.toLowerCase()
+                                  );
+
+                                  return (
+                                    <button
+                                      key={s}
+                                      type="button"
+                                      onClick={() => toggleCompanionAllergy(idx, s)}
+                                      className={[
+                                        "rounded-full border px-3 py-1 text-xs transition inline-flex items-center gap-1",
+                                        selected
+                                          ? "bg-muted border-muted-foreground/30"
+                                          : "hover:bg-muted/50",
+                                      ].join(" ")}
+                                      aria-pressed={selected}
+                                    >
+                                      {selected && <span aria-hidden>✓</span>}
+                                      {s}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -476,7 +698,7 @@ export default function GuestTab() {
               {/* Notas */}
               <div className="space-y-2">
                 <Label>Notas (opcional)</Label>
-                <Input
+                <Textarea
                   placeholder="Ej: amiga de la uni, necesita silla especial..."
                   value={form.notes}
                   onChange={(e) => setForm((p) => ({ ...p, notes: e.target.value }))}
@@ -506,45 +728,129 @@ export default function GuestTab() {
 
       {error && <div className="text-sm text-red-600">{error}</div>}
 
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {filteredGuests.map((guest) => (
           <li
             key={guest.id}
-            className="flex justify-between items-center p-3 rounded border bg-background shadow-sm"
+            className="rounded-2xl border bg-background shadow-sm transition hover:shadow-md"
           >
-            <div>
-              <div className="font-medium">{guest.name}</div>
-              <div className="text-sm text-muted-foreground">
-                {guest.group?.name ?? "Sin grupo"} · {rsvpLabel((guest.rsvp ?? "PENDING") as RsvpStatus)}
+            <div className="flex items-start justify-between gap-4 p-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h4 className="font-semibold text-base">{guest.name}</h4>
+
+                  <span
+                    className={[
+                      "rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wide border",
+                      guest.rsvp === "CONFIRMED"
+                        ? "border-green-200 bg-green-50 text-green-700"
+                        : guest.rsvp === "DECLINED"
+                          ? "border-red-200 bg-red-50 text-red-700"
+                          : "border-yellow-200 bg-yellow-50 text-yellow-700",
+                    ].join(" ")}
+                  >
+                    {rsvpLabel((guest.rsvp ?? "PENDING") as RsvpStatus)}
+                  </span>
+
+                  <span className="rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-wide">
+                    {guest.group?.name ?? "Sin grupo"}
+                  </span>
+                </div>
+
+                {(guest as any).allergies?.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {(guest as any).allergies.map((allergy: string) => (
+                      <span
+                        key={allergy}
+                        className="rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 text-xs text-orange-700"
+                      >
+                        {allergy}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {(guest.companions?.length ?? 0) > 0 && (
+                  <div className="mt-4 space-y-2">
+                    <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      Acompañantes
+                    </div>
+
+                    {guest.companions!.map((c) => (
+                      <div
+                        key={c.id ?? c.name}
+                        className="ml-2 rounded-xl border bg-muted/30 px-3 py-2"
+                      >
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-medium text-sm">{c.name}</span>
+
+                          <span className="rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+                            Acompañante
+                          </span>
+
+                          {c.ageGroup && (
+                            <span className="text-xs text-muted-foreground">
+                              {c.ageGroup === "ADULT"
+                                ? "Adulto"
+                                : c.ageGroup === "CHILD"
+                                  ? "Niño"
+                                  : "Bebé"}
+                            </span>
+                          )}
+                        </div>
+
+                        {(c.allergies?.length ?? 0) > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {c.allergies!.map((allergy) => (
+                              <span
+                                key={allergy}
+                                className="rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 text-xs text-orange-700"
+                              >
+                                {allergy}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {(guest as any).notes && (
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {(guest as any).notes}
+                  </p>
+                )}
               </div>
 
-              {(guest.companions?.length ?? 0) > 0 && (
-                <div className="text-xs text-muted-foreground mt-1">
-                  Acompañantes: {guest.companions!.map((c) => c.name).join(", ")}
-                </div>
-              )}
-            </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => openEdit(guest)}
+                  title="Editar"
+                >
+                  <Pencil className="size-4" />
+                </Button>
 
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon" onClick={() => openEdit(guest)} title="Editar">
-                <Pencil className="size-4" />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleDeleteGuest(guest)}
-                className="text-destructive hover:bg-destructive/10"
-                title="Eliminar"
-              >
-                <Trash2 className="size-4" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleDeleteGuest(guest)}
+                  className="text-destructive hover:bg-destructive/10"
+                  title="Eliminar"
+                >
+                  <Trash2 className="size-4" />
+                </Button>
+              </div>
             </div>
           </li>
         ))}
 
         {!loading && filteredGuests.length === 0 && (
-          <li className="text-sm text-muted-foreground italic">Sin resultados.</li>
+          <li className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground italic">
+            Sin resultados.
+          </li>
         )}
       </ul>
     </div>

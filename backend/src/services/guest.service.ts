@@ -4,11 +4,16 @@ const prisma = new PrismaClient();
 
 export function listGuests(weddingId: string) {
   return prisma.guest.findMany({
-    where: { weddingId },
+    where: {
+      weddingId,
+      role: "PRIMARY",
+    },
     include: {
       group: true,
       table: true,
-      companions: true,
+      companions: {
+        orderBy: { name: "asc" },
+      },
     },
     orderBy: { name: "asc" },
   });
@@ -17,20 +22,12 @@ export function listGuests(weddingId: string) {
 export function getGuestById(id: string) {
   return prisma.guest.findUnique({
     where: { id },
-    include: { group: true, table: true },
-  });
-}
-
-export function createGuest(
-  weddingId: string,
-  name: string,
-  groupId?: string
-) {
-  return prisma.guest.create({
-    data: {
-      name,
-      weddingId,
-      groupId: groupId || null,
+    include: {
+      group: true,
+      table: true,
+      companions: {
+        orderBy: { name: "asc" },
+      },
     },
   });
 }
@@ -66,6 +63,7 @@ export async function createGuestWithCompanions(
           weddingId,
           parentId: primary.id,
           role: "COMPANION",
+          groupId: primary.groupId,
           name: c.name.trim(),
           ageGroup: c.ageGroup ?? "ADULT",
           rsvp: c.rsvp ?? "PENDING",
@@ -79,18 +77,106 @@ export async function createGuestWithCompanions(
 
     return tx.guest.findUnique({
       where: { id: primary.id },
-      include: { group: true, table: true, companions: true },
+      include: {
+        group: true,
+        table: true,
+        companions: {
+          orderBy: { name: "asc" },
+        },
+      },
     });
   });
 }
 
-export function updateGuest(
+export async function updateGuestWithCompanions(
   id: string,
-  data: { name?: string; groupId?: string | null; tableId?: string | null }
+  payload: any
 ) {
-  return prisma.guest.update({
-    where: { id },
-    data,
+  const {
+    companions,
+    ...guestData
+  } = payload;
+
+  return prisma.$transaction(async (tx) => {
+    const existing = await tx.guest.findUnique({
+      where: { id },
+      include: { companions: true },
+    });
+
+    if (!existing) {
+      throw new Error("Guest not found");
+    }
+
+    const updatedPrimary = await tx.guest.update({
+      where: { id },
+      data: {
+        ...guestData,
+        allergies: guestData.allergies ?? undefined,
+      },
+    });
+
+    if (companions) {
+      const existingIds = existing.companions.map((c) => c.id);
+      const incomingIds = companions
+        .map((c: any) => c.id)
+        .filter(Boolean);
+
+      const idsToDelete = existingIds.filter((existingId) => !incomingIds.includes(existingId));
+
+      if (idsToDelete.length > 0) {
+        await tx.guest.deleteMany({
+          where: {
+            id: { in: idsToDelete },
+            parentId: id,
+          },
+        });
+      }
+
+      for (const c of companions) {
+        if (c.id) {
+          await tx.guest.update({
+            where: { id: c.id },
+            data: {
+              name: c.name.trim(),
+              ageGroup: c.ageGroup ?? "ADULT",
+              rsvp: c.rsvp ?? "PENDING",
+              diet: c.diet ?? "NONE",
+              dietNotes: c.dietNotes ?? null,
+              allergies: c.allergies ?? [],
+              notes: c.notes ?? null,
+              groupId: updatedPrimary.groupId ?? null,
+            },
+          });
+        } else {
+          await tx.guest.create({
+            data: {
+              weddingId: existing.weddingId,
+              parentId: id,
+              role: "COMPANION",
+              groupId: updatedPrimary.groupId ?? null,
+              name: c.name.trim(),
+              ageGroup: c.ageGroup ?? "ADULT",
+              rsvp: c.rsvp ?? "PENDING",
+              diet: c.diet ?? "NONE",
+              dietNotes: c.dietNotes ?? null,
+              allergies: c.allergies ?? [],
+              notes: c.notes ?? null,
+            },
+          });
+        }
+      }
+    }
+
+    return tx.guest.findUnique({
+      where: { id },
+      include: {
+        group: true,
+        table: true,
+        companions: {
+          orderBy: { name: "asc" },
+        },
+      },
+    });
   });
 }
 
