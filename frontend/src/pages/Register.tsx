@@ -11,6 +11,17 @@ import {
 } from "@/components/ui/card";
 import { apiPost } from "@/lib/api";
 import { prettyApiError } from "@/lib/errors";
+import { setAccessToken, setRefreshToken, setWeddingId } from "@/lib/auth";
+
+type RegisterResponse = {
+  access: string;
+  refresh: string;
+  wedding?: {
+    id: string;
+    name: string;
+    date?: string | null;
+  } | null;
+};
 
 export default function Register() {
   const nav = useNavigate();
@@ -24,9 +35,22 @@ export default function Register() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
     try {
-      await apiPost("/auth/register", { name: name || undefined, email, password });
-      nav("/login");
+      const res = await apiPost<RegisterResponse>("/auth/register", {
+        name: name || undefined,
+        email,
+        password,
+      });
+
+      setAccessToken(res.access);
+      setRefreshToken(res.refresh);
+
+      if (res.wedding?.id) {
+        setWeddingId(res.wedding.id);
+      }
+
+      nav("/guests");
     } catch (err: any) {
       setError(prettyApiError(err));
     } finally {
@@ -38,7 +62,7 @@ export default function Register() {
     <Card className="shadow-md">
       <CardHeader className="space-y-2">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
             <span className="text-lg">✨</span>
           </div>
           <div>
@@ -92,7 +116,7 @@ export default function Register() {
             </div>
           )}
 
-          <Button type="submit" className="w-full mt-2" disabled={loading}>
+          <Button type="submit" className="mt-2 w-full" disabled={loading}>
             {loading ? "Creando..." : "Crear cuenta"}
           </Button>
 

@@ -10,10 +10,18 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { apiPost } from "@/lib/api";
-import { setAccessToken } from "@/lib/auth";
+import { setAccessToken, setRefreshToken, setWeddingId } from "@/lib/auth";
 import { prettyApiError } from "@/lib/errors";
 
-type LoginResponse = { access: string; refresh: string };
+type LoginResponse = {
+  access: string;
+  refresh: string;
+  wedding?: {
+    id: string;
+    name: string;
+    date?: string | null;
+  } | null;
+};
 
 export default function Login() {
   const nav = useNavigate();
@@ -26,10 +34,17 @@ export default function Login() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
     try {
       const res = await apiPost<LoginResponse>("/auth/login", { email, password });
+
       setAccessToken(res.access);
-      localStorage.setItem("refreshToken", res.refresh);
+      setRefreshToken(res.refresh);
+
+      if (res.wedding?.id) {
+        setWeddingId(res.wedding.id);
+      }
+
       nav("/guests");
     } catch (err: any) {
       setError(prettyApiError(err));
@@ -42,7 +57,7 @@ export default function Login() {
     <Card className="shadow-md">
       <CardHeader className="space-y-2">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
             <span className="text-lg">💍</span>
           </div>
           <div>
@@ -83,7 +98,7 @@ export default function Login() {
             </div>
           )}
 
-          <Button type="submit" className="w-full mt-2" disabled={loading}>
+          <Button type="submit" className="mt-2 w-full" disabled={loading}>
             {loading ? "Entrando..." : "Entrar"}
           </Button>
 
@@ -95,8 +110,8 @@ export default function Login() {
           </div>
 
           <div className="mt-4 rounded-lg border bg-background/60 p-4">
-            <div className="text-sm font-medium mb-2">Con Planifica2 puedes:</div>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <div className="mb-2 text-sm font-medium">Con Planifica2 puedes:</div>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               <li>• Organizar invitados y grupos sin líos</li>
               <li>• Diseñar mesas de forma visual</li>
               <li>• Planificar agenda y tareas clave</li>

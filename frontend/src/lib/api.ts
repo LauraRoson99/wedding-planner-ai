@@ -1,11 +1,48 @@
+import { clearAuth, getAccessToken, isTokenExpired } from "@/lib/auth";
+
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 
-function getToken() {
-  return localStorage.getItem("accessToken"); // ajusta si lo guardas con otro nombre
+function redirectToLogin() {
+  if (window.location.pathname !== "/login") {
+    window.location.href = "/login";
+  }
+}
+
+function getValidToken() {
+  const token = getAccessToken();
+  if (!token) return null;
+
+  if (isTokenExpired(token)) {
+    clearAuth();
+    redirectToLogin();
+    return null;
+  }
+
+  return token;
+}
+
+async function handleResponse<T>(res: Response, method: string, path: string): Promise<T> {
+  if (res.status === 401) {
+    clearAuth();
+    redirectToLogin();
+    throw new Error("Sesión expirada");
+  }
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || `${method} ${path} failed (${res.status})`);
+  }
+
+  if (res.status === 204) {
+    return undefined as T;
+  }
+
+  return res.json();
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
-  const token = getToken();
+  const token = getValidToken();
+
   const res = await fetch(`${API_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",
@@ -13,15 +50,12 @@ export async function apiGet<T>(path: string): Promise<T> {
     },
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `GET ${path} failed (${res.status})`);
-  }
-  return res.json();
+  return handleResponse<T>(res, "GET", path);
 }
 
 export async function apiPost<T>(path: string, body: unknown): Promise<T> {
-  const token = getToken();
+  const token = getValidToken();
+
   const res = await fetch(`${API_URL}${path}`, {
     method: "POST",
     headers: {
@@ -31,15 +65,12 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `POST ${path} failed (${res.status})`);
-  }
-  return res.json();
+  return handleResponse<T>(res, "POST", path);
 }
 
 export async function apiDelete(path: string): Promise<void> {
-  const token = localStorage.getItem("accessToken");
+  const token = getValidToken();
+
   const res = await fetch(`${API_URL}${path}`, {
     method: "DELETE",
     headers: {
@@ -48,14 +79,12 @@ export async function apiDelete(path: string): Promise<void> {
     },
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `DELETE ${path} failed (${res.status})`);
-  }
+  return handleResponse<void>(res, "DELETE", path);
 }
 
 export async function apiPut<T>(path: string, body: unknown): Promise<T> {
-  const token = getToken();
+  const token = getValidToken();
+
   const res = await fetch(`${API_URL}${path}`, {
     method: "PUT",
     headers: {
@@ -65,15 +94,12 @@ export async function apiPut<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `PUT ${path} failed (${res.status})`);
-  }
-  return res.json();
+  return handleResponse<T>(res, "PUT", path);
 }
 
 export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
-  const token = getToken();
+  const token = getValidToken();
+
   const res = await fetch(`${API_URL}${path}`, {
     method: "PATCH",
     headers: {
@@ -83,9 +109,5 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || `PATCH ${path} failed (${res.status})`);
-  }
-  return res.json();
+  return handleResponse<T>(res, "PATCH", path);
 }
