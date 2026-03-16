@@ -26,6 +26,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Trash2, Pencil, UserPlus, UsersRound, Plus, X } from "lucide-react";
+import { getWeddingId } from "@/lib/auth";
 
 // ✅ helper: chips de alergias
 function normalizeTag(t: string) {
@@ -67,7 +68,7 @@ export default function GuestTab() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const weddingId = localStorage.getItem("weddingId") ?? "";
+  const weddingId = getWeddingId() ?? "";
 
   // modal crear/editar
   const [open, setOpen] = useState(false);

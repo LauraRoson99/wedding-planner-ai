@@ -12,6 +12,7 @@ import { Trash2, Pencil, UsersRound, Eye, User, Heart } from "lucide-react"
 import { apiDelete, apiGet, apiPost, apiPatch } from "@/lib/api"
 import type { GroupDto } from "@/features/groups/types"
 import type { GuestDto, CompanionDto } from "@/features/guests/types"
+import { getWeddingId } from "@/lib/auth"
 
 export default function GroupTab() {
   const [groups, setGroups] = useState<GroupDto[]>([])
@@ -24,7 +25,7 @@ export default function GroupTab() {
   const [selectedGroup, setSelectedGroup] = useState<GroupDto | null>(null)
   const [search, setSearch] = useState("")
 
-  const weddingId = localStorage.getItem("weddingId") ?? ""
+  const weddingId = getWeddingId() ?? "";
 
   async function loadData() {
     if (!weddingId) {
