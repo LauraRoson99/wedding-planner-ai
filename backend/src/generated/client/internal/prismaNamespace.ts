@@ -930,6 +930,7 @@ export const GuestScalarFieldEnum = {
   weddingId: 'weddingId',
   groupId: 'groupId',
   tableId: 'tableId',
+  seatNumber: 'seatNumber',
   role: 'role',
   rsvp: 'rsvp',
   diet: 'diet',
@@ -1040,6 +1041,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'GuestRole'
  */
 export type EnumGuestRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GuestRole'>
@@ -1092,20 +1107,6 @@ export type EnumAgeGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'AgeGroup[]'
  */
 export type ListEnumAgeGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgeGroup[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 

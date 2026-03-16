@@ -3,10 +3,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import GuestTab from "@/components/guests/tabs/guests/GuestTab"
 import GroupTab from "@/components/guests/tabs/groups/GroupTab"
 import TableTab from "@/components/guests/tabs/tables/TableTab"
+import { getWeddingId } from "@/lib/auth"
 
 export default function GuestsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const tab = searchParams.get("tab") ?? "guests"
+  const weddingId = getWeddingId() ?? "";
 
   const handleTabChange = (value: string) => {
     setSearchParams({ tab: value })
@@ -28,7 +30,7 @@ export default function GuestsPage() {
           <GroupTab />
         </TabsContent>
         <TabsContent value="tables">
-          <TableTab />
+          <TableTab weddingId={weddingId} />
         </TabsContent>
       </Tabs>
     </div>

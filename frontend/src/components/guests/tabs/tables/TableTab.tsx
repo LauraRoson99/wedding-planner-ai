@@ -1,102 +1,182 @@
-import { useState } from "react"
-import { TableControls } from "./TableControls"
-import { TableMap } from "./TableMap"
-import { GuestList } from "./GuestList"
-import type { Guest, Table } from "../../types"
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { apiDelete, apiGet, apiPost, apiPut } from "@/lib/api";
+import { TableControls } from "./TableControls";
+import { TableMap } from "./TableMap";
+import { GuestList } from "./GuestList";
+import type {
+  CreateTableDto,
+  TableDto,
+  TablePersonDto,
+  UpdateTableDto,
+} from "@/features/tables/types";
 
-const mockGuests: Guest[] = [
-  { name: "Laura", group: "Amigos de la novia", color: "bg-pink-500" },
-  { name: "Dani", group: "Familia del novio", color: "bg-blue-500" },
-  { name: "Mario", group: "Amigos de la novia", color: "bg-pink-500" },
-]
+type Props = {
+  weddingId: string;
+};
 
-export default function TableTab() {
-  const [tables, setTables] = useState<Table[]>([
-    { id: 1, name: "Mesa 1", guests: [mockGuests[0], mockGuests[1]] },
-    { id: 2, name: "Mesa 2", guests: [mockGuests[2]] },
-  ])
-  const [seatsPerTable, setSeatsPerTable] = useState(8)
-  const [nextTableId, setNextTableId] = useState(3)
-  const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null)
-  
+export default function TableTab({ weddingId }: Props) {
+  const [tables, setTables] = useState<TableDto[]>([]);
+  const [people, setPeople] = useState<TablePersonDto[]>([]);
+  const [selectedPerson, setSelectedPerson] = useState<TablePersonDto | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const assignedGuests = tables.flatMap(t => t.guests.filter(Boolean))
+  const loadData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-  const availableGuests = mockGuests.filter(
-    g => !assignedGuests.includes(g)
-  )
+    try {
+      const [tablesData, peopleData] = await Promise.all([
+        apiGet<TableDto[]>(`/tables?weddingId=${weddingId}`),
+        apiGet<TablePersonDto[]>(`/tables/people?weddingId=${weddingId}`),
+      ]);
 
-  const handleUpdate = (numTables: number, seats: number) => {
-    setSeatsPerTable(seats)
-  }
+      setTables(tablesData);
+      setPeople(peopleData);
 
-  const handleAddTable = () => {
-    setTables((prev) => [
-      ...prev,
-      { id: nextTableId, name: `Mesa ${nextTableId}`, guests: [] },
-    ])
-    setNextTableId((id) => id + 1)
-  }
+      setSelectedPerson((current) => {
+        if (!current) return null;
+        return peopleData.find((p) => p.id === current.id) ?? null;
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudieron cargar las mesas");
+    } finally {
+      setLoading(false);
+    }
+  }, [weddingId]);
 
-  const handleDeleteTable = (tableId: number) => {
-    // Recuperar los invitados de la mesa borrada para que vuelvan a estar disponibles
-    const tableToDelete = tables.find((t) => t.id === tableId)
-    const guestsToRecover = tableToDelete?.guests ?? []
-    setTables((prev) => prev.filter((t) => t.id !== tableId))
-    // (Mockeado: no hacemos nada con `guestsToRecover` porque usamos mockGuests como fuente)
-  }
+  useEffect(() => {
+    void loadData();
+  }, [loadData]);
 
-  const handleEditTableName = (tableId: number, newName: string) => {
-    setTables((prev) =>
-      prev.map((t) => (t.id === tableId ? { ...t, name: newName } : t))
-    )
-  }
+  const assignedPersonIds = useMemo(() => {
+    return new Set(
+      people.filter((person) => person.tableId && person.seatNumber).map((person) => person.id)
+    );
+  }, [people]);
 
-  const handleAddGuestToTable = (tableId: number, seatIndex: number) => {
-    if (!selectedGuest) return
+  const handleCreateTable = async (payload: CreateTableDto) => {
+    setSaving(true);
+    setError(null);
 
-    setTables((prev) =>
-      prev.map((t) => {
-        if (t.id !== tableId) return t
-        const updatedGuests = [...t.guests]
-        updatedGuests[seatIndex] = selectedGuest
-        return { ...t, guests: updatedGuests }
-      })
-    )
-    setSelectedGuest(null)
-  }
+    try {
+      await apiPost<TableDto>(`/tables?weddingId=${weddingId}`, payload);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo crear la mesa");
+    } finally {
+      setSaving(false);
+    }
+  };
 
-  const handleRemoveGuestFromTable = (tableId: number, seatIndex: number) => {
-    setTables((prev) =>
-      prev.map((t) => {
-        if (t.id !== tableId) return t
-        const updatedGuests = [...t.guests]
-        updatedGuests[seatIndex] = undefined as any // liberamos el hueco
-        return { ...t, guests: updatedGuests }
-      })
-    )
-  }
+  const handleUpdateTable = async (tableId: string, payload: UpdateTableDto) => {
+    setSaving(true);
+    setError(null);
+
+    try {
+      await apiPut<TableDto>(`/tables/${tableId}`, payload);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo actualizar la mesa");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteTable = async (tableId: string) => {
+    setSaving(true);
+    setError(null);
+
+    try {
+      await apiDelete(`/tables/${tableId}`);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo borrar la mesa");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleAssignPersonToSeat = async (tableId: string, seatNumber: number) => {
+    if (!selectedPerson) return;
+
+    setSaving(true);
+    setError(null);
+
+    try {
+      await apiPut(`/tables/${tableId}/seats/${seatNumber}/assign`, {
+        guestId: selectedPerson.id,
+      });
+
+      setSelectedPerson(null);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo asignar la persona");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleClearSeat = async (tableId: string, seatNumber: number) => {
+    setSaving(true);
+    setError(null);
+
+    try {
+      await apiDelete(`/tables/${tableId}/seats/${seatNumber}`);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo liberar la silla");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleClearTable = async (tableId: string) => {
+    setSaving(true);
+    setError(null);
+
+    try {
+      await apiDelete(`/tables/${tableId}/guests`);
+      await loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo vaciar la mesa");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
-      <TableControls onUpdate={handleUpdate} />
-      <div className="flex flex-col md:flex-row gap-6">
+      <TableControls onCreateTable={handleCreateTable} disabled={saving || loading} />
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      <div className="flex flex-col gap-6 xl:flex-row">
         <GuestList
-          guests={mockGuests}
-          assignedGuests={assignedGuests}
-          selectedGuest={selectedGuest}
-          onSelect={setSelectedGuest}
+          guests={people}
+          assignedGuestIds={assignedPersonIds}
+          selectedGuest={selectedPerson}
+          onSelect={setSelectedPerson}
+          loading={loading}
         />
+
         <TableMap
           tables={tables}
-          seatsPerTable={seatsPerTable}
-          onAddGuestToTable={handleAddGuestToTable}
-          onRemoveGuestFromTable={handleRemoveGuestFromTable}
-          onEditTableName={handleEditTableName}
+          selectedGuest={selectedPerson}
+          loading={loading}
+          disabled={saving}
+          onAssignGuestToSeat={handleAssignPersonToSeat}
+          onRemoveGuestFromSeat={handleClearSeat}
+          onEditTable={handleUpdateTable}
           onDeleteTable={handleDeleteTable}
-          onAddTable={handleAddTable}
+          onClearTable={handleClearTable}
         />
       </div>
     </div>
-  )
+  );
 }
