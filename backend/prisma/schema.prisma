@@ -20,21 +20,36 @@ model User {
 }
 
 model Wedding {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
   date      DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
-  ownerId String
-  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  guests    Guest[]
+  groups    Group[]
+  tables    Table[]
+  events    Event[]
+  tasks     Task[]
 
-  guests Guest[]
-  groups Group[]
-  tables Table[]
-  events Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([ownerId])
+}
+
+model Task {
+  id        String   @id @default(cuid())
+  title     String
+  completed Boolean  @default(false)
+
+  weddingId String
+  wedding   Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([weddingId])
 }
 
 enum RsvpStatus {

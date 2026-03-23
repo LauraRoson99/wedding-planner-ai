@@ -28,27 +28,27 @@ export type WeddingMinAggregateOutputType = {
   id: string | null
   name: string | null
   date: Date | null
+  ownerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  ownerId: string | null
 }
 
 export type WeddingMaxAggregateOutputType = {
   id: string | null
   name: string | null
   date: Date | null
+  ownerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  ownerId: string | null
 }
 
 export type WeddingCountAggregateOutputType = {
   id: number
   name: number
   date: number
+  ownerId: number
   createdAt: number
   updatedAt: number
-  ownerId: number
   _all: number
 }
 
@@ -57,27 +57,27 @@ export type WeddingMinAggregateInputType = {
   id?: true
   name?: true
   date?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
-  ownerId?: true
 }
 
 export type WeddingMaxAggregateInputType = {
   id?: true
   name?: true
   date?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
-  ownerId?: true
 }
 
 export type WeddingCountAggregateInputType = {
   id?: true
   name?: true
   date?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
-  ownerId?: true
   _all?: true
 }
 
@@ -157,9 +157,9 @@ export type WeddingGroupByOutputType = {
   id: string
   name: string
   date: Date | null
+  ownerId: string
   createdAt: Date
   updatedAt: Date
-  ownerId: string
   _count: WeddingCountAggregateOutputType | null
   _min: WeddingMinAggregateOutputType | null
   _max: WeddingMaxAggregateOutputType | null
@@ -187,28 +187,30 @@ export type WeddingWhereInput = {
   id?: Prisma.StringFilter<"Wedding"> | string
   name?: Prisma.StringFilter<"Wedding"> | string
   date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null
+  ownerId?: Prisma.StringFilter<"Wedding"> | string
   createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
-  ownerId?: Prisma.StringFilter<"Wedding"> | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   guests?: Prisma.GuestListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   tables?: Prisma.TableListRelationFilter
   events?: Prisma.EventListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
 }
 
 export type WeddingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   guests?: Prisma.GuestOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
   tables?: Prisma.TableOrderByRelationAggregateInput
   events?: Prisma.EventOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
 }
 
 export type WeddingWhereUniqueInput = Prisma.AtLeast<{
@@ -218,23 +220,24 @@ export type WeddingWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.WeddingWhereInput | Prisma.WeddingWhereInput[]
   name?: Prisma.StringFilter<"Wedding"> | string
   date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null
+  ownerId?: Prisma.StringFilter<"Wedding"> | string
   createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
-  ownerId?: Prisma.StringFilter<"Wedding"> | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   guests?: Prisma.GuestListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   tables?: Prisma.TableListRelationFilter
   events?: Prisma.EventListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
 }, "id">
 
 export type WeddingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
   _count?: Prisma.WeddingCountOrderByAggregateInput
   _max?: Prisma.WeddingMaxOrderByAggregateInput
   _min?: Prisma.WeddingMinOrderByAggregateInput
@@ -247,9 +250,9 @@ export type WeddingScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Wedding"> | string
   name?: Prisma.StringWithAggregatesFilter<"Wedding"> | string
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"Wedding"> | Date | string | null
+  ownerId?: Prisma.StringWithAggregatesFilter<"Wedding"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Wedding"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Wedding"> | Date | string
-  ownerId?: Prisma.StringWithAggregatesFilter<"Wedding"> | string
 }
 
 export type WeddingCreateInput = {
@@ -263,19 +266,21 @@ export type WeddingCreateInput = {
   groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
   guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUpdateInput = {
@@ -289,28 +294,30 @@ export type WeddingUpdateInput = {
   groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateManyInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
 }
 
 export type WeddingUpdateManyMutationInput = {
@@ -325,9 +332,9 @@ export type WeddingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WeddingListRelationFilter = {
@@ -344,27 +351,27 @@ export type WeddingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
 }
 
 export type WeddingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
 }
 
 export type WeddingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
 }
 
 export type WeddingScalarRelationFilter = {
@@ -416,6 +423,20 @@ export type WeddingUncheckedUpdateManyWithoutOwnerNestedInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type WeddingCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTasksInput
+  connect?: Prisma.WeddingWhereUniqueInput
+}
+
+export type WeddingUpdateOneRequiredWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.WeddingUpsertWithoutTasksInput
+  connect?: Prisma.WeddingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutTasksInput, Prisma.WeddingUpdateWithoutTasksInput>, Prisma.WeddingUncheckedUpdateWithoutTasksInput>
 }
 
 export type WeddingCreateNestedOneWithoutGuestsInput = {
@@ -484,6 +505,7 @@ export type WeddingCreateWithoutOwnerInput = {
   groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutOwnerInput = {
@@ -496,6 +518,7 @@ export type WeddingUncheckedCreateWithoutOwnerInput = {
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutOwnerInput = {
@@ -531,9 +554,77 @@ export type WeddingScalarWhereInput = {
   id?: Prisma.StringFilter<"Wedding"> | string
   name?: Prisma.StringFilter<"Wedding"> | string
   date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null
+  ownerId?: Prisma.StringFilter<"Wedding"> | string
   createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string
-  ownerId?: Prisma.StringFilter<"Wedding"> | string
+}
+
+export type WeddingCreateWithoutTasksInput = {
+  id?: string
+  name: string
+  date?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutWeddingsInput
+  guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput
+  groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
+  tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
+  events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+}
+
+export type WeddingUncheckedCreateWithoutTasksInput = {
+  id?: string
+  name: string
+  date?: Date | string | null
+  ownerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
+  tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+}
+
+export type WeddingCreateOrConnectWithoutTasksInput = {
+  where: Prisma.WeddingWhereUniqueInput
+  create: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>
+}
+
+export type WeddingUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.WeddingUpdateWithoutTasksInput, Prisma.WeddingUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>
+  where?: Prisma.WeddingWhereInput
+}
+
+export type WeddingUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.WeddingWhereInput
+  data: Prisma.XOR<Prisma.WeddingUpdateWithoutTasksInput, Prisma.WeddingUncheckedUpdateWithoutTasksInput>
+}
+
+export type WeddingUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput
+  guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
+  tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
+  events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+}
+
+export type WeddingUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
+  tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutGuestsInput = {
@@ -546,18 +637,20 @@ export type WeddingCreateWithoutGuestsInput = {
   groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutGuestsInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutGuestsInput = {
@@ -586,18 +679,20 @@ export type WeddingUpdateWithoutGuestsInput = {
   groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutGuestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutGroupsInput = {
@@ -610,18 +705,20 @@ export type WeddingCreateWithoutGroupsInput = {
   guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutGroupsInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
   guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutGroupsInput = {
@@ -650,18 +747,20 @@ export type WeddingUpdateWithoutGroupsInput = {
   guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutGroupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutTablesInput = {
@@ -674,18 +773,20 @@ export type WeddingCreateWithoutTablesInput = {
   guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput
   groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutTablesInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
   guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutTablesInput = {
@@ -714,18 +815,20 @@ export type WeddingUpdateWithoutTablesInput = {
   guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutTablesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutEventsInput = {
@@ -738,18 +841,20 @@ export type WeddingCreateWithoutEventsInput = {
   guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput
   groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutEventsInput = {
   id?: string
   name: string
   date?: Date | string | null
+  ownerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ownerId: string
   guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
   tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutEventsInput = {
@@ -778,18 +883,20 @@ export type WeddingUpdateWithoutEventsInput = {
   guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateManyOwnerInput = {
@@ -810,6 +917,7 @@ export type WeddingUpdateWithoutOwnerInput = {
   groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutOwnerInput = {
@@ -822,6 +930,7 @@ export type WeddingUncheckedUpdateWithoutOwnerInput = {
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateManyWithoutOwnerInput = {
@@ -842,6 +951,7 @@ export type WeddingCountOutputType = {
   groups: number
   tables: number
   events: number
+  tasks: number
 }
 
 export type WeddingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -849,6 +959,7 @@ export type WeddingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   groups?: boolean | WeddingCountOutputTypeCountGroupsArgs
   tables?: boolean | WeddingCountOutputTypeCountTablesArgs
   events?: boolean | WeddingCountOutputTypeCountEventsArgs
+  tasks?: boolean | WeddingCountOutputTypeCountTasksArgs
 }
 
 /**
@@ -889,19 +1000,27 @@ export type WeddingCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.EventWhereInput
 }
 
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
 
 export type WeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   date?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ownerId?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   guests?: boolean | Prisma.Wedding$guestsArgs<ExtArgs>
   groups?: boolean | Prisma.Wedding$groupsArgs<ExtArgs>
   tables?: boolean | Prisma.Wedding$tablesArgs<ExtArgs>
   events?: boolean | Prisma.Wedding$eventsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wedding"]>
 
@@ -909,9 +1028,9 @@ export type WeddingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   date?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ownerId?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wedding"]>
 
@@ -919,9 +1038,9 @@ export type WeddingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   date?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ownerId?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wedding"]>
 
@@ -929,18 +1048,19 @@ export type WeddingSelectScalar = {
   id?: boolean
   name?: boolean
   date?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ownerId?: boolean
 }
 
-export type WeddingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "date" | "createdAt" | "updatedAt" | "ownerId", ExtArgs["result"]["wedding"]>
+export type WeddingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "date" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["wedding"]>
 export type WeddingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   guests?: boolean | Prisma.Wedding$guestsArgs<ExtArgs>
   groups?: boolean | Prisma.Wedding$groupsArgs<ExtArgs>
   tables?: boolean | Prisma.Wedding$tablesArgs<ExtArgs>
   events?: boolean | Prisma.Wedding$eventsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WeddingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -958,14 +1078,15 @@ export type $WeddingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     groups: Prisma.$GroupPayload<ExtArgs>[]
     tables: Prisma.$TablePayload<ExtArgs>[]
     events: Prisma.$EventPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     date: Date | null
+    ownerId: string
     createdAt: Date
     updatedAt: Date
-    ownerId: string
   }, ExtArgs["result"]["wedding"]>
   composites: {}
 }
@@ -1365,6 +1486,7 @@ export interface Prisma__WeddingClient<T, Null = never, ExtArgs extends runtime.
   groups<T extends Prisma.Wedding$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tables<T extends Prisma.Wedding$tablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$tablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Wedding$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.Wedding$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1397,9 +1519,9 @@ export interface WeddingFieldRefs {
   readonly id: Prisma.FieldRef<"Wedding", 'String'>
   readonly name: Prisma.FieldRef<"Wedding", 'String'>
   readonly date: Prisma.FieldRef<"Wedding", 'DateTime'>
+  readonly ownerId: Prisma.FieldRef<"Wedding", 'String'>
   readonly createdAt: Prisma.FieldRef<"Wedding", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Wedding", 'DateTime'>
-  readonly ownerId: Prisma.FieldRef<"Wedding", 'String'>
 }
     
 
@@ -1889,6 +2011,30 @@ export type Wedding$eventsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
+}
+
+/**
+ * Wedding.tasks
+ */
+export type Wedding$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
 }
 
 /**

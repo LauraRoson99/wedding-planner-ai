@@ -392,6 +392,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Wedding: 'Wedding',
+  Task: 'Task',
   Guest: 'Guest',
   Group: 'Group',
   Table: 'Table',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "wedding" | "guest" | "group" | "table" | "event"
+    modelProps: "user" | "wedding" | "task" | "guest" | "group" | "table" | "event"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -560,6 +561,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WeddingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WeddingCountAggregateOutputType> | number
+        }
+      }
+    }
+    Task: {
+      payload: Prisma.$TaskPayload<ExtArgs>
+      fields: Prisma.TaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        findFirst: {
+          args: Prisma.TaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        findMany: {
+          args: Prisma.TaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>[]
+        }
+        create: {
+          args: Prisma.TaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        createMany: {
+          args: Prisma.TaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>[]
+        }
+        delete: {
+          args: Prisma.TaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        update: {
+          args: Prisma.TaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.TaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.TaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>
+        }
+        aggregate: {
+          args: Prisma.TaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTask>
+        }
+        groupBy: {
+          args: Prisma.TaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TaskCountAggregateOutputType> | number
         }
       }
     }
@@ -914,12 +989,24 @@ export const WeddingScalarFieldEnum = {
   id: 'id',
   name: 'name',
   date: 'date',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ownerId: 'ownerId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type WeddingScalarFieldEnum = (typeof WeddingScalarFieldEnum)[keyof typeof WeddingScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  completed: 'completed',
+  weddingId: 'weddingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
 export const GuestScalarFieldEnum = {
@@ -1037,6 +1124,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1212,6 +1306,7 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   wedding?: Prisma.WeddingOmit
+  task?: Prisma.TaskOmit
   guest?: Prisma.GuestOmit
   group?: Prisma.GroupOmit
   table?: Prisma.TableOmit

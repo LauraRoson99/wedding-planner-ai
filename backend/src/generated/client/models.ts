@@ -10,6 +10,7 @@
  */
 export type * from './models/User'
 export type * from './models/Wedding'
+export type * from './models/Task'
 export type * from './models/Guest'
 export type * from './models/Group'
 export type * from './models/Table'

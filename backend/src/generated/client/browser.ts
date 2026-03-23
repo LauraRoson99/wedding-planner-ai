@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Wedding = Prisma.WeddingModel
 /**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
  * Model Guest
  * 
  */
