@@ -9,6 +9,42 @@
 * 🟢 You can import this file directly.
 */
 
+export const TaskPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+} as const
+
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
+
+
+export const TaskStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+
+
+export const TaskCategory = {
+  GUESTS: 'GUESTS',
+  CEREMONY: 'CEREMONY',
+  BANQUET: 'BANQUET',
+  DECORATION: 'DECORATION',
+  PHOTO_VIDEO: 'PHOTO_VIDEO',
+  MUSIC: 'MUSIC',
+  TRAVEL: 'TRAVEL',
+  OUTFITS: 'OUTFITS',
+  PAPERWORK: 'PAPERWORK',
+  BUDGET: 'BUDGET',
+  OTHER: 'OTHER'
+} as const
+
+export type TaskCategory = (typeof TaskCategory)[keyof typeof TaskCategory]
+
+
 export const RsvpStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',

@@ -101,7 +101,12 @@ export type WeddingScalarFieldEnum = (typeof WeddingScalarFieldEnum)[keyof typeo
 export const TaskScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  notes: 'notes',
   completed: 'completed',
+  dueDate: 'dueDate',
+  priority: 'priority',
+  status: 'status',
+  category: 'category',
   weddingId: 'weddingId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

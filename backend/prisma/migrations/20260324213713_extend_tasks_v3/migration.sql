@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "TaskCategory" AS ENUM ('GUESTS', 'CEREMONY', 'BANQUET', 'DECORATION', 'PHOTO_VIDEO', 'MUSIC', 'TRAVEL', 'OUTFITS', 'PAPERWORK', 'BUDGET', 'OTHER');
+
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN     "category" "TaskCategory" NOT NULL DEFAULT 'OTHER';

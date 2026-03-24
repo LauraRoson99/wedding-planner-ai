@@ -38,16 +38,49 @@ model Wedding {
   @@index([ownerId])
 }
 
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+}
+
+enum TaskCategory {
+  GUESTS
+  CEREMONY
+  BANQUET
+  DECORATION
+  PHOTO_VIDEO
+  MUSIC
+  TRAVEL
+  OUTFITS
+  PAPERWORK
+  BUDGET
+  OTHER
+}
+
 model Task {
-  id        String   @id @default(cuid())
+  id        String       @id @default(cuid())
   title     String
-  completed Boolean  @default(false)
+  notes     String?
+  completed Boolean      @default(false)
+
+  dueDate   DateTime?
+  priority  TaskPriority @default(MEDIUM)
+  status    TaskStatus   @default(PENDING)
+  category  TaskCategory @default(OTHER)
 
   weddingId String
-  wedding   Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  wedding   Wedding      @relation(fields: [weddingId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 
   @@index([weddingId])
 }
