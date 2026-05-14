@@ -166,10 +166,12 @@ export const EventScalarFieldEnum = {
   id: 'id',
   title: 'title',
   date: 'date',
+  time: 'time',
+  location: 'location',
   description: 'description',
+  weddingId: 'weddingId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  weddingId: 'weddingId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]

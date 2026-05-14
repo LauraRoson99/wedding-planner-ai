@@ -28,30 +28,36 @@ export type EventMinAggregateOutputType = {
   id: string | null
   title: string | null
   date: Date | null
+  time: string | null
+  location: string | null
   description: string | null
+  weddingId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  weddingId: string | null
 }
 
 export type EventMaxAggregateOutputType = {
   id: string | null
   title: string | null
   date: Date | null
+  time: string | null
+  location: string | null
   description: string | null
+  weddingId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  weddingId: string | null
 }
 
 export type EventCountAggregateOutputType = {
   id: number
   title: number
   date: number
+  time: number
+  location: number
   description: number
+  weddingId: number
   createdAt: number
   updatedAt: number
-  weddingId: number
   _all: number
 }
 
@@ -60,30 +66,36 @@ export type EventMinAggregateInputType = {
   id?: true
   title?: true
   date?: true
+  time?: true
+  location?: true
   description?: true
+  weddingId?: true
   createdAt?: true
   updatedAt?: true
-  weddingId?: true
 }
 
 export type EventMaxAggregateInputType = {
   id?: true
   title?: true
   date?: true
+  time?: true
+  location?: true
   description?: true
+  weddingId?: true
   createdAt?: true
   updatedAt?: true
-  weddingId?: true
 }
 
 export type EventCountAggregateInputType = {
   id?: true
   title?: true
   date?: true
+  time?: true
+  location?: true
   description?: true
+  weddingId?: true
   createdAt?: true
   updatedAt?: true
-  weddingId?: true
   _all?: true
 }
 
@@ -163,10 +175,12 @@ export type EventGroupByOutputType = {
   id: string
   title: string
   date: Date
+  time: string | null
+  location: string | null
   description: string | null
+  weddingId: string
   createdAt: Date
   updatedAt: Date
-  weddingId: string
   _count: EventCountAggregateOutputType | null
   _min: EventMinAggregateOutputType | null
   _max: EventMaxAggregateOutputType | null
@@ -194,10 +208,12 @@ export type EventWhereInput = {
   id?: Prisma.StringFilter<"Event"> | string
   title?: Prisma.StringFilter<"Event"> | string
   date?: Prisma.DateTimeFilter<"Event"> | Date | string
+  time?: Prisma.StringNullableFilter<"Event"> | string | null
+  location?: Prisma.StringNullableFilter<"Event"> | string | null
   description?: Prisma.StringNullableFilter<"Event"> | string | null
+  weddingId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
-  weddingId?: Prisma.StringFilter<"Event"> | string
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
 }
 
@@ -205,10 +221,12 @@ export type EventOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  time?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  weddingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  weddingId?: Prisma.SortOrder
   wedding?: Prisma.WeddingOrderByWithRelationInput
 }
 
@@ -219,10 +237,12 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   title?: Prisma.StringFilter<"Event"> | string
   date?: Prisma.DateTimeFilter<"Event"> | Date | string
+  time?: Prisma.StringNullableFilter<"Event"> | string | null
+  location?: Prisma.StringNullableFilter<"Event"> | string | null
   description?: Prisma.StringNullableFilter<"Event"> | string | null
+  weddingId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
-  weddingId?: Prisma.StringFilter<"Event"> | string
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
 }, "id">
 
@@ -230,10 +250,12 @@ export type EventOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  time?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  weddingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  weddingId?: Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
   _max?: Prisma.EventMaxOrderByAggregateInput
   _min?: Prisma.EventMinOrderByAggregateInput
@@ -246,16 +268,20 @@ export type EventScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Event"> | string
   title?: Prisma.StringWithAggregatesFilter<"Event"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
+  time?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  weddingId?: Prisma.StringWithAggregatesFilter<"Event"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
-  weddingId?: Prisma.StringWithAggregatesFilter<"Event"> | string
 }
 
 export type EventCreateInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -266,16 +292,20 @@ export type EventUncheckedCreateInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
+  weddingId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  weddingId: string
 }
 
 export type EventUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -286,26 +316,32 @@ export type EventUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weddingId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  weddingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type EventCreateManyInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
+  weddingId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  weddingId: string
 }
 
 export type EventUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,10 +351,12 @@ export type EventUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weddingId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  weddingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type EventListRelationFilter = {
@@ -335,30 +373,36 @@ export type EventCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  time?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  weddingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  weddingId?: Prisma.SortOrder
 }
 
 export type EventMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  time?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  weddingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  weddingId?: Prisma.SortOrder
 }
 
 export type EventMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  time?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  weddingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  weddingId?: Prisma.SortOrder
 }
 
 export type EventCreateNestedManyWithoutWeddingInput = {
@@ -407,6 +451,8 @@ export type EventCreateWithoutWeddingInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -416,6 +462,8 @@ export type EventUncheckedCreateWithoutWeddingInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -454,16 +502,20 @@ export type EventScalarWhereInput = {
   id?: Prisma.StringFilter<"Event"> | string
   title?: Prisma.StringFilter<"Event"> | string
   date?: Prisma.DateTimeFilter<"Event"> | Date | string
+  time?: Prisma.StringNullableFilter<"Event"> | string | null
+  location?: Prisma.StringNullableFilter<"Event"> | string | null
   description?: Prisma.StringNullableFilter<"Event"> | string | null
+  weddingId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
-  weddingId?: Prisma.StringFilter<"Event"> | string
 }
 
 export type EventCreateManyWeddingInput = {
   id?: string
   title: string
   date: Date | string
+  time?: string | null
+  location?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -473,6 +525,8 @@ export type EventUpdateWithoutWeddingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,6 +536,8 @@ export type EventUncheckedUpdateWithoutWeddingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -491,6 +547,8 @@ export type EventUncheckedUpdateManyWithoutWeddingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,10 +560,12 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   title?: boolean
   date?: boolean
+  time?: boolean
+  location?: boolean
   description?: boolean
+  weddingId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  weddingId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -513,10 +573,12 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   title?: boolean
   date?: boolean
+  time?: boolean
+  location?: boolean
   description?: boolean
+  weddingId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  weddingId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -524,10 +586,12 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   title?: boolean
   date?: boolean
+  time?: boolean
+  location?: boolean
   description?: boolean
+  weddingId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  weddingId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -535,13 +599,15 @@ export type EventSelectScalar = {
   id?: boolean
   title?: boolean
   date?: boolean
+  time?: boolean
+  location?: boolean
   description?: boolean
+  weddingId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  weddingId?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "date" | "description" | "createdAt" | "updatedAt" | "weddingId", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "date" | "time" | "location" | "description" | "weddingId" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
 }
@@ -561,10 +627,12 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     title: string
     date: Date
+    time: string | null
+    location: string | null
     description: string | null
+    weddingId: string
     createdAt: Date
     updatedAt: Date
-    weddingId: string
   }, ExtArgs["result"]["event"]>
   composites: {}
 }
@@ -992,10 +1060,12 @@ export interface EventFieldRefs {
   readonly id: Prisma.FieldRef<"Event", 'String'>
   readonly title: Prisma.FieldRef<"Event", 'String'>
   readonly date: Prisma.FieldRef<"Event", 'DateTime'>
+  readonly time: Prisma.FieldRef<"Event", 'String'>
+  readonly location: Prisma.FieldRef<"Event", 'String'>
   readonly description: Prisma.FieldRef<"Event", 'String'>
+  readonly weddingId: Prisma.FieldRef<"Event", 'String'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>
-  readonly weddingId: Prisma.FieldRef<"Event", 'String'>
 }
     
 

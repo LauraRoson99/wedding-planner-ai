@@ -12,6 +12,16 @@ import {
   deleteTaskService,
 } from "../services/task.service";
 
+function getParamId(req: Request): string | null {
+  const { id } = req.params;
+
+  if (!id || typeof id !== "string") {
+    return null;
+  }
+
+  return id;
+}
+
 function isValidPriority(value: unknown): value is TaskPriority {
   return value === "LOW" || value === "MEDIUM" || value === "HIGH";
 }
@@ -46,16 +56,19 @@ function parseOptionalDate(value: unknown): Date | null | undefined {
   if (value === null || value === "") return null;
 
   const date = new Date(String(value));
-  if (Number.isNaN(date.getTime())) return undefined;
+
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
+  }
 
   return date;
 }
 
 export async function getTasks(req: Request, res: Response) {
   try {
-    const weddingId = req.query.weddingId as string | undefined;
+    const weddingId = req.query.weddingId;
 
-    if (!weddingId) {
+    if (!weddingId || typeof weddingId !== "string") {
       return res.status(400).json({ message: "weddingId es obligatorio" });
     }
 
@@ -69,7 +82,11 @@ export async function getTasks(req: Request, res: Response) {
 
 export async function getTaskById(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    const id = getParamId(req);
+
+    if (!id) {
+      return res.status(400).json({ message: "id es obligatorio" });
+    }
 
     const task = await getTaskByIdService(id);
 
@@ -86,7 +103,8 @@ export async function getTaskById(req: Request, res: Response) {
 
 export async function createTask(req: Request, res: Response) {
   try {
-    const { title, weddingId, notes, dueDate, priority, status, category } = req.body;
+    const { title, weddingId, notes, dueDate, priority, status, category } =
+      req.body;
 
     if (!title || typeof title !== "string" || !title.trim()) {
       return res.status(400).json({ message: "El título es obligatorio" });
@@ -113,19 +131,45 @@ export async function createTask(req: Request, res: Response) {
     }
 
     const parsedDueDate = parseOptionalDate(dueDate);
+
     if (dueDate !== undefined && parsedDueDate === undefined) {
       return res.status(400).json({ message: "dueDate no es válida" });
     }
 
-    const task = await createTaskService({
+    const data: {
+      title: string;
+      weddingId: string;
+      notes?: string | null;
+      dueDate?: Date | null;
+      priority?: TaskPriority;
+      status?: TaskStatus;
+      category?: TaskCategory;
+    } = {
       title: title.trim(),
       weddingId,
-      notes: notes?.trim() || null,
-      dueDate: parsedDueDate,
-      priority,
-      status,
-      category,
-    });
+    };
+
+    if (notes !== undefined) {
+      data.notes = typeof notes === "string" ? notes.trim() || null : null;
+    }
+
+    if (parsedDueDate !== undefined) {
+      data.dueDate = parsedDueDate;
+    }
+
+    if (priority !== undefined) {
+      data.priority = priority;
+    }
+
+    if (status !== undefined) {
+      data.status = status;
+    }
+
+    if (category !== undefined) {
+      data.category = category;
+    }
+
+    const task = await createTaskService(data);
 
     return res.status(201).json(task);
   } catch (error) {
@@ -136,8 +180,14 @@ export async function createTask(req: Request, res: Response) {
 
 export async function updateTask(req: Request, res: Response) {
   try {
-    const { id } = req.params;
-    const { title, notes, completed, dueDate, priority, status, category } = req.body;
+    const id = getParamId(req);
+
+    if (!id) {
+      return res.status(400).json({ message: "id es obligatorio" });
+    }
+
+    const { title, notes, completed, dueDate, priority, status, category } =
+      req.body;
 
     const existingTask = await getTaskByIdService(id);
 
@@ -159,6 +209,7 @@ export async function updateTask(req: Request, res: Response) {
       if (typeof title !== "string" || !title.trim()) {
         return res.status(400).json({ message: "El título no es válido" });
       }
+
       data.title = title.trim();
     }
 
@@ -166,13 +217,15 @@ export async function updateTask(req: Request, res: Response) {
       if (notes !== null && typeof notes !== "string") {
         return res.status(400).json({ message: "notes debe ser texto" });
       }
-      data.notes = notes?.trim() || null;
+
+      data.notes = typeof notes === "string" ? notes.trim() || null : null;
     }
 
     if (completed !== undefined) {
       if (typeof completed !== "boolean") {
         return res.status(400).json({ message: "completed debe ser boolean" });
       }
+
       data.completed = completed;
     }
 
@@ -180,6 +233,7 @@ export async function updateTask(req: Request, res: Response) {
       if (!isValidPriority(priority)) {
         return res.status(400).json({ message: "priority no es válida" });
       }
+
       data.priority = priority;
     }
 
@@ -187,6 +241,7 @@ export async function updateTask(req: Request, res: Response) {
       if (!isValidStatus(status)) {
         return res.status(400).json({ message: "status no es válido" });
       }
+
       data.status = status;
       data.completed = status === "COMPLETED";
     }
@@ -195,14 +250,17 @@ export async function updateTask(req: Request, res: Response) {
       if (!isValidCategory(category)) {
         return res.status(400).json({ message: "category no es válida" });
       }
+
       data.category = category;
     }
 
     const parsedDueDate = parseOptionalDate(dueDate);
+
     if (dueDate !== undefined && parsedDueDate === undefined) {
       return res.status(400).json({ message: "dueDate no es válida" });
     }
-    if (dueDate !== undefined) {
+
+    if (parsedDueDate !== undefined) {
       data.dueDate = parsedDueDate;
     }
 
@@ -216,7 +274,11 @@ export async function updateTask(req: Request, res: Response) {
 
 export async function deleteTask(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    const id = getParamId(req);
+
+    if (!id) {
+      return res.status(400).json({ message: "id es obligatorio" });
+    }
 
     const existingTask = await getTaskByIdService(id);
 

@@ -184,12 +184,15 @@ model Event {
   id          String   @id @default(cuid())
   title       String
   date        DateTime
+  time        String?
+  location    String?
   description String?
+
+  weddingId   String
+  wedding     Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  weddingId String
-  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
 
   @@index([weddingId])
 }
