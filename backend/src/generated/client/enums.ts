@@ -81,3 +81,34 @@ export const AgeGroup = {
 } as const
 
 export type AgeGroup = (typeof AgeGroup)[keyof typeof AgeGroup]
+
+
+export const BudgetCategory = {
+  VENUE: 'VENUE',
+  CATERING: 'CATERING',
+  DRESS: 'DRESS',
+  SUIT: 'SUIT',
+  PHOTO_VIDEO: 'PHOTO_VIDEO',
+  MUSIC: 'MUSIC',
+  DECORATION: 'DECORATION',
+  FLOWERS: 'FLOWERS',
+  TRANSPORT: 'TRANSPORT',
+  INVITATIONS: 'INVITATIONS',
+  HONEYMOON: 'HONEYMOON',
+  BEAUTY: 'BEAUTY',
+  CEREMONY: 'CEREMONY',
+  GIFTS: 'GIFTS',
+  OTHER: 'OTHER'
+} as const
+
+export type BudgetCategory = (typeof BudgetCategory)[keyof typeof BudgetCategory]
+
+
+export const BudgetItemStatus = {
+  PLANNED: 'PLANNED',
+  CONFIRMED: 'CONFIRMED',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type BudgetItemStatus = (typeof BudgetItemStatus)[keyof typeof BudgetItemStatus]

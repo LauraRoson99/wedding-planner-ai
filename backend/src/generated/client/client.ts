@@ -77,3 +77,13 @@ export type Table = Prisma.TableModel
  * 
  */
 export type Event = Prisma.EventModel
+/**
+ * Model Budget
+ * 
+ */
+export type Budget = Prisma.BudgetModel
+/**
+ * Model BudgetItem
+ * 
+ */
+export type BudgetItem = Prisma.BudgetItemModel

@@ -55,7 +55,9 @@ export const ModelName = {
   Guest: 'Guest',
   Group: 'Group',
   Table: 'Table',
-  Event: 'Event'
+  Event: 'Event',
+  Budget: 'Budget',
+  BudgetItem: 'BudgetItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -175,6 +177,38 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const BudgetScalarFieldEnum = {
+  id: 'id',
+  weddingId: 'weddingId',
+  totalAmount: 'totalAmount',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
+
+
+export const BudgetItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  estimatedAmount: 'estimatedAmount',
+  actualAmount: 'actualAmount',
+  paidAmount: 'paidAmount',
+  status: 'status',
+  dueDate: 'dueDate',
+  paymentDate: 'paymentDate',
+  supplier: 'supplier',
+  notes: 'notes',
+  weddingId: 'weddingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetItemScalarFieldEnum = (typeof BudgetItemScalarFieldEnum)[keyof typeof BudgetItemScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -32,6 +32,9 @@ model Wedding {
   events    Event[]
   tasks     Task[]
 
+  budget       Budget?
+  budgetItems  BudgetItem[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -195,4 +198,70 @@ model Event {
   updatedAt   DateTime @updatedAt
 
   @@index([weddingId])
+}
+
+enum BudgetCategory {
+  VENUE
+  CATERING
+  DRESS
+  SUIT
+  PHOTO_VIDEO
+  MUSIC
+  DECORATION
+  FLOWERS
+  TRANSPORT
+  INVITATIONS
+  HONEYMOON
+  BEAUTY
+  CEREMONY
+  GIFTS
+  OTHER
+}
+
+enum BudgetItemStatus {
+  PLANNED
+  CONFIRMED
+  PAID
+  CANCELLED
+}
+
+model Budget {
+  id          String   @id @default(cuid())
+  weddingId   String   @unique
+  wedding     Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  totalAmount Float    @default(0)
+  currency    String   @default("EUR")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([weddingId])
+}
+
+model BudgetItem {
+  id              String           @id @default(cuid())
+  name            String
+  category        BudgetCategory   @default(OTHER)
+
+  estimatedAmount Float
+  actualAmount    Float?
+  paidAmount      Float            @default(0)
+
+  status          BudgetItemStatus @default(PLANNED)
+  dueDate         DateTime?
+  paymentDate     DateTime?
+
+  supplier        String?
+  notes           String?
+
+  weddingId       String
+  wedding         Wedding          @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([weddingId])
+  @@index([category])
+  @@index([status])
 }
