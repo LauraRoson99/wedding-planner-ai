@@ -185,3 +185,62 @@ export function deleteGuest(id: string) {
     where: { id },
   });
 }
+
+export async function importGuests(
+  weddingId: string,
+  guests: Array<{ name: string; email?: string; groupName?: string }>
+) {
+  const groups = await prisma.group.findMany({ where: { weddingId } });
+  const groupMap = new Map(groups.map((g) => [g.name.toLowerCase(), g.id]));
+
+  const created: string[] = [];
+  const errors: string[] = [];
+
+  for (const g of guests) {
+    const name = g.name.trim();
+    if (!name) continue;
+
+    const groupId = g.groupName
+      ? groupMap.get(g.groupName.trim().toLowerCase()) ?? null
+      : null;
+
+    if (g.groupName && !groupId) {
+      errors.push(`Grupo "${g.groupName}" no encontrado para "${name}"`);
+    }
+
+    try {
+      await prisma.guest.create({
+        data: {
+          weddingId,
+          name,
+          role: "PRIMARY",
+          email: g.email?.trim() || null,
+          groupId,
+          allergies: [],
+        },
+      });
+      created.push(name);
+    } catch {
+      errors.push(`Error creando "${name}"`);
+    }
+  }
+
+  return { created: created.length, errors };
+}
+
+export async function markInvitationsSent(weddingId: string, guestIds: string[]) {
+  const now = new Date();
+  await prisma.guest.updateMany({
+    where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
+    data: { invitationSent: true, invitationSentAt: now },
+  });
+  return { updated: guestIds.length };
+}
+
+export async function markInvitationsNotSent(weddingId: string, guestIds: string[]) {
+  await prisma.guest.updateMany({
+    where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
+    data: { invitationSent: false, invitationSentAt: null },
+  });
+  return { updated: guestIds.length };
+}

@@ -1,5 +1,6 @@
 import {
     PrismaClient,
+    ProviderStatus,
     RsvpStatus,
     TaskStatus,
 } from "../generated/client/client";
@@ -49,6 +50,12 @@ export async function getDashboardSummaryService(weddingId: string, userId: stri
         nextEvent,
         budgetSettings,
         budgetItems,
+        invitationsSent,
+        totalProviders,
+        providersContacted,
+        providersConfirmed,
+        upcomingTasks,
+        overdueTasks,
     ] = await Promise.all([
         prisma.guest.count({
             where: { weddingId },
@@ -184,6 +191,37 @@ export async function getDashboardSummaryService(weddingId: string, userId: stri
         prisma.budgetItem.findMany({
             where: { weddingId },
         }),
+
+        // Invitations
+        prisma.guest.count({ where: { weddingId, role: "PRIMARY", invitationSent: true } }),
+
+        // Providers
+        prisma.provider.count({ where: { weddingId } }),
+        prisma.provider.count({ where: { weddingId, status: ProviderStatus.CONTACTED } }),
+        prisma.provider.count({ where: { weddingId, status: { in: [ProviderStatus.CONFIRMED, ProviderStatus.PAID] } } }),
+
+        // Upcoming tasks with due date
+        prisma.task.findMany({
+            where: {
+                weddingId,
+                dueDate: { gte: now },
+                status: { notIn: [TaskStatus.COMPLETED] },
+                completed: false,
+            },
+            orderBy: { dueDate: "asc" },
+            take: 5,
+            select: { id: true, title: true, dueDate: true, priority: true, status: true, category: true },
+        }),
+
+        // Overdue tasks
+        prisma.task.count({
+            where: {
+                weddingId,
+                dueDate: { lt: now },
+                status: { notIn: [TaskStatus.COMPLETED] },
+                completed: false,
+            },
+        }),
     ]);
 
     const totalSeats = totalSeatsResult._sum.seats ?? 0;
@@ -257,5 +295,22 @@ export async function getDashboardSummaryService(weddingId: string, userId: stri
             paidTotal,
             pendingTotal,
         },
+
+        invitations: {
+            total: primaryGuests,
+            sent: invitationsSent,
+            pending: primaryGuests - invitationsSent,
+            percentage: primaryGuests === 0 ? 0 : Math.round((invitationsSent / primaryGuests) * 100),
+        },
+
+        providers: {
+            total: totalProviders,
+            contacted: providersContacted,
+            confirmed: providersConfirmed,
+            needsAttention: providersContacted,
+        },
+
+        upcomingTasks,
+        overdueTasks,
     };
 }

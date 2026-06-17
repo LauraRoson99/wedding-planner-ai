@@ -21,7 +21,7 @@ export default function Countdown({ weddingDate, hideOnMobile = false }: Props) 
   if (diff === 0) {
     return (
       <div
-        className={`px-3 py-1 rounded-full text-sm font-romantic text-foreground bg-accent/60 backdrop-blur-sm shadow-sm ring-1 ring-primary/20 ${hideOnMobile ? "hidden md:inline-flex" : ""}`}
+        className={`px-3 py-1 rounded-full text-sm font-sans text-foreground bg-accent/60 backdrop-blur-sm shadow-sm ring-1 ring-primary/20 ${hideOnMobile ? "hidden md:inline-flex" : ""}`}
       >
         💍 ¡Hoy es el gran día! 💖
       </div>
@@ -59,13 +59,13 @@ function Segment({ value, label, pulse }: { value: string; label: string; pulse?
           "px-3 md:px-3.5 py-0.5 rounded-xl shadow-sm ring-1 ring-primary/20",
           "bg-gradient-to-b from-pink-50 to-rose-50 text-rose-700",
           "dark:from-rose-900/30 dark:to-pink-900/20 dark:text-rose-100",
-          "font-romantic text-base md:text-lg tracking-tight select-none",
+          "font-sans text-base md:text-lg tracking-tight select-none",
           pulse ? "animate-heartbeat" : ""
         ].join(" ")}
       >
         {value}
       </div>
-      <span className="text-[11px] md:text-[12px] mt-0.5 text-muted-foreground font-script leading-none">
+      <span className="text-[11px] md:text-[12px] mt-0.5 text-muted-foreground font-sans leading-none">
         {label}
       </span>
     </div>

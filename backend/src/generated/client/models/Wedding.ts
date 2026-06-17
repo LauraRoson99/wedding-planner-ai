@@ -198,6 +198,7 @@ export type WeddingWhereInput = {
   tasks?: Prisma.TaskListRelationFilter
   budget?: Prisma.XOR<Prisma.BudgetNullableScalarRelationFilter, Prisma.BudgetWhereInput> | null
   budgetItems?: Prisma.BudgetItemListRelationFilter
+  providers?: Prisma.ProviderListRelationFilter
 }
 
 export type WeddingOrderByWithRelationInput = {
@@ -215,6 +216,7 @@ export type WeddingOrderByWithRelationInput = {
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   budget?: Prisma.BudgetOrderByWithRelationInput
   budgetItems?: Prisma.BudgetItemOrderByRelationAggregateInput
+  providers?: Prisma.ProviderOrderByRelationAggregateInput
 }
 
 export type WeddingWhereUniqueInput = Prisma.AtLeast<{
@@ -235,6 +237,7 @@ export type WeddingWhereUniqueInput = Prisma.AtLeast<{
   tasks?: Prisma.TaskListRelationFilter
   budget?: Prisma.XOR<Prisma.BudgetNullableScalarRelationFilter, Prisma.BudgetWhereInput> | null
   budgetItems?: Prisma.BudgetItemListRelationFilter
+  providers?: Prisma.ProviderListRelationFilter
 }, "id">
 
 export type WeddingOrderByWithAggregationInput = {
@@ -275,6 +278,7 @@ export type WeddingCreateInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateInput = {
@@ -291,6 +295,7 @@ export type WeddingUncheckedCreateInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUpdateInput = {
@@ -307,6 +312,7 @@ export type WeddingUpdateInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateInput = {
@@ -323,6 +329,7 @@ export type WeddingUncheckedUpdateInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateManyInput = {
@@ -509,6 +516,20 @@ export type WeddingUpdateOneRequiredWithoutEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutEventsInput, Prisma.WeddingUpdateWithoutEventsInput>, Prisma.WeddingUncheckedUpdateWithoutEventsInput>
 }
 
+export type WeddingCreateNestedOneWithoutProvidersInput = {
+  create?: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>
+  connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutProvidersInput
+  connect?: Prisma.WeddingWhereUniqueInput
+}
+
+export type WeddingUpdateOneRequiredWithoutProvidersNestedInput = {
+  create?: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>
+  connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutProvidersInput
+  upsert?: Prisma.WeddingUpsertWithoutProvidersInput
+  connect?: Prisma.WeddingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutProvidersInput, Prisma.WeddingUpdateWithoutProvidersInput>, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>
+}
+
 export type WeddingCreateNestedOneWithoutBudgetInput = {
   create?: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetInput, Prisma.WeddingUncheckedCreateWithoutBudgetInput>
   connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutBudgetInput
@@ -550,6 +571,7 @@ export type WeddingCreateWithoutOwnerInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutOwnerInput = {
@@ -565,6 +587,7 @@ export type WeddingUncheckedCreateWithoutOwnerInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutOwnerInput = {
@@ -618,6 +641,7 @@ export type WeddingCreateWithoutTasksInput = {
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutTasksInput = {
@@ -633,6 +657,7 @@ export type WeddingUncheckedCreateWithoutTasksInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutTasksInput = {
@@ -664,6 +689,7 @@ export type WeddingUpdateWithoutTasksInput = {
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutTasksInput = {
@@ -679,6 +705,7 @@ export type WeddingUncheckedUpdateWithoutTasksInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutGuestsInput = {
@@ -694,6 +721,7 @@ export type WeddingCreateWithoutGuestsInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutGuestsInput = {
@@ -709,6 +737,7 @@ export type WeddingUncheckedCreateWithoutGuestsInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutGuestsInput = {
@@ -740,6 +769,7 @@ export type WeddingUpdateWithoutGuestsInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutGuestsInput = {
@@ -755,6 +785,7 @@ export type WeddingUncheckedUpdateWithoutGuestsInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutGroupsInput = {
@@ -770,6 +801,7 @@ export type WeddingCreateWithoutGroupsInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutGroupsInput = {
@@ -785,6 +817,7 @@ export type WeddingUncheckedCreateWithoutGroupsInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutGroupsInput = {
@@ -816,6 +849,7 @@ export type WeddingUpdateWithoutGroupsInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutGroupsInput = {
@@ -831,6 +865,7 @@ export type WeddingUncheckedUpdateWithoutGroupsInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutTablesInput = {
@@ -846,6 +881,7 @@ export type WeddingCreateWithoutTablesInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutTablesInput = {
@@ -861,6 +897,7 @@ export type WeddingUncheckedCreateWithoutTablesInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutTablesInput = {
@@ -892,6 +929,7 @@ export type WeddingUpdateWithoutTablesInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutTablesInput = {
@@ -907,6 +945,7 @@ export type WeddingUncheckedUpdateWithoutTablesInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutEventsInput = {
@@ -922,6 +961,7 @@ export type WeddingCreateWithoutEventsInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutEventsInput = {
@@ -937,6 +977,7 @@ export type WeddingUncheckedCreateWithoutEventsInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutEventsInput = {
@@ -968,6 +1009,7 @@ export type WeddingUpdateWithoutEventsInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutEventsInput = {
@@ -980,6 +1022,87 @@ export type WeddingUncheckedUpdateWithoutEventsInput = {
   guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
   tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
+  budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
+}
+
+export type WeddingCreateWithoutProvidersInput = {
+  id?: string
+  name: string
+  date?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutWeddingsInput
+  guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput
+  groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput
+  tables?: Prisma.TableCreateNestedManyWithoutWeddingInput
+  events?: Prisma.EventCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
+  budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+}
+
+export type WeddingUncheckedCreateWithoutProvidersInput = {
+  id?: string
+  name: string
+  date?: Date | string | null
+  ownerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput
+  tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
+  budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+}
+
+export type WeddingCreateOrConnectWithoutProvidersInput = {
+  where: Prisma.WeddingWhereUniqueInput
+  create: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>
+}
+
+export type WeddingUpsertWithoutProvidersInput = {
+  update: Prisma.XOR<Prisma.WeddingUpdateWithoutProvidersInput, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>
+  create: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>
+  where?: Prisma.WeddingWhereInput
+}
+
+export type WeddingUpdateToOneWithWhereWithoutProvidersInput = {
+  where?: Prisma.WeddingWhereInput
+  data: Prisma.XOR<Prisma.WeddingUpdateWithoutProvidersInput, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>
+}
+
+export type WeddingUpdateWithoutProvidersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput
+  guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput
+  tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput
+  events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
+  budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+}
+
+export type WeddingUncheckedUpdateWithoutProvidersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput
+  tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
@@ -998,6 +1121,7 @@ export type WeddingCreateWithoutBudgetInput = {
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutBudgetInput = {
@@ -1013,6 +1137,7 @@ export type WeddingUncheckedCreateWithoutBudgetInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutBudgetInput = {
@@ -1044,6 +1169,7 @@ export type WeddingUpdateWithoutBudgetInput = {
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutBudgetInput = {
@@ -1059,6 +1185,7 @@ export type WeddingUncheckedUpdateWithoutBudgetInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateWithoutBudgetItemsInput = {
@@ -1074,6 +1201,7 @@ export type WeddingCreateWithoutBudgetItemsInput = {
   events?: Prisma.EventCreateNestedManyWithoutWeddingInput
   tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput
+  providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingUncheckedCreateWithoutBudgetItemsInput = {
@@ -1089,6 +1217,7 @@ export type WeddingUncheckedCreateWithoutBudgetItemsInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput
   budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput
+  providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput
 }
 
 export type WeddingCreateOrConnectWithoutBudgetItemsInput = {
@@ -1120,6 +1249,7 @@ export type WeddingUpdateWithoutBudgetItemsInput = {
   events?: Prisma.EventUpdateManyWithoutWeddingNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutBudgetItemsInput = {
@@ -1135,6 +1265,7 @@ export type WeddingUncheckedUpdateWithoutBudgetItemsInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingCreateManyOwnerInput = {
@@ -1158,6 +1289,7 @@ export type WeddingUpdateWithoutOwnerInput = {
   tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateWithoutOwnerInput = {
@@ -1173,6 +1305,7 @@ export type WeddingUncheckedUpdateWithoutOwnerInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput
   budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput
+  providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput
 }
 
 export type WeddingUncheckedUpdateManyWithoutOwnerInput = {
@@ -1195,6 +1328,7 @@ export type WeddingCountOutputType = {
   events: number
   tasks: number
   budgetItems: number
+  providers: number
 }
 
 export type WeddingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1204,6 +1338,7 @@ export type WeddingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   events?: boolean | WeddingCountOutputTypeCountEventsArgs
   tasks?: boolean | WeddingCountOutputTypeCountTasksArgs
   budgetItems?: boolean | WeddingCountOutputTypeCountBudgetItemsArgs
+  providers?: boolean | WeddingCountOutputTypeCountProvidersArgs
 }
 
 /**
@@ -1258,6 +1393,13 @@ export type WeddingCountOutputTypeCountBudgetItemsArgs<ExtArgs extends runtime.T
   where?: Prisma.BudgetItemWhereInput
 }
 
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountProvidersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProviderWhereInput
+}
+
 
 export type WeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1274,6 +1416,7 @@ export type WeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>
   budget?: boolean | Prisma.Wedding$budgetArgs<ExtArgs>
   budgetItems?: boolean | Prisma.Wedding$budgetItemsArgs<ExtArgs>
+  providers?: boolean | Prisma.Wedding$providersArgs<ExtArgs>
   _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wedding"]>
 
@@ -1316,6 +1459,7 @@ export type WeddingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>
   budget?: boolean | Prisma.Wedding$budgetArgs<ExtArgs>
   budgetItems?: boolean | Prisma.Wedding$budgetItemsArgs<ExtArgs>
+  providers?: boolean | Prisma.Wedding$providersArgs<ExtArgs>
   _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WeddingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1336,6 +1480,7 @@ export type $WeddingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     budget: Prisma.$BudgetPayload<ExtArgs> | null
     budgetItems: Prisma.$BudgetItemPayload<ExtArgs>[]
+    providers: Prisma.$ProviderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1746,6 +1891,7 @@ export interface Prisma__WeddingClient<T, Null = never, ExtArgs extends runtime.
   tasks<T extends Prisma.Wedding$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   budget<T extends Prisma.Wedding$budgetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$budgetArgs<ExtArgs>>): Prisma.Prisma__BudgetClient<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   budgetItems<T extends Prisma.Wedding$budgetItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$budgetItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  providers<T extends Prisma.Wedding$providersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$providersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2337,6 +2483,30 @@ export type Wedding$budgetItemsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.BudgetItemScalarFieldEnum | Prisma.BudgetItemScalarFieldEnum[]
+}
+
+/**
+ * Wedding.providers
+ */
+export type Wedding$providersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Provider
+   */
+  select?: Prisma.ProviderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Provider
+   */
+  omit?: Prisma.ProviderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProviderInclude<ExtArgs> | null
+  where?: Prisma.ProviderWhereInput
+  orderBy?: Prisma.ProviderOrderByWithRelationInput | Prisma.ProviderOrderByWithRelationInput[]
+  cursor?: Prisma.ProviderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProviderScalarFieldEnum | Prisma.ProviderScalarFieldEnum[]
 }
 
 /**

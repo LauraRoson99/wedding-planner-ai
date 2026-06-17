@@ -22,4 +22,6 @@ export type GuestDto = {
   group?: Pick<GroupDto, "id" | "name"> | null;
   companions?: CompanionDto[];
   table?: { id: string; name: string } | null;
+  invitationSent?: boolean;
+  invitationSentAt?: string | null;
 };

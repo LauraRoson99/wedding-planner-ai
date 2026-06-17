@@ -78,6 +78,11 @@ export type Table = Prisma.TableModel
  */
 export type Event = Prisma.EventModel
 /**
+ * Model Provider
+ * 
+ */
+export type Provider = Prisma.ProviderModel
+/**
  * Model Budget
  * 
  */

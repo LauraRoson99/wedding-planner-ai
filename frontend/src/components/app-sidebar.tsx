@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, ListCheck, Calendar, Wallet, UsersRound } from 'lucide-react'
+import { Home, ListCheck, Calendar, Wallet, UsersRound, Handshake } from 'lucide-react'
 
 const navItems = [
   { to: "/", icon: <Home className="size-5" />, label: "Inicio" },
@@ -7,6 +7,7 @@ const navItems = [
   { to: "/guests", icon: <UsersRound className="size-5" />, label: "Invitados" },
   { to: "/agenda", icon: <Calendar className="size-5" />, label: "Agenda" },
   { to: "/budget", icon: <Wallet className="size-5" />, label: "Presupuesto" },
+  { to: "/providers", icon: <Handshake className="size-5" />, label: "Proveedores" },
 ]
 
 export function AppSidebar() {

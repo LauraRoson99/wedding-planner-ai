@@ -397,6 +397,7 @@ export const ModelName = {
   Group: 'Group',
   Table: 'Table',
   Event: 'Event',
+  Provider: 'Provider',
   Budget: 'Budget',
   BudgetItem: 'BudgetItem'
 } as const
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "wedding" | "task" | "guest" | "group" | "table" | "event" | "budget" | "budgetItem"
+    modelProps: "user" | "wedding" | "task" | "guest" | "group" | "table" | "event" | "provider" | "budget" | "budgetItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -936,6 +937,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Provider: {
+      payload: Prisma.$ProviderPayload<ExtArgs>
+      fields: Prisma.ProviderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProviderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProviderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        findFirst: {
+          args: Prisma.ProviderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProviderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        findMany: {
+          args: Prisma.ProviderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>[]
+        }
+        create: {
+          args: Prisma.ProviderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        createMany: {
+          args: Prisma.ProviderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProviderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>[]
+        }
+        delete: {
+          args: Prisma.ProviderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        update: {
+          args: Prisma.ProviderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProviderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProviderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProviderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProviderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderPayload>
+        }
+        aggregate: {
+          args: Prisma.ProviderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProvider>
+        }
+        groupBy: {
+          args: Prisma.ProviderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProviderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderCountAggregateOutputType> | number
+        }
+      }
+    }
     Budget: {
       payload: Prisma.$BudgetPayload<ExtArgs>
       fields: Prisma.BudgetFieldRefs
@@ -1182,6 +1257,8 @@ export const GuestScalarFieldEnum = {
   ageGroup: 'ageGroup',
   phone: 'phone',
   email: 'email',
+  invitationSent: 'invitationSent',
+  invitationSentAt: 'invitationSentAt',
   parentId: 'parentId'
 } as const
 
@@ -1224,6 +1301,26 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const ProviderScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  status: 'status',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  website: 'website',
+  estimatedPrice: 'estimatedPrice',
+  finalPrice: 'finalPrice',
+  notes: 'notes',
+  weddingId: 'weddingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProviderScalarFieldEnum = (typeof ProviderScalarFieldEnum)[keyof typeof ProviderScalarFieldEnum]
 
 
 export const BudgetScalarFieldEnum = {
@@ -1436,6 +1533,34 @@ export type ListEnumAgeGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'ProviderCategory'
+ */
+export type EnumProviderCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'ProviderCategory[]'
+ */
+export type ListEnumProviderCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProviderStatus'
+ */
+export type EnumProviderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ProviderStatus[]'
+ */
+export type ListEnumProviderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProviderStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1570,6 +1695,7 @@ export type GlobalOmitConfig = {
   group?: Prisma.GroupOmit
   table?: Prisma.TableOmit
   event?: Prisma.EventOmit
+  provider?: Prisma.ProviderOmit
   budget?: Prisma.BudgetOmit
   budgetItem?: Prisma.BudgetItemOmit
 }

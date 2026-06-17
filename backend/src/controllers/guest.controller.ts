@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import * as svc from "../services/guest.service";
 
+
 const IdParamSchema = z.object({
   id: z.string().min(1),
 });
@@ -101,6 +102,53 @@ export async function deleteGuest(req: Request, res: Response, next: NextFunctio
     const { id } = IdParamSchema.parse(req.params);
     await svc.deleteGuest(id);
     res.status(204).send();
+  } catch (e) {
+    next(e);
+  }
+}
+
+const ImportGuestSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().optional(),
+  groupName: z.string().optional(),
+});
+
+const ImportPayloadSchema = z.object({
+  guests: z.array(ImportGuestSchema).min(1),
+});
+
+export async function importGuests(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { guests } = ImportPayloadSchema.parse(req.body);
+    const result = await svc.importGuests(weddingId, guests);
+    res.status(201).json(result);
+  } catch (e) {
+    next(e);
+  }
+}
+
+const InvitationPayloadSchema = z.object({
+  guestIds: z.array(z.string().min(1)).min(1),
+});
+
+export async function markInvitationsSent(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { guestIds } = InvitationPayloadSchema.parse(req.body);
+    const result = await svc.markInvitationsSent(weddingId, guestIds);
+    res.json(result);
+  } catch (e) {
+    next(e);
+  }
+}
+
+export async function markInvitationsNotSent(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { guestIds } = InvitationPayloadSchema.parse(req.body);
+    const result = await svc.markInvitationsNotSent(weddingId, guestIds);
+    res.json(result);
   } catch (e) {
     next(e);
   }

@@ -56,6 +56,31 @@ export type DashboardSummary = {
         paidTotal: number;
         pendingTotal: number;
     };
+
+    invitations: {
+        total: number;
+        sent: number;
+        pending: number;
+        percentage: number;
+    };
+
+    providers: {
+        total: number;
+        contacted: number;
+        confirmed: number;
+        needsAttention: number;
+    };
+
+    upcomingTasks: {
+        id: string;
+        title: string;
+        dueDate: string;
+        priority: "LOW" | "MEDIUM" | "HIGH";
+        status: string;
+        category: string;
+    }[];
+
+    overdueTasks: number;
 };
 
 export function getDashboardSummary(weddingId: string) {

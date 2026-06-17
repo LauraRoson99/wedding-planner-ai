@@ -51,6 +51,8 @@ export type GuestMinAggregateOutputType = {
   ageGroup: $Enums.AgeGroup | null
   phone: string | null
   email: string | null
+  invitationSent: boolean | null
+  invitationSentAt: Date | null
   parentId: string | null
 }
 
@@ -71,6 +73,8 @@ export type GuestMaxAggregateOutputType = {
   ageGroup: $Enums.AgeGroup | null
   phone: string | null
   email: string | null
+  invitationSent: boolean | null
+  invitationSentAt: Date | null
   parentId: string | null
 }
 
@@ -92,6 +96,8 @@ export type GuestCountAggregateOutputType = {
   ageGroup: number
   phone: number
   email: number
+  invitationSent: number
+  invitationSentAt: number
   parentId: number
   _all: number
 }
@@ -122,6 +128,8 @@ export type GuestMinAggregateInputType = {
   ageGroup?: true
   phone?: true
   email?: true
+  invitationSent?: true
+  invitationSentAt?: true
   parentId?: true
 }
 
@@ -142,6 +150,8 @@ export type GuestMaxAggregateInputType = {
   ageGroup?: true
   phone?: true
   email?: true
+  invitationSent?: true
+  invitationSentAt?: true
   parentId?: true
 }
 
@@ -163,6 +173,8 @@ export type GuestCountAggregateInputType = {
   ageGroup?: true
   phone?: true
   email?: true
+  invitationSent?: true
+  invitationSentAt?: true
   parentId?: true
   _all?: true
 }
@@ -271,6 +283,8 @@ export type GuestGroupByOutputType = {
   ageGroup: $Enums.AgeGroup
   phone: string | null
   email: string | null
+  invitationSent: boolean
+  invitationSentAt: Date | null
   parentId: string | null
   _count: GuestCountAggregateOutputType | null
   _avg: GuestAvgAggregateOutputType | null
@@ -315,6 +329,8 @@ export type GuestWhereInput = {
   ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup
   phone?: Prisma.StringNullableFilter<"Guest"> | string | null
   email?: Prisma.StringNullableFilter<"Guest"> | string | null
+  invitationSent?: Prisma.BoolFilter<"Guest"> | boolean
+  invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null
   parentId?: Prisma.StringNullableFilter<"Guest"> | string | null
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
   group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
@@ -341,6 +357,8 @@ export type GuestOrderByWithRelationInput = {
   ageGroup?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  invitationSent?: Prisma.SortOrder
+  invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   wedding?: Prisma.WeddingOrderByWithRelationInput
   group?: Prisma.GroupOrderByWithRelationInput
@@ -371,6 +389,8 @@ export type GuestWhereUniqueInput = Prisma.AtLeast<{
   ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup
   phone?: Prisma.StringNullableFilter<"Guest"> | string | null
   email?: Prisma.StringNullableFilter<"Guest"> | string | null
+  invitationSent?: Prisma.BoolFilter<"Guest"> | boolean
+  invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null
   parentId?: Prisma.StringNullableFilter<"Guest"> | string | null
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
   group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
@@ -397,6 +417,8 @@ export type GuestOrderByWithAggregationInput = {
   ageGroup?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  invitationSent?: Prisma.SortOrder
+  invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.GuestCountOrderByAggregateInput
   _avg?: Prisma.GuestAvgOrderByAggregateInput
@@ -426,6 +448,8 @@ export type GuestScalarWhereWithAggregatesInput = {
   ageGroup?: Prisma.EnumAgeGroupWithAggregatesFilter<"Guest"> | $Enums.AgeGroup
   phone?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
+  invitationSent?: Prisma.BoolWithAggregatesFilter<"Guest"> | boolean
+  invitationSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Guest"> | Date | string | null
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
 }
 
@@ -444,6 +468,8 @@ export type GuestCreateInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -469,6 +495,8 @@ export type GuestUncheckedCreateInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -488,6 +516,8 @@ export type GuestUpdateInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -513,6 +543,8 @@ export type GuestUncheckedUpdateInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -535,6 +567,8 @@ export type GuestCreateManyInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
 }
 
@@ -553,6 +587,8 @@ export type GuestUpdateManyMutationInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type GuestUncheckedUpdateManyInput = {
@@ -573,6 +609,8 @@ export type GuestUncheckedUpdateManyInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -622,6 +660,8 @@ export type GuestCountOrderByAggregateInput = {
   ageGroup?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  invitationSent?: Prisma.SortOrder
+  invitationSentAt?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -646,6 +686,8 @@ export type GuestMaxOrderByAggregateInput = {
   ageGroup?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  invitationSent?: Prisma.SortOrder
+  invitationSentAt?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -666,6 +708,8 @@ export type GuestMinOrderByAggregateInput = {
   ageGroup?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  invitationSent?: Prisma.SortOrder
+  invitationSentAt?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -905,6 +949,8 @@ export type GuestCreateWithoutWeddingInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -928,6 +974,8 @@ export type GuestUncheckedCreateWithoutWeddingInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -979,6 +1027,8 @@ export type GuestScalarWhereInput = {
   ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup
   phone?: Prisma.StringNullableFilter<"Guest"> | string | null
   email?: Prisma.StringNullableFilter<"Guest"> | string | null
+  invitationSent?: Prisma.BoolFilter<"Guest"> | boolean
+  invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null
   parentId?: Prisma.StringNullableFilter<"Guest"> | string | null
 }
 
@@ -997,6 +1047,8 @@ export type GuestCreateWithoutCompanionsInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -1021,6 +1073,8 @@ export type GuestUncheckedCreateWithoutCompanionsInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
 }
 
@@ -1044,6 +1098,8 @@ export type GuestCreateWithoutParentInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -1068,6 +1124,8 @@ export type GuestUncheckedCreateWithoutParentInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
 
@@ -1107,6 +1165,8 @@ export type GuestUpdateWithoutCompanionsInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -1131,6 +1191,8 @@ export type GuestUncheckedUpdateWithoutCompanionsInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1165,6 +1227,8 @@ export type GuestCreateWithoutGroupInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -1188,6 +1252,8 @@ export type GuestUncheckedCreateWithoutGroupInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1233,6 +1299,8 @@ export type GuestCreateWithoutTableInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -1256,6 +1324,8 @@ export type GuestUncheckedCreateWithoutTableInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1303,6 +1373,8 @@ export type GuestCreateManyWeddingInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
 }
 
@@ -1321,6 +1393,8 @@ export type GuestUpdateWithoutWeddingInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1344,6 +1418,8 @@ export type GuestUncheckedUpdateWithoutWeddingInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1365,6 +1441,8 @@ export type GuestUncheckedUpdateManyWithoutWeddingInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1386,6 +1464,8 @@ export type GuestCreateManyParentInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
 }
 
 export type GuestUpdateWithoutParentInput = {
@@ -1403,6 +1483,8 @@ export type GuestUpdateWithoutParentInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -1427,6 +1509,8 @@ export type GuestUncheckedUpdateWithoutParentInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
 
@@ -1448,6 +1532,8 @@ export type GuestUncheckedUpdateManyWithoutParentInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type GuestCreateManyGroupInput = {
@@ -1467,6 +1553,8 @@ export type GuestCreateManyGroupInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
 }
 
@@ -1485,6 +1573,8 @@ export type GuestUpdateWithoutGroupInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1508,6 +1598,8 @@ export type GuestUncheckedUpdateWithoutGroupInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1529,6 +1621,8 @@ export type GuestUncheckedUpdateManyWithoutGroupInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1549,6 +1643,8 @@ export type GuestCreateManyTableInput = {
   ageGroup?: $Enums.AgeGroup
   phone?: string | null
   email?: string | null
+  invitationSent?: boolean
+  invitationSentAt?: Date | string | null
   parentId?: string | null
 }
 
@@ -1567,6 +1663,8 @@ export type GuestUpdateWithoutTableInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1590,6 +1688,8 @@ export type GuestUncheckedUpdateWithoutTableInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1611,6 +1711,8 @@ export type GuestUncheckedUpdateManyWithoutTableInput = {
   ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1663,6 +1765,8 @@ export type GuestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   ageGroup?: boolean
   phone?: boolean
   email?: boolean
+  invitationSent?: boolean
+  invitationSentAt?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1690,6 +1794,8 @@ export type GuestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   ageGroup?: boolean
   phone?: boolean
   email?: boolean
+  invitationSent?: boolean
+  invitationSentAt?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1715,6 +1821,8 @@ export type GuestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   ageGroup?: boolean
   phone?: boolean
   email?: boolean
+  invitationSent?: boolean
+  invitationSentAt?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1740,10 +1848,12 @@ export type GuestSelectScalar = {
   ageGroup?: boolean
   phone?: boolean
   email?: boolean
+  invitationSent?: boolean
+  invitationSentAt?: boolean
   parentId?: boolean
 }
 
-export type GuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "weddingId" | "groupId" | "tableId" | "seatNumber" | "role" | "rsvp" | "diet" | "dietNotes" | "allergies" | "notes" | "ageGroup" | "phone" | "email" | "parentId", ExtArgs["result"]["guest"]>
+export type GuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "weddingId" | "groupId" | "tableId" | "seatNumber" | "role" | "rsvp" | "diet" | "dietNotes" | "allergies" | "notes" | "ageGroup" | "phone" | "email" | "invitationSent" | "invitationSentAt" | "parentId", ExtArgs["result"]["guest"]>
 export type GuestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1792,6 +1902,8 @@ export type $GuestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     ageGroup: $Enums.AgeGroup
     phone: string | null
     email: string | null
+    invitationSent: boolean
+    invitationSentAt: Date | null
     parentId: string | null
   }, ExtArgs["result"]["guest"]>
   composites: {}
@@ -2238,6 +2350,8 @@ export interface GuestFieldRefs {
   readonly ageGroup: Prisma.FieldRef<"Guest", 'AgeGroup'>
   readonly phone: Prisma.FieldRef<"Guest", 'String'>
   readonly email: Prisma.FieldRef<"Guest", 'String'>
+  readonly invitationSent: Prisma.FieldRef<"Guest", 'Boolean'>
+  readonly invitationSentAt: Prisma.FieldRef<"Guest", 'DateTime'>
   readonly parentId: Prisma.FieldRef<"Guest", 'String'>
 }
     

@@ -83,6 +83,39 @@ export const AgeGroup = {
 export type AgeGroup = (typeof AgeGroup)[keyof typeof AgeGroup]
 
 
+export const ProviderCategory = {
+  VENUE: 'VENUE',
+  CATERING: 'CATERING',
+  PHOTOGRAPHY: 'PHOTOGRAPHY',
+  VIDEO: 'VIDEO',
+  MUSIC: 'MUSIC',
+  FLORIST: 'FLORIST',
+  DECORATION: 'DECORATION',
+  TRANSPORT: 'TRANSPORT',
+  BEAUTY: 'BEAUTY',
+  DRESS: 'DRESS',
+  SUIT: 'SUIT',
+  INVITATIONS: 'INVITATIONS',
+  HONEYMOON: 'HONEYMOON',
+  CEREMONY: 'CEREMONY',
+  OTHER: 'OTHER'
+} as const
+
+export type ProviderCategory = (typeof ProviderCategory)[keyof typeof ProviderCategory]
+
+
+export const ProviderStatus = {
+  CONTACTED: 'CONTACTED',
+  QUOTED: 'QUOTED',
+  BOOKED: 'BOOKED',
+  CONFIRMED: 'CONFIRMED',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ProviderStatus = (typeof ProviderStatus)[keyof typeof ProviderStatus]
+
+
 export const BudgetCategory = {
   VENUE: 'VENUE',
   CATERING: 'CATERING',

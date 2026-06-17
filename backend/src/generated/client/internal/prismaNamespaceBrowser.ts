@@ -56,6 +56,7 @@ export const ModelName = {
   Group: 'Group',
   Table: 'Table',
   Event: 'Event',
+  Provider: 'Provider',
   Budget: 'Budget',
   BudgetItem: 'BudgetItem'
 } as const
@@ -135,6 +136,8 @@ export const GuestScalarFieldEnum = {
   ageGroup: 'ageGroup',
   phone: 'phone',
   email: 'email',
+  invitationSent: 'invitationSent',
+  invitationSentAt: 'invitationSentAt',
   parentId: 'parentId'
 } as const
 
@@ -177,6 +180,26 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const ProviderScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  status: 'status',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  website: 'website',
+  estimatedPrice: 'estimatedPrice',
+  finalPrice: 'finalPrice',
+  notes: 'notes',
+  weddingId: 'weddingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProviderScalarFieldEnum = (typeof ProviderScalarFieldEnum)[keyof typeof ProviderScalarFieldEnum]
 
 
 export const BudgetScalarFieldEnum = {
