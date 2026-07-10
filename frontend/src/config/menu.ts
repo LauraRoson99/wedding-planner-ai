@@ -6,6 +6,7 @@ import {
     Calendar,
     Wallet,
     Handshake,
+    Settings,
 } from 'lucide-react'
 
 type MenuItemType = {
@@ -48,5 +49,10 @@ export const mainMenu: MenuType = [
         title: 'Proveedores',
         url: '/providers',
         icon: Handshake,
+    },
+    {
+        title: 'Ajustes',
+        url: '/settings',
+        icon: Settings,
     },
 ]

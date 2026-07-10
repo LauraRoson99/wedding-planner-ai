@@ -10,6 +10,7 @@ import Guests from './pages/Guests'
 import Agenda from './pages/Agenda'
 import Budget from './pages/Budget'
 import Providers from './pages/Providers'
+import Settings from './pages/Settings'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -37,6 +38,7 @@ export default function Router() {
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/budget" element={<Budget />} />
         <Route path="/providers" element={<Providers />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotMatch />} />
       </Route>
     </Routes>

@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { appConfig, baseUrl } from '@/config/app'
 import { useNavigate } from "react-router-dom";
-import { logout } from "@/lib/auth";
+import { logout, getWeddingDate, WEDDING_UPDATED_EVENT } from "@/lib/auth";
 import { cn } from '@/lib/utils'
 import {
     DropdownMenu,
@@ -20,6 +21,18 @@ import Countdown from './navbar/Countdown'
 
 export function AppHeader() {
     const nav = useNavigate();
+    const [weddingDate, setWeddingDate] = useState<string | null>(getWeddingDate());
+
+    useEffect(() => {
+        const sync = () => setWeddingDate(getWeddingDate());
+        // Refresh when the wedding is updated in this tab (Settings) or another tab.
+        window.addEventListener(WEDDING_UPDATED_EVENT, sync);
+        window.addEventListener("storage", sync);
+        return () => {
+            window.removeEventListener(WEDDING_UPDATED_EVENT, sync);
+            window.removeEventListener("storage", sync);
+        };
+    }, []);
 
     function handleLogout() {
         logout();
@@ -49,9 +62,11 @@ export function AppHeader() {
                     </Link>
                 </div>
 
-                <div className="hidden md:block">
-                    <Countdown weddingDate="2025-10-10T13:00:00" />
-                </div>
+                {weddingDate && (
+                    <div className="hidden md:block">
+                        <Countdown weddingDate={weddingDate} />
+                    </div>
+                )}
 
                 <nav className="flex gap-1 items-center">
                     <a

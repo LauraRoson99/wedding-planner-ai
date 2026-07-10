@@ -10,7 +10,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { apiPost } from "@/lib/api";
-import { setAccessToken, setRefreshToken, setWeddingId } from "@/lib/auth";
+import { setAccessToken, setRefreshToken, setWeddingId, setWeddingName, setWeddingDate } from "@/lib/auth";
 import { prettyApiError } from "@/lib/errors";
 
 type LoginResponse = {
@@ -43,6 +43,8 @@ export default function Login() {
 
       if (res.wedding?.id) {
         setWeddingId(res.wedding.id);
+        setWeddingName(res.wedding.name);
+        setWeddingDate(res.wedding.date ?? null);
       }
 
       nav("/guests");

@@ -1,6 +1,11 @@
 const TOKEN_KEY = "accessToken";
 const REFRESH_KEY = "refreshToken";
 const WEDDING_KEY = "weddingId";
+const WEDDING_NAME_KEY = "weddingName";
+const WEDDING_DATE_KEY = "weddingDate";
+
+/** Custom event dispatched whenever the active wedding's data changes. */
+export const WEDDING_UPDATED_EVENT = "wedding:updated";
 
 type JwtPayload = {
   exp?: number;
@@ -31,6 +36,26 @@ export function setWeddingId(weddingId: string) {
   localStorage.setItem(WEDDING_KEY, weddingId);
 }
 
+export function getWeddingName() {
+  return localStorage.getItem(WEDDING_NAME_KEY);
+}
+
+export function setWeddingName(name: string) {
+  localStorage.setItem(WEDDING_NAME_KEY, name);
+}
+
+export function getWeddingDate() {
+  return localStorage.getItem(WEDDING_DATE_KEY);
+}
+
+export function setWeddingDate(date: string | null) {
+  if (date) {
+    localStorage.setItem(WEDDING_DATE_KEY, date);
+  } else {
+    localStorage.removeItem(WEDDING_DATE_KEY);
+  }
+}
+
 export function clearAccessToken() {
   localStorage.removeItem(TOKEN_KEY);
 }
@@ -43,9 +68,16 @@ export function clearWeddingId() {
   localStorage.removeItem(WEDDING_KEY);
 }
 
+export function clearWedding() {
+  localStorage.removeItem(WEDDING_KEY);
+  localStorage.removeItem(WEDDING_NAME_KEY);
+  localStorage.removeItem(WEDDING_DATE_KEY);
+}
+
 export function clearAuth() {
   clearAccessToken();
   clearRefreshToken();
+  clearWedding();
 }
 
 function parseJwt(token: string): JwtPayload | null {

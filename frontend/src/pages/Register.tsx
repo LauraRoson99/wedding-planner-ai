@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { apiPost } from "@/lib/api";
 import { prettyApiError } from "@/lib/errors";
-import { setAccessToken, setRefreshToken, setWeddingId } from "@/lib/auth";
+import { setAccessToken, setRefreshToken, setWeddingId, setWeddingName, setWeddingDate } from "@/lib/auth";
 
 type RegisterResponse = {
   access: string;
@@ -48,6 +48,8 @@ export default function Register() {
 
       if (res.wedding?.id) {
         setWeddingId(res.wedding.id);
+        setWeddingName(res.wedding.name);
+        setWeddingDate(res.wedding.date ?? null);
       }
 
       nav("/guests");

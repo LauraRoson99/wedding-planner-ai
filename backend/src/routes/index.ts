@@ -10,6 +10,7 @@ import { event } from "./event.routes";
 import { dashboard } from "./dashboard.routes";
 import { budget } from "./budget.routes";
 import { provider } from "./provider.routes";
+import { wedding } from "./wedding.routes";
 
 export const routes = Router();
 routes.use(health);
@@ -22,4 +23,5 @@ routes.use(event);
 routes.use(dashboard);
 routes.use(budget);
 routes.use(provider);
+routes.use(wedding);
 
