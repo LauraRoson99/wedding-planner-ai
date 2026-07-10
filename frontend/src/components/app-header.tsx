@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { appConfig, baseUrl } from '@/config/app'
 import { useNavigate } from "react-router-dom";
 import { logout } from "@/lib/auth";
@@ -19,7 +19,6 @@ import { ModeToggle } from './mode-toggle'
 import Countdown from './navbar/Countdown'
 
 export function AppHeader() {
-    const location = useLocation()
     const nav = useNavigate();
 
     function handleLogout() {

@@ -1,8 +1,11 @@
 import type { LucideIcon } from 'lucide-react'
 import {
-    CircleAlert,
-    Files,
-    Gauge
+    Home,
+    ListCheck,
+    UsersRound,
+    Calendar,
+    Wallet,
+    Handshake,
 } from 'lucide-react'
 
 type MenuItemType = {
@@ -14,30 +17,36 @@ type MenuItemType = {
 }
 type MenuType = MenuItemType[]
 
+// Titles are user-facing labels, kept in Spanish (product language).
 export const mainMenu: MenuType = [
     {
-        title: 'Dashboard',
+        title: 'Inicio',
         url: '/',
-        icon: Gauge
+        icon: Home,
     },
     {
-        title: 'Pages',
-        url: '/pages',
-        icon: Files,
-        items: [
-            {
-                title: 'Sample Page',
-                url: '/pages/sample',
-            },
-            {
-                title: 'Coming Soon',
-                url: '/pages/feature',
-            },
-        ]
+        title: 'Tareas',
+        url: '/tasks',
+        icon: ListCheck,
     },
     {
-        title: 'Error',
-        url: '/404',
-        icon: CircleAlert,
+        title: 'Invitados',
+        url: '/guests',
+        icon: UsersRound,
+    },
+    {
+        title: 'Agenda',
+        url: '/agenda',
+        icon: Calendar,
+    },
+    {
+        title: 'Presupuesto',
+        url: '/budget',
+        icon: Wallet,
+    },
+    {
+        title: 'Proveedores',
+        url: '/providers',
+        icon: Handshake,
     },
 ]

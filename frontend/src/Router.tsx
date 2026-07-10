@@ -4,8 +4,6 @@ import { AppAuthLayout } from './components/app-auth-layout'
 import { ProtectedRoute } from './components/protected-route'
 
 import NotMatch from './pages/NotMatch'
-import Sample from './pages/Sample'
-import ComingSoon from './pages/ComingSoon'
 import Home from './pages/Home'
 import Tasks from './pages/Tasks'
 import Guests from './pages/Guests'
@@ -39,10 +37,6 @@ export default function Router() {
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/budget" element={<Budget />} />
         <Route path="/providers" element={<Providers />} />
-        <Route path="pages">
-          <Route path="sample" element={<Sample />} />
-          <Route path="feature" element={<ComingSoon />} />
-        </Route>
         <Route path="*" element={<NotMatch />} />
       </Route>
     </Routes>
