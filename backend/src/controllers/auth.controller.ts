@@ -9,6 +9,10 @@ const AuthSchema = z.object({
   name: z.string().optional()
 });
 
+const RefreshSchema = z.object({
+  refresh: z.string().min(1),
+});
+
 export async function postRegister(req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password, name } = AuthSchema.parse(req.body);
@@ -21,6 +25,14 @@ export async function postLogin(req: Request, res: Response, next: NextFunction)
   try {
     const { email, password } = AuthSchema.omit({ name: true }).parse(req.body);
     const result = await svc.login(email, password);
+    res.json(result);
+  } catch (e) { next(e); }
+}
+
+export async function postRefresh(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { refresh } = RefreshSchema.parse(req.body);
+    const result = await svc.refresh(refresh);
     res.json(result);
   } catch (e) { next(e); }
 }

@@ -1,7 +1,7 @@
 // services/auth.service.ts
 import { prisma } from '../db/prisma';
 import { hashPassword, comparePassword } from '../utils/passwords';
-import { signAccess, signRefresh } from '../utils/jwt';
+import { signAccess, signRefresh, verifyRefresh } from '../utils/jwt';
 
 async function getOrCreateActiveWedding(userId: string) {
   const existingWedding = await prisma.wedding.findFirst({
@@ -52,6 +52,31 @@ export async function register(email: string, password: string, name?: string) {
     refresh,
     wedding,
   };
+}
+
+export async function refresh(refreshToken: string) {
+  let payload: unknown;
+  try {
+    payload = verifyRefresh(refreshToken);
+  } catch {
+    throw { status: 401, message: 'Invalid refresh token' };
+  }
+
+  const userId =
+    typeof payload === 'object' && payload !== null
+      ? (payload as { sub?: string }).sub
+      : undefined;
+
+  if (!userId) throw { status: 401, message: 'Invalid refresh token' };
+
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw { status: 401, message: 'Invalid refresh token' };
+
+  // Rotate both tokens so the session keeps sliding while the user is active.
+  const access = signAccess({ sub: user.id, email: user.email });
+  const newRefresh = signRefresh({ sub: user.id });
+
+  return { access, refresh: newRefresh };
 }
 
 export async function login(email: string, password: string) {

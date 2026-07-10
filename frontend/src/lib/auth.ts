@@ -109,14 +109,15 @@ export function isTokenExpired(token: string) {
 
 export function isLoggedIn() {
   const token = getAccessToken();
-  if (!token) return false;
+  if (token && !isTokenExpired(token)) return true;
 
-  if (isTokenExpired(token)) {
-    clearAuth();
-    return false;
-  }
+  // Access token missing or expired: the session is still valid as long as the
+  // refresh token is good — the API layer will renew the access token on demand.
+  const refresh = getRefreshToken();
+  if (refresh && !isTokenExpired(refresh)) return true;
 
-  return true;
+  clearAuth();
+  return false;
 }
 
 export function logout() {
