@@ -34,8 +34,8 @@ export function AppHeader() {
         };
     }, []);
 
-    function handleLogout() {
-        logout();
+    async function handleLogout() {
+        await logout();
         nav("/login", { replace: true });
     }
     return (

@@ -36,3 +36,11 @@ export async function postRefresh(req: Request, res: Response, next: NextFunctio
     res.json(result);
   } catch (e) { next(e); }
 }
+
+export async function postLogout(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { refresh } = RefreshSchema.parse(req.body);
+    const result = await svc.logout(refresh);
+    res.json(result);
+  } catch (e) { next(e); }
+}

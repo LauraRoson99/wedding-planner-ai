@@ -120,6 +120,21 @@ export function isLoggedIn() {
   return false;
 }
 
-export function logout() {
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
+
+export async function logout() {
+  const refresh = getRefreshToken();
+  if (refresh) {
+    try {
+      // Revoke the session server-side (RF-84) before clearing local state.
+      await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh }),
+      });
+    } catch {
+      // Ignore network errors — we still clear local auth below.
+    }
+  }
   clearAuth();
 }

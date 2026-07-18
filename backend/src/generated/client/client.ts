@@ -48,6 +48,11 @@ path.join(process.cwd(), "src/generated/client/query_engine-windows.dll.node")
  */
 export type User = Prisma.UserModel
 /**
+ * Model RefreshToken
+ * 
+ */
+export type RefreshToken = Prisma.RefreshTokenModel
+/**
  * Model Wedding
  * 
  */
