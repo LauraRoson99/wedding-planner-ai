@@ -1,4 +1,6 @@
 import { PrismaClient } from "../generated/client/client";
+import { sendMail } from "../utils/mailer";
+import { renderInvitationEmail } from "./invitation.template";
 
 const prisma = new PrismaClient();
 
@@ -243,4 +245,70 @@ export async function markInvitationsNotSent(weddingId: string, guestIds: string
     data: { invitationSent: false, invitationSentAt: null },
   });
   return { updated: guestIds.length };
+}
+
+type InvitationOutcome = { id: string; name: string; reason?: string };
+
+export type SendInvitationsResult = {
+  sent: string[];
+  failed: InvitationOutcome[];
+  skipped: InvitationOutcome[];
+  previews: { id: string; url: string }[];
+};
+
+export async function sendInvitations(
+  weddingId: string,
+  guestIds: string[]
+): Promise<SendInvitationsResult | null> {
+  const wedding = await prisma.wedding.findUnique({
+    where: { id: weddingId },
+    select: { name: true, date: true },
+  });
+  if (!wedding) return null;
+
+  const guests = await prisma.guest.findMany({
+    where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
+    select: { id: true, name: true, email: true },
+  });
+
+  const result: SendInvitationsResult = {
+    sent: [],
+    failed: [],
+    skipped: [],
+    previews: [],
+  };
+
+  for (const guest of guests) {
+    const email = guest.email?.trim();
+    if (!email) {
+      result.skipped.push({ id: guest.id, name: guest.name, reason: "Sin email" });
+      continue;
+    }
+
+    const { subject, html, text } = renderInvitationEmail({
+      guestName: guest.name,
+      weddingName: wedding.name,
+      weddingDate: wedding.date,
+    });
+
+    try {
+      const info = await sendMail({ to: email, subject, html, text });
+      result.sent.push(guest.id);
+      if (info.previewUrl) {
+        result.previews.push({ id: guest.id, url: info.previewUrl });
+      }
+    } catch (e) {
+      const reason = e instanceof Error ? e.message : "Error de envío";
+      result.failed.push({ id: guest.id, name: guest.name, reason });
+    }
+  }
+
+  if (result.sent.length) {
+    await prisma.guest.updateMany({
+      where: { id: { in: result.sent }, weddingId, role: "PRIMARY" },
+      data: { invitationSent: true, invitationSentAt: new Date() },
+    });
+  }
+
+  return result;
 }

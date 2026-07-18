@@ -8,6 +8,7 @@ import {
   importGuests,
   markInvitationsSent,
   markInvitationsNotSent,
+  sendInvitations,
 } from "../controllers/guest.controller";
 import { requireAuth } from "../middleware/auth";
 
@@ -21,5 +22,6 @@ guest.post("/guests", postGuest);
 guest.post("/guests/import", importGuests);
 guest.patch("/guests/invitation/sent", markInvitationsSent);
 guest.patch("/guests/invitation/unsent", markInvitationsNotSent);
+guest.post("/guests/invitation/send", sendInvitations);
 guest.put("/guests/:id", putGuest);
 guest.delete("/guests/:id", deleteGuest);

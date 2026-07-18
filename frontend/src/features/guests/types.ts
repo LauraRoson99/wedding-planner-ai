@@ -16,6 +16,7 @@ export type CompanionDto = {
 export type GuestDto = {
   id: string;
   name: string;
+  email?: string | null;
   rsvp?: RsvpStatus;
   allergies?: string[];
   notes?: string | null;

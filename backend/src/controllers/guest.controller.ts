@@ -153,3 +153,15 @@ export async function markInvitationsNotSent(req: Request, res: Response, next: 
     next(e);
   }
 }
+
+export async function sendInvitations(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { guestIds } = InvitationPayloadSchema.parse(req.body);
+    const result = await svc.sendInvitations(weddingId, guestIds);
+    if (!result) return res.status(404).json({ error: "Wedding not found" });
+    res.json(result);
+  } catch (e) {
+    next(e);
+  }
+}

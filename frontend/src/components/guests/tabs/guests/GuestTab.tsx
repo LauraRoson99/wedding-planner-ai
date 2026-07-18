@@ -25,6 +25,7 @@ function normalizeTag(t: string) {
 
 type GuestFormState = {
   name: string;
+  email: string;
   groupId: string;
   rsvp: RsvpStatus;
   allergies: string[];
@@ -39,10 +40,18 @@ type GuestFormState = {
 };
 
 const DEFAULT_FORM: GuestFormState = {
-  name: "", groupId: "", rsvp: "PENDING", allergies: [], notes: "", companions: [],
+  name: "", email: "", groupId: "", rsvp: "PENDING", allergies: [], notes: "", companions: [],
 };
 
 type CsvRow = { name: string; email: string; groupName: string };
+
+type InvitationOutcome = { id: string; name: string; reason?: string };
+type SendInvitationsResult = {
+  sent: string[];
+  failed: InvitationOutcome[];
+  skipped: InvitationOutcome[];
+  previews: { id: string; url: string }[];
+};
 
 function parseCsv(raw: string): CsvRow[] {
   return raw
@@ -74,6 +83,8 @@ export default function GuestTab() {
 
   // Selección múltiple para invitaciones
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [sending, setSending] = useState(false);
+  const [inviteResult, setInviteResult] = useState<SendInvitationsResult | null>(null);
 
   // Modal importar CSV
   const [csvOpen, setCsvOpen] = useState(false);
@@ -140,15 +151,27 @@ export default function GuestTab() {
 
   function clearSelection() { setSelected(new Set()); }
 
-  async function markSent(ids: string[]) {
-    if (!ids.length) return;
+  async function sendInvitations(ids: string[]) {
+    if (!ids.length || sending) return;
+    setSending(true);
+    setError(null);
+    setInviteResult(null);
     try {
-      await apiPatch(`/guests/invitation/sent?weddingId=${encodeURIComponent(weddingId)}`, { guestIds: ids });
+      const res = await apiPost<SendInvitationsResult>(
+        `/guests/invitation/send?weddingId=${encodeURIComponent(weddingId)}`,
+        { guestIds: ids }
+      );
+      const sentSet = new Set(res.sent);
       setGuests((prev) => prev.map((g) =>
-        ids.includes(g.id) ? { ...g, invitationSent: true, invitationSentAt: new Date().toISOString() } : g
+        sentSet.has(g.id) ? { ...g, invitationSent: true, invitationSentAt: new Date().toISOString() } : g
       ));
       setSelected(new Set());
-    } catch (e: any) { setError(e?.message ?? "Error marcando invitaciones"); }
+      setInviteResult(res);
+    } catch (e: any) {
+      setError(e?.message ?? "Error enviando invitaciones");
+    } finally {
+      setSending(false);
+    }
   }
 
   async function markUnsent(ids: string[]) {
@@ -230,6 +253,7 @@ export default function GuestTab() {
     setEditingId(guest.id);
     setForm({
       name: guest.name ?? "",
+      email: guest.email ?? "",
       groupId: guest.group?.id ?? "",
       rsvp: (guest.rsvp ?? "PENDING") as RsvpStatus,
       allergies: guest.allergies ?? [],
@@ -298,7 +322,7 @@ export default function GuestTab() {
   async function submitGuest() {
     if (!weddingId || !form.name.trim()) return;
     const payload = {
-      name: form.name.trim(), groupId: form.groupId || undefined, rsvp: form.rsvp,
+      name: form.name.trim(), email: form.email.trim() || undefined, groupId: form.groupId || undefined, rsvp: form.rsvp,
       allergies: form.allergies, notes: form.notes.trim(),
       companions: form.companions.map((c) => ({ id: c.id, name: c.name.trim(), ageGroup: c.ageGroup, allergies: c.allergies })).filter((c) => c.name.length > 0),
     };
@@ -351,6 +375,12 @@ export default function GuestTab() {
                   <Label htmlFor="guestName">Nombre</Label>
                   <Input id="guestName" placeholder="Ej: Ana García" value={form.name}
                     onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} autoFocus />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="guestEmail">Email</Label>
+                  <Input id="guestEmail" type="email" placeholder="ana.garcia@email.com" value={form.email}
+                    onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))} />
+                  <p className="text-xs text-muted-foreground">Necesario para enviarle la invitación por correo.</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-2">
@@ -496,10 +526,46 @@ export default function GuestTab() {
       {selected.size > 0 && (
         <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-muted/40 px-4 py-2">
           <span className="text-sm font-medium">{selected.size} seleccionado{selected.size > 1 ? "s" : ""}</span>
-          <Button size="sm" variant="outline" onClick={() => markSent(Array.from(selected))}>
-            <SendHorizonal className="size-4 mr-1" /> Marcar invitación enviada
+          <Button size="sm" variant="outline" onClick={() => sendInvitations(Array.from(selected))} disabled={sending}>
+            <SendHorizonal className="size-4 mr-1" /> {sending ? "Enviando..." : "Enviar invitaciones"}
           </Button>
           <Button size="sm" variant="ghost" onClick={clearSelection}>Cancelar selección</Button>
+        </div>
+      )}
+
+      {/* Resultado del envío de invitaciones */}
+      {inviteResult && (
+        <div className="rounded-xl border bg-muted/40 px-4 py-3 text-sm space-y-1">
+          <div className="flex items-start justify-between gap-2">
+            <span className="font-medium">
+              {inviteResult.sent.length} invitación{inviteResult.sent.length === 1 ? "" : "es"} enviada{inviteResult.sent.length === 1 ? "" : "s"}
+              {inviteResult.skipped.length > 0 && ` · ${inviteResult.skipped.length} sin email`}
+              {inviteResult.failed.length > 0 && ` · ${inviteResult.failed.length} con error`}
+            </span>
+            <button type="button" onClick={() => setInviteResult(null)} className="text-muted-foreground hover:text-foreground">
+              <X className="size-4" />
+            </button>
+          </div>
+          {inviteResult.skipped.length > 0 && (
+            <p className="text-xs text-muted-foreground">
+              Sin email: {inviteResult.skipped.map((s) => s.name).join(", ")}
+            </p>
+          )}
+          {inviteResult.failed.length > 0 && (
+            <ul className="text-xs text-red-600">
+              {inviteResult.failed.map((f) => <li key={f.id}>{f.name}: {f.reason}</li>)}
+            </ul>
+          )}
+          {inviteResult.previews.length > 0 && (
+            <div className="text-xs text-muted-foreground">
+              Previsualización (dev):{" "}
+              {inviteResult.previews.map((p, i) => (
+                <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className="text-primary hover:underline mr-2">
+                  email {i + 1}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -551,9 +617,11 @@ export default function GuestTab() {
                     </span>
                   ) : (
                     <button type="button"
-                      onClick={() => markSent([guest.id])}
-                      className="inline-flex items-center gap-1 rounded-full border border-dashed border-gray-300 px-2.5 py-1 text-[10px] uppercase tracking-wide text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition">
-                      <Send className="size-3" /> Sin enviar
+                      onClick={() => sendInvitations([guest.id])}
+                      disabled={sending}
+                      title={guest.email ? `Enviar invitación a ${guest.email}` : "Este invitado no tiene email"}
+                      className="inline-flex items-center gap-1 rounded-full border border-dashed border-gray-300 px-2.5 py-1 text-[10px] uppercase tracking-wide text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition disabled:opacity-50">
+                      <Send className="size-3" /> Enviar
                     </button>
                   )}
                 </div>
