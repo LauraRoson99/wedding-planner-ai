@@ -249,6 +249,8 @@ model Provider {
   weddingId    String
   wedding      Wedding          @relation(fields: [weddingId], references: [id], onDelete: Cascade)
 
+  budgetItems  BudgetItem[]
+
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
@@ -313,10 +315,14 @@ model BudgetItem {
   weddingId       String
   wedding         Wedding          @relation(fields: [weddingId], references: [id], onDelete: Cascade)
 
+  providerId      String?
+  provider        Provider?        @relation(fields: [providerId], references: [id], onDelete: SetNull)
+
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
   @@index([weddingId])
   @@index([category])
   @@index([status])
+  @@index([providerId])
 }

@@ -293,6 +293,7 @@ export type ProviderWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Provider"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Provider"> | Date | string
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
+  budgetItems?: Prisma.BudgetItemListRelationFilter
 }
 
 export type ProviderOrderByWithRelationInput = {
@@ -311,6 +312,7 @@ export type ProviderOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   wedding?: Prisma.WeddingOrderByWithRelationInput
+  budgetItems?: Prisma.BudgetItemOrderByRelationAggregateInput
 }
 
 export type ProviderWhereUniqueInput = Prisma.AtLeast<{
@@ -332,6 +334,7 @@ export type ProviderWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Provider"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Provider"> | Date | string
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
+  budgetItems?: Prisma.BudgetItemListRelationFilter
 }, "id">
 
 export type ProviderOrderByWithAggregationInput = {
@@ -391,6 +394,7 @@ export type ProviderCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   wedding: Prisma.WeddingCreateNestedOneWithoutProvidersInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProviderInput
 }
 
 export type ProviderUncheckedCreateInput = {
@@ -408,6 +412,7 @@ export type ProviderUncheckedCreateInput = {
   weddingId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProviderInput
 }
 
 export type ProviderUpdateInput = {
@@ -425,6 +430,7 @@ export type ProviderUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutProvidersNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutProviderNestedInput
 }
 
 export type ProviderUncheckedUpdateInput = {
@@ -442,6 +448,7 @@ export type ProviderUncheckedUpdateInput = {
   weddingId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProviderNestedInput
 }
 
 export type ProviderCreateManyInput = {
@@ -565,6 +572,11 @@ export type ProviderSumOrderByAggregateInput = {
   finalPrice?: Prisma.SortOrder
 }
 
+export type ProviderNullableScalarRelationFilter = {
+  is?: Prisma.ProviderWhereInput | null
+  isNot?: Prisma.ProviderWhereInput | null
+}
+
 export type ProviderCreateNestedManyWithoutWeddingInput = {
   create?: Prisma.XOR<Prisma.ProviderCreateWithoutWeddingInput, Prisma.ProviderUncheckedCreateWithoutWeddingInput> | Prisma.ProviderCreateWithoutWeddingInput[] | Prisma.ProviderUncheckedCreateWithoutWeddingInput[]
   connectOrCreate?: Prisma.ProviderCreateOrConnectWithoutWeddingInput | Prisma.ProviderCreateOrConnectWithoutWeddingInput[]
@@ -623,6 +635,22 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ProviderCreateNestedOneWithoutBudgetItemsInput = {
+  create?: Prisma.XOR<Prisma.ProviderCreateWithoutBudgetItemsInput, Prisma.ProviderUncheckedCreateWithoutBudgetItemsInput>
+  connectOrCreate?: Prisma.ProviderCreateOrConnectWithoutBudgetItemsInput
+  connect?: Prisma.ProviderWhereUniqueInput
+}
+
+export type ProviderUpdateOneWithoutBudgetItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProviderCreateWithoutBudgetItemsInput, Prisma.ProviderUncheckedCreateWithoutBudgetItemsInput>
+  connectOrCreate?: Prisma.ProviderCreateOrConnectWithoutBudgetItemsInput
+  upsert?: Prisma.ProviderUpsertWithoutBudgetItemsInput
+  disconnect?: Prisma.ProviderWhereInput | boolean
+  delete?: Prisma.ProviderWhereInput | boolean
+  connect?: Prisma.ProviderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProviderUpdateToOneWithWhereWithoutBudgetItemsInput, Prisma.ProviderUpdateWithoutBudgetItemsInput>, Prisma.ProviderUncheckedUpdateWithoutBudgetItemsInput>
+}
+
 export type ProviderCreateWithoutWeddingInput = {
   id?: string
   name: string
@@ -637,6 +665,7 @@ export type ProviderCreateWithoutWeddingInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProviderInput
 }
 
 export type ProviderUncheckedCreateWithoutWeddingInput = {
@@ -653,6 +682,7 @@ export type ProviderUncheckedCreateWithoutWeddingInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProviderInput
 }
 
 export type ProviderCreateOrConnectWithoutWeddingInput = {
@@ -701,6 +731,90 @@ export type ProviderScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Provider"> | Date | string
 }
 
+export type ProviderCreateWithoutBudgetItemsInput = {
+  id?: string
+  name: string
+  category?: $Enums.ProviderCategory
+  status?: $Enums.ProviderStatus
+  contactName?: string | null
+  phone?: string | null
+  email?: string | null
+  website?: string | null
+  estimatedPrice?: number | null
+  finalPrice?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  wedding: Prisma.WeddingCreateNestedOneWithoutProvidersInput
+}
+
+export type ProviderUncheckedCreateWithoutBudgetItemsInput = {
+  id?: string
+  name: string
+  category?: $Enums.ProviderCategory
+  status?: $Enums.ProviderStatus
+  contactName?: string | null
+  phone?: string | null
+  email?: string | null
+  website?: string | null
+  estimatedPrice?: number | null
+  finalPrice?: number | null
+  notes?: string | null
+  weddingId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProviderCreateOrConnectWithoutBudgetItemsInput = {
+  where: Prisma.ProviderWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProviderCreateWithoutBudgetItemsInput, Prisma.ProviderUncheckedCreateWithoutBudgetItemsInput>
+}
+
+export type ProviderUpsertWithoutBudgetItemsInput = {
+  update: Prisma.XOR<Prisma.ProviderUpdateWithoutBudgetItemsInput, Prisma.ProviderUncheckedUpdateWithoutBudgetItemsInput>
+  create: Prisma.XOR<Prisma.ProviderCreateWithoutBudgetItemsInput, Prisma.ProviderUncheckedCreateWithoutBudgetItemsInput>
+  where?: Prisma.ProviderWhereInput
+}
+
+export type ProviderUpdateToOneWithWhereWithoutBudgetItemsInput = {
+  where?: Prisma.ProviderWhereInput
+  data: Prisma.XOR<Prisma.ProviderUpdateWithoutBudgetItemsInput, Prisma.ProviderUncheckedUpdateWithoutBudgetItemsInput>
+}
+
+export type ProviderUpdateWithoutBudgetItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProviderCategoryFieldUpdateOperationsInput | $Enums.ProviderCategory
+  status?: Prisma.EnumProviderStatusFieldUpdateOperationsInput | $Enums.ProviderStatus
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  wedding?: Prisma.WeddingUpdateOneRequiredWithoutProvidersNestedInput
+}
+
+export type ProviderUncheckedUpdateWithoutBudgetItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProviderCategoryFieldUpdateOperationsInput | $Enums.ProviderCategory
+  status?: Prisma.EnumProviderStatusFieldUpdateOperationsInput | $Enums.ProviderStatus
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weddingId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ProviderCreateManyWeddingInput = {
   id?: string
   name: string
@@ -731,6 +845,7 @@ export type ProviderUpdateWithoutWeddingInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutProviderNestedInput
 }
 
 export type ProviderUncheckedUpdateWithoutWeddingInput = {
@@ -747,6 +862,7 @@ export type ProviderUncheckedUpdateWithoutWeddingInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProviderNestedInput
 }
 
 export type ProviderUncheckedUpdateManyWithoutWeddingInput = {
@@ -766,6 +882,35 @@ export type ProviderUncheckedUpdateManyWithoutWeddingInput = {
 }
 
 
+/**
+ * Count Type ProviderCountOutputType
+ */
+
+export type ProviderCountOutputType = {
+  budgetItems: number
+}
+
+export type ProviderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  budgetItems?: boolean | ProviderCountOutputTypeCountBudgetItemsArgs
+}
+
+/**
+ * ProviderCountOutputType without action
+ */
+export type ProviderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProviderCountOutputType
+   */
+  select?: Prisma.ProviderCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProviderCountOutputType without action
+ */
+export type ProviderCountOutputTypeCountBudgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BudgetItemWhereInput
+}
+
 
 export type ProviderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -783,6 +928,8 @@ export type ProviderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
+  budgetItems?: boolean | Prisma.Provider$budgetItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProviderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["provider"]>
 
 export type ProviderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -841,6 +988,8 @@ export type ProviderSelectScalar = {
 export type ProviderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "status" | "contactName" | "phone" | "email" | "website" | "estimatedPrice" | "finalPrice" | "notes" | "weddingId" | "createdAt" | "updatedAt", ExtArgs["result"]["provider"]>
 export type ProviderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
+  budgetItems?: boolean | Prisma.Provider$budgetItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProviderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProviderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
@@ -853,6 +1002,7 @@ export type $ProviderPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Provider"
   objects: {
     wedding: Prisma.$WeddingPayload<ExtArgs>
+    budgetItems: Prisma.$BudgetItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1264,6 +1414,7 @@ readonly fields: ProviderFieldRefs;
 export interface Prisma__ProviderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   wedding<T extends Prisma.WeddingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WeddingDefaultArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  budgetItems<T extends Prisma.Provider$budgetItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Provider$budgetItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1700,6 +1851,30 @@ export type ProviderDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Providers to delete.
    */
   limit?: number
+}
+
+/**
+ * Provider.budgetItems
+ */
+export type Provider$budgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BudgetItem
+   */
+  select?: Prisma.BudgetItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BudgetItem
+   */
+  omit?: Prisma.BudgetItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BudgetItemInclude<ExtArgs> | null
+  where?: Prisma.BudgetItemWhereInput
+  orderBy?: Prisma.BudgetItemOrderByWithRelationInput | Prisma.BudgetItemOrderByWithRelationInput[]
+  cursor?: Prisma.BudgetItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BudgetItemScalarFieldEnum | Prisma.BudgetItemScalarFieldEnum[]
 }
 
 /**

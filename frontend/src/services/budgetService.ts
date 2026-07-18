@@ -34,6 +34,8 @@ export type BudgetItem = {
   dueDate: string | null
   paymentDate: string | null
   supplier: string | null
+  providerId: string | null
+  provider?: { id: string; name: string } | null
   notes: string | null
   weddingId: string
   createdAt: string
@@ -90,6 +92,7 @@ export type CreateBudgetItemPayload = {
   dueDate?: string | null
   paymentDate?: string | null
   supplier?: string | null
+  providerId?: string | null
   notes?: string | null
 }
 

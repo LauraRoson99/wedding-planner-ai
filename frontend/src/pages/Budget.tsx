@@ -48,7 +48,11 @@ import type {
   BudgetItemStatus,
   BudgetSummary,
 } from "@/services/budgetService"
+import { getProviders } from "@/services/providerService"
+import type { Provider } from "@/services/providerService"
 import { getWeddingId } from "@/lib/auth"
+
+const NO_PROVIDER = "none"
 
 const categoryLabels: Record<BudgetCategory, string> = {
   VENUE: "Finca / espacio",
@@ -97,6 +101,7 @@ const initialForm = {
   dueDate: "",
   paymentDate: "",
   supplier: "",
+  providerId: "",
   notes: "",
 }
 
@@ -120,6 +125,7 @@ function formatDate(date: string | null) {
 
 export default function Budget() {
   const [budget, setBudget] = useState<BudgetSummary | null>(null)
+  const [providers, setProviders] = useState<Provider[]>([])
   const [totalBudgetInput, setTotalBudgetInput] = useState("")
   const [form, setForm] = useState(initialForm)
   const [isLoading, setIsLoading] = useState(true)
@@ -139,8 +145,12 @@ export default function Budget() {
       setIsLoading(true)
       setError(null)
 
-      const data = await getBudgetSummary(weddingId)
+      const [data, providerList] = await Promise.all([
+        getBudgetSummary(weddingId),
+        getProviders(weddingId).catch(() => [] as Provider[]),
+      ])
       setBudget(data)
+      setProviders(providerList)
       setTotalBudgetInput(String(data.budget.totalAmount || ""))
     } catch (err) {
       setError(
@@ -209,6 +219,7 @@ export default function Budget() {
         dueDate: form.dueDate || null,
         paymentDate: form.paymentDate || null,
         supplier: form.supplier || null,
+        providerId: form.providerId || null,
         notes: form.notes || null,
       })
 
@@ -603,7 +614,37 @@ export default function Budget() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="supplier">Proveedor</Label>
+                  <Label htmlFor="providerId">Proveedor vinculado</Label>
+                  <Select
+                    value={form.providerId || NO_PROVIDER}
+                    onValueChange={(value) =>
+                      setForm((current) => ({
+                        ...current,
+                        providerId: value === NO_PROVIDER ? "" : value,
+                      }))
+                    }
+                  >
+                    <SelectTrigger id="providerId" className="rounded-xl">
+                      <SelectValue placeholder="Sin proveedor" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={NO_PROVIDER}>Sin proveedor</SelectItem>
+                      {providers.map((provider) => (
+                        <SelectItem key={provider.id} value={provider.id}>
+                          {provider.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {providers.length === 0 && (
+                    <p className="text-xs text-muted-foreground">
+                      Aún no tienes proveedores. Créalos en la sección Proveedores o escribe uno abajo.
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="supplier">Proveedor (texto libre)</Label>
                   <Input
                     id="supplier"
                     value={form.supplier}
@@ -613,7 +654,7 @@ export default function Budget() {
                         supplier: event.target.value,
                       }))
                     }
-                    placeholder="Opcional"
+                    placeholder="Si no está en tu lista de proveedores"
                     className="rounded-xl"
                   />
                 </div>
@@ -807,7 +848,12 @@ export default function Budget() {
                             <div>
                               <p className="font-medium">{item.name}</p>
                               <p className="text-xs text-muted-foreground">
-                                {item.supplier ?? "Sin proveedor"}
+                                {item.provider?.name ?? item.supplier ?? "Sin proveedor"}
+                                {item.provider && (
+                                  <span className="ml-1 rounded-full border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] text-rose-700 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-300">
+                                    proveedor
+                                  </span>
+                                )}
                               </p>
                             </div>
                           </td>

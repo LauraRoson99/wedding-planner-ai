@@ -228,6 +228,7 @@ export const BudgetItemScalarFieldEnum = {
   supplier: 'supplier',
   notes: 'notes',
   weddingId: 'weddingId',
+  providerId: 'providerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

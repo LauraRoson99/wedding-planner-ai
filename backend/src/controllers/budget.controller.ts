@@ -56,6 +56,7 @@ const CreateBudgetItemSchema = z.object({
   dueDate: z.coerce.date().nullable().optional(),
   paymentDate: z.coerce.date().nullable().optional(),
   supplier: z.string().nullable().optional(),
+  providerId: z.string().min(1).nullable().optional(),
   notes: z.string().nullable().optional(),
 });
 

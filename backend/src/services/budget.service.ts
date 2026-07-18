@@ -16,6 +16,7 @@ type CreateBudgetItemInput = {
   dueDate?: Date | null | undefined;
   paymentDate?: Date | null | undefined;
   supplier?: string | null | undefined;
+  providerId?: string | null | undefined;
   notes?: string | null | undefined;
 };
 
@@ -29,8 +30,23 @@ type UpdateBudgetItemInput = {
   dueDate?: Date | null | undefined;
   paymentDate?: Date | null | undefined;
   supplier?: string | null | undefined;
+  providerId?: string | null | undefined;
   notes?: string | null | undefined;
 };
+
+const budgetItemInclude = {
+  provider: { select: { id: true, name: true } },
+} as const;
+
+/** Throws 400 if providerId is set but does not belong to the given wedding. */
+async function assertProviderInWedding(providerId: string | null | undefined, weddingId: string) {
+  if (!providerId) return;
+  const provider = await prisma.provider.findFirst({
+    where: { id: providerId, weddingId },
+    select: { id: true },
+  });
+  if (!provider) throw { status: 400, message: "Proveedor no válido" };
+}
 
 export async function getBudgetSummaryService(weddingId: string, userId: string) {
   const wedding = await prisma.wedding.findFirst({
@@ -68,6 +84,7 @@ export async function getBudgetSummaryService(weddingId: string, userId: string)
       { dueDate: "asc" },
       { createdAt: "desc" },
     ],
+    include: budgetItemInclude,
   });
 
   const totalEstimated = items.reduce(
@@ -247,6 +264,8 @@ export async function createBudgetItemService(
     return null;
   }
 
+  await assertProviderInWedding(data.providerId, weddingId);
+
   return prisma.budgetItem.create({
     data: {
       weddingId,
@@ -259,8 +278,10 @@ export async function createBudgetItemService(
       dueDate: data.dueDate ?? null,
       paymentDate: data.paymentDate ?? null,
       supplier: data.supplier ?? null,
+      providerId: data.providerId ?? null,
       notes: data.notes ?? null,
     },
+    include: budgetItemInclude,
   });
 }
 
@@ -292,6 +313,7 @@ export async function updateBudgetItemService(
     dueDate?: Date | null;
     paymentDate?: Date | null;
     supplier?: string | null;
+    providerId?: string | null;
     notes?: string | null;
   } = {};
 
@@ -331,6 +353,11 @@ export async function updateBudgetItemService(
     updateData.supplier = data.supplier;
   }
 
+  if (data.providerId !== undefined) {
+    await assertProviderInWedding(data.providerId, existing.weddingId);
+    updateData.providerId = data.providerId;
+  }
+
   if (data.notes !== undefined) {
     updateData.notes = data.notes;
   }
@@ -338,6 +365,7 @@ export async function updateBudgetItemService(
   return prisma.budgetItem.update({
     where: { id },
     data: updateData,
+    include: budgetItemInclude,
   });
 }
 
