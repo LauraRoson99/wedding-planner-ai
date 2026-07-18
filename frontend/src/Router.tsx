@@ -16,6 +16,8 @@ import PublicRsvp from './pages/PublicRsvp'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 export default function Router() {
   return (
@@ -24,6 +26,8 @@ export default function Router() {
       <Route element={<AppAuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Route>
 
       {/* Public RSVP (sin login, sin layout) */}

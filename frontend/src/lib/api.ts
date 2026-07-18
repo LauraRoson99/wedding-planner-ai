@@ -69,7 +69,11 @@ async function authedFetch(
   init: RequestInit,
   retry = true
 ): Promise<Response> {
-  const isAuthPath = path.startsWith("/auth/");
+  // Unauthenticated auth endpoints (login/register/refresh/logout/forgot/reset)
+  // carry no token and must not trigger the 401-refresh retry. `change-password`
+  // is authenticated, so it goes through the normal token flow.
+  const isAuthPath =
+    path.startsWith("/auth/") && !path.startsWith("/auth/change-password");
   const token = isAuthPath ? null : await getValidToken();
 
   const res = await fetch(`${API_URL}${path}`, {

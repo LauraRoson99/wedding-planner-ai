@@ -1,8 +1,17 @@
 // services/auth.service.ts
-import { randomUUID } from 'crypto';
+import { randomUUID, randomBytes, createHash } from 'crypto';
 import { prisma } from '../db/prisma';
 import { hashPassword, comparePassword } from '../utils/passwords';
 import { signAccess, signRefresh, verifyRefresh } from '../utils/jwt';
+import { sendMail } from '../utils/mailer';
+import { renderPasswordResetEmail } from './password-reset.template';
+import { env } from '../config/env';
+
+const PASSWORD_RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+function hashResetToken(rawToken: string): string {
+  return createHash('sha256').update(rawToken).digest('hex');
+}
 
 /**
  * Signs an access + refresh token pair and persists the refresh token's `jti`
@@ -144,6 +153,76 @@ export async function logout(refreshToken: string) {
   } catch {
     // Ignore: nothing to revoke.
   }
+
+  return { ok: true };
+}
+
+export async function forgotPassword(email: string) {
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  // Do not reveal whether the email exists.
+  if (!user) return { ok: true };
+
+  // Invalidate any previous reset tokens for this user.
+  await prisma.passwordResetToken.deleteMany({ where: { userId: user.id } });
+
+  const rawToken = randomBytes(32).toString('hex');
+  await prisma.passwordResetToken.create({
+    data: {
+      tokenHash: hashResetToken(rawToken),
+      userId: user.id,
+      expiresAt: new Date(Date.now() + PASSWORD_RESET_TTL_MS),
+    },
+  });
+
+  const resetUrl = `${env.appBaseUrl}/reset-password/${rawToken}`;
+  const { subject, html, text } = renderPasswordResetEmail(resetUrl);
+
+  const info = await sendMail({ to: user.email, subject, html, text });
+  if (env.nodeEnv !== 'production') {
+    // Dev aid: surface the link (Ethereal doesn't deliver to real inboxes).
+    console.log(`[password-reset] ${user.email} -> ${resetUrl}`);
+    if (info.previewUrl) console.log(`[password-reset] preview: ${info.previewUrl}`);
+  }
+
+  return { ok: true };
+}
+
+export async function resetPassword(rawToken: string, newPassword: string) {
+  const record = await prisma.passwordResetToken.findUnique({
+    where: { tokenHash: hashResetToken(rawToken) },
+  });
+
+  if (!record || record.expiresAt < new Date()) {
+    throw { status: 400, message: 'El enlace de restablecimiento no es válido o ha caducado' };
+  }
+
+  const hash = await hashPassword(newPassword);
+
+  await prisma.$transaction([
+    prisma.user.update({ where: { id: record.userId }, data: { password: hash } }),
+    // Consume all reset tokens for this user.
+    prisma.passwordResetToken.deleteMany({ where: { userId: record.userId } }),
+    // Revoke every active session — a password reset ends all logins.
+    prisma.refreshToken.deleteMany({ where: { userId: record.userId } }),
+  ]);
+
+  return { ok: true };
+}
+
+export async function changePassword(
+  userId: string,
+  currentPassword: string,
+  newPassword: string
+) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw { status: 401, message: 'Invalid user session' };
+
+  const ok = await comparePassword(currentPassword, user.password);
+  if (!ok) throw { status: 400, message: 'La contraseña actual no es correcta' };
+
+  const hash = await hashPassword(newPassword);
+  await prisma.user.update({ where: { id: userId }, data: { password: hash } });
 
   return { ok: true };
 }
