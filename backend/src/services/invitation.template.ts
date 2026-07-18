@@ -2,6 +2,7 @@ export type InvitationTemplateInput = {
   guestName: string;
   weddingName: string;
   weddingDate: Date | null;
+  rsvpUrl?: string | null;
 };
 
 export type RenderedEmail = {
@@ -45,6 +46,20 @@ export function renderInvitationEmail(input: InvitationTemplateInput): RenderedE
     ? `Será el ${formattedDate}.`
     : 'Muy pronto te confirmaremos la fecha.';
 
+  const rsvpUrl = input.rsvpUrl?.trim() || null;
+
+  const rsvpButtonHtml = rsvpUrl
+    ? `<div style="margin:8px 0 24px;">
+          <a href="${escapeHtml(rsvpUrl)}" style="display:inline-block;background:#be185d;color:#ffffff;text-decoration:none;font-size:15px;font-weight:bold;padding:12px 28px;border-radius:999px;">
+            Confirmar asistencia
+          </a>
+        </div>`
+    : '';
+
+  const rsvpTextLine = rsvpUrl
+    ? `\nConfirma tu asistencia aquí: ${rsvpUrl}\n`
+    : '';
+
   const html = `
   <div style="margin:0;padding:0;background:#fdf2f8;">
     <div style="max-width:560px;margin:0 auto;padding:32px 24px;font-family:Arial,Helvetica,sans-serif;color:#3f3f46;">
@@ -59,6 +74,7 @@ export function renderInvitationEmail(input: InvitationTemplateInput): RenderedE
         <p style="margin:0 0 24px;font-size:16px;line-height:1.6;">
           Te iremos compartiendo todos los detalles. ¡Esperamos verte allí! 💖
         </p>
+        ${rsvpButtonHtml}
         <div style="margin-top:24px;padding-top:16px;border-top:1px solid #f4f4f5;font-size:13px;color:#a1a1aa;">
           Enviado con cariño desde Planifica2
         </div>
@@ -72,7 +88,7 @@ export function renderInvitationEmail(input: InvitationTemplateInput): RenderedE
     `Nos hace mucha ilusión invitarte a ${weddingName}. ${dateLineText}`,
     '',
     'Te iremos compartiendo todos los detalles. ¡Esperamos verte allí!',
-    '',
+    rsvpTextLine,
     'Enviado con cariño desde Planifica2',
   ].join('\n');
 

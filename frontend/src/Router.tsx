@@ -12,6 +12,8 @@ import Budget from './pages/Budget'
 import Providers from './pages/Providers'
 import Settings from './pages/Settings'
 
+import PublicRsvp from './pages/PublicRsvp'
+
 import Login from './pages/Login'
 import Register from './pages/Register'
 
@@ -23,6 +25,9 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
+
+      {/* Public RSVP (sin login, sin layout) */}
+      <Route path="/rsvp/:token" element={<PublicRsvp />} />
 
       {/* App routes (con sidebar) -> protegidas */}
       <Route

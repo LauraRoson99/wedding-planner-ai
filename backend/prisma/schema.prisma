@@ -146,6 +146,8 @@ model Guest {
   invitationSent   Boolean   @default(false)
   invitationSentAt DateTime?
 
+  rsvpToken String? @unique
+
   parentId   String?
   parent     Guest?   @relation("GuestCompanions", fields: [parentId], references: [id], onDelete: Cascade)
   companions Guest[]  @relation("GuestCompanions")

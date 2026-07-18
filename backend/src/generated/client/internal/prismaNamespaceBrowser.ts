@@ -138,6 +138,7 @@ export const GuestScalarFieldEnum = {
   email: 'email',
   invitationSent: 'invitationSent',
   invitationSentAt: 'invitationSentAt',
+  rsvpToken: 'rsvpToken',
   parentId: 'parentId'
 } as const
 

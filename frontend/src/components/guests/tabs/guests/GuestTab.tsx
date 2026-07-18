@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Trash2, Pencil, UserPlus, UsersRound, Plus, X,
-  Upload, Send, SendHorizonal, CheckSquare, Square, Download,
+  Upload, Send, SendHorizonal, CheckSquare, Square, Download, Link2, Check,
 } from "lucide-react";
 import { getWeddingId } from "@/lib/auth";
 
@@ -85,6 +85,7 @@ export default function GuestTab() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [sending, setSending] = useState(false);
   const [inviteResult, setInviteResult] = useState<SendInvitationsResult | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Modal importar CSV
   const [csvOpen, setCsvOpen] = useState(false);
@@ -171,6 +172,20 @@ export default function GuestTab() {
       setError(e?.message ?? "Error enviando invitaciones");
     } finally {
       setSending(false);
+    }
+  }
+
+  async function copyRsvpLink(guestId: string) {
+    try {
+      const res = await apiPost<{ token: string; url: string }>(
+        `/guests/${encodeURIComponent(guestId)}/rsvp-link`,
+        {}
+      );
+      await navigator.clipboard.writeText(res.url);
+      setCopiedId(guestId);
+      setTimeout(() => setCopiedId((c) => (c === guestId ? null : c)), 2000);
+    } catch (e: any) {
+      setError(e?.message ?? "No se pudo copiar el enlace");
     }
   }
 
@@ -668,6 +683,12 @@ export default function GuestTab() {
               </div>
 
               <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon"
+                  title={copiedId === guest.id ? "¡Enlace copiado!" : "Copiar enlace de RSVP"}
+                  onClick={() => copyRsvpLink(guest.id)}
+                  className={copiedId === guest.id ? "text-green-600" : "text-muted-foreground"}>
+                  {copiedId === guest.id ? <Check className="size-4" /> : <Link2 className="size-4" />}
+                </Button>
                 {guest.invitationSent && (
                   <Button variant="ghost" size="icon" title="Desmarcar enviada"
                     onClick={() => markUnsent([guest.id])} className="text-muted-foreground">

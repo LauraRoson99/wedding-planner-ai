@@ -53,6 +53,7 @@ export type GuestMinAggregateOutputType = {
   email: string | null
   invitationSent: boolean | null
   invitationSentAt: Date | null
+  rsvpToken: string | null
   parentId: string | null
 }
 
@@ -75,6 +76,7 @@ export type GuestMaxAggregateOutputType = {
   email: string | null
   invitationSent: boolean | null
   invitationSentAt: Date | null
+  rsvpToken: string | null
   parentId: string | null
 }
 
@@ -98,6 +100,7 @@ export type GuestCountAggregateOutputType = {
   email: number
   invitationSent: number
   invitationSentAt: number
+  rsvpToken: number
   parentId: number
   _all: number
 }
@@ -130,6 +133,7 @@ export type GuestMinAggregateInputType = {
   email?: true
   invitationSent?: true
   invitationSentAt?: true
+  rsvpToken?: true
   parentId?: true
 }
 
@@ -152,6 +156,7 @@ export type GuestMaxAggregateInputType = {
   email?: true
   invitationSent?: true
   invitationSentAt?: true
+  rsvpToken?: true
   parentId?: true
 }
 
@@ -175,6 +180,7 @@ export type GuestCountAggregateInputType = {
   email?: true
   invitationSent?: true
   invitationSentAt?: true
+  rsvpToken?: true
   parentId?: true
   _all?: true
 }
@@ -285,6 +291,7 @@ export type GuestGroupByOutputType = {
   email: string | null
   invitationSent: boolean
   invitationSentAt: Date | null
+  rsvpToken: string | null
   parentId: string | null
   _count: GuestCountAggregateOutputType | null
   _avg: GuestAvgAggregateOutputType | null
@@ -331,6 +338,7 @@ export type GuestWhereInput = {
   email?: Prisma.StringNullableFilter<"Guest"> | string | null
   invitationSent?: Prisma.BoolFilter<"Guest"> | boolean
   invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null
+  rsvpToken?: Prisma.StringNullableFilter<"Guest"> | string | null
   parentId?: Prisma.StringNullableFilter<"Guest"> | string | null
   wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>
   group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
@@ -359,6 +367,7 @@ export type GuestOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   invitationSent?: Prisma.SortOrder
   invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rsvpToken?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   wedding?: Prisma.WeddingOrderByWithRelationInput
   group?: Prisma.GroupOrderByWithRelationInput
@@ -369,6 +378,7 @@ export type GuestOrderByWithRelationInput = {
 
 export type GuestWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  rsvpToken?: string
   tableId_seatNumber?: Prisma.GuestTableIdSeatNumberCompoundUniqueInput
   AND?: Prisma.GuestWhereInput | Prisma.GuestWhereInput[]
   OR?: Prisma.GuestWhereInput[]
@@ -397,7 +407,7 @@ export type GuestWhereUniqueInput = Prisma.AtLeast<{
   table?: Prisma.XOR<Prisma.TableNullableScalarRelationFilter, Prisma.TableWhereInput> | null
   parent?: Prisma.XOR<Prisma.GuestNullableScalarRelationFilter, Prisma.GuestWhereInput> | null
   companions?: Prisma.GuestListRelationFilter
-}, "id" | "tableId_seatNumber">
+}, "id" | "rsvpToken" | "tableId_seatNumber">
 
 export type GuestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -419,6 +429,7 @@ export type GuestOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   invitationSent?: Prisma.SortOrder
   invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rsvpToken?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.GuestCountOrderByAggregateInput
   _avg?: Prisma.GuestAvgOrderByAggregateInput
@@ -450,6 +461,7 @@ export type GuestScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
   invitationSent?: Prisma.BoolWithAggregatesFilter<"Guest"> | boolean
   invitationSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Guest"> | Date | string | null
+  rsvpToken?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null
 }
 
@@ -470,6 +482,7 @@ export type GuestCreateInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -497,6 +510,7 @@ export type GuestUncheckedCreateInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -518,6 +532,7 @@ export type GuestUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -545,6 +560,7 @@ export type GuestUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -569,6 +585,7 @@ export type GuestCreateManyInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
 }
 
@@ -589,6 +606,7 @@ export type GuestUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GuestUncheckedUpdateManyInput = {
@@ -611,6 +629,7 @@ export type GuestUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -662,6 +681,7 @@ export type GuestCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   invitationSent?: Prisma.SortOrder
   invitationSentAt?: Prisma.SortOrder
+  rsvpToken?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -688,6 +708,7 @@ export type GuestMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   invitationSent?: Prisma.SortOrder
   invitationSentAt?: Prisma.SortOrder
+  rsvpToken?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -710,6 +731,7 @@ export type GuestMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   invitationSent?: Prisma.SortOrder
   invitationSentAt?: Prisma.SortOrder
+  rsvpToken?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
 }
 
@@ -951,6 +973,7 @@ export type GuestCreateWithoutWeddingInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -976,6 +999,7 @@ export type GuestUncheckedCreateWithoutWeddingInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1029,6 +1053,7 @@ export type GuestScalarWhereInput = {
   email?: Prisma.StringNullableFilter<"Guest"> | string | null
   invitationSent?: Prisma.BoolFilter<"Guest"> | boolean
   invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null
+  rsvpToken?: Prisma.StringNullableFilter<"Guest"> | string | null
   parentId?: Prisma.StringNullableFilter<"Guest"> | string | null
 }
 
@@ -1049,6 +1074,7 @@ export type GuestCreateWithoutCompanionsInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -1075,6 +1101,7 @@ export type GuestUncheckedCreateWithoutCompanionsInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
 }
 
@@ -1100,6 +1127,7 @@ export type GuestCreateWithoutParentInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
@@ -1126,6 +1154,7 @@ export type GuestUncheckedCreateWithoutParentInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
 
@@ -1167,6 +1196,7 @@ export type GuestUpdateWithoutCompanionsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -1193,6 +1223,7 @@ export type GuestUncheckedUpdateWithoutCompanionsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1229,6 +1260,7 @@ export type GuestCreateWithoutGroupInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   table?: Prisma.TableCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -1254,6 +1286,7 @@ export type GuestUncheckedCreateWithoutGroupInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1301,6 +1334,7 @@ export type GuestCreateWithoutTableInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput
   group?: Prisma.GroupCreateNestedOneWithoutGuestsInput
   parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput
@@ -1326,6 +1360,7 @@ export type GuestUncheckedCreateWithoutTableInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
   companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1375,6 +1410,7 @@ export type GuestCreateManyWeddingInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
 }
 
@@ -1395,6 +1431,7 @@ export type GuestUpdateWithoutWeddingInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1420,6 +1457,7 @@ export type GuestUncheckedUpdateWithoutWeddingInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1443,6 +1481,7 @@ export type GuestUncheckedUpdateManyWithoutWeddingInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1466,6 +1505,7 @@ export type GuestCreateManyParentInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
 }
 
 export type GuestUpdateWithoutParentInput = {
@@ -1485,6 +1525,7 @@ export type GuestUpdateWithoutParentInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
@@ -1511,6 +1552,7 @@ export type GuestUncheckedUpdateWithoutParentInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
 
@@ -1534,6 +1576,7 @@ export type GuestUncheckedUpdateManyWithoutParentInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GuestCreateManyGroupInput = {
@@ -1555,6 +1598,7 @@ export type GuestCreateManyGroupInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
 }
 
@@ -1575,6 +1619,7 @@ export type GuestUpdateWithoutGroupInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   table?: Prisma.TableUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1600,6 +1645,7 @@ export type GuestUncheckedUpdateWithoutGroupInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1623,6 +1669,7 @@ export type GuestUncheckedUpdateManyWithoutGroupInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1645,6 +1692,7 @@ export type GuestCreateManyTableInput = {
   email?: string | null
   invitationSent?: boolean
   invitationSentAt?: Date | string | null
+  rsvpToken?: string | null
   parentId?: string | null
 }
 
@@ -1665,6 +1713,7 @@ export type GuestUpdateWithoutTableInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput
   group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput
   parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput
@@ -1690,6 +1739,7 @@ export type GuestUncheckedUpdateWithoutTableInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1713,6 +1763,7 @@ export type GuestUncheckedUpdateManyWithoutTableInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1767,6 +1818,7 @@ export type GuestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   email?: boolean
   invitationSent?: boolean
   invitationSentAt?: boolean
+  rsvpToken?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1796,6 +1848,7 @@ export type GuestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   email?: boolean
   invitationSent?: boolean
   invitationSentAt?: boolean
+  rsvpToken?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1823,6 +1876,7 @@ export type GuestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   email?: boolean
   invitationSent?: boolean
   invitationSentAt?: boolean
+  rsvpToken?: boolean
   parentId?: boolean
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1850,10 +1904,11 @@ export type GuestSelectScalar = {
   email?: boolean
   invitationSent?: boolean
   invitationSentAt?: boolean
+  rsvpToken?: boolean
   parentId?: boolean
 }
 
-export type GuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "weddingId" | "groupId" | "tableId" | "seatNumber" | "role" | "rsvp" | "diet" | "dietNotes" | "allergies" | "notes" | "ageGroup" | "phone" | "email" | "invitationSent" | "invitationSentAt" | "parentId", ExtArgs["result"]["guest"]>
+export type GuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "weddingId" | "groupId" | "tableId" | "seatNumber" | "role" | "rsvp" | "diet" | "dietNotes" | "allergies" | "notes" | "ageGroup" | "phone" | "email" | "invitationSent" | "invitationSentAt" | "rsvpToken" | "parentId", ExtArgs["result"]["guest"]>
 export type GuestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Guest$groupArgs<ExtArgs>
@@ -1904,6 +1959,7 @@ export type $GuestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     email: string | null
     invitationSent: boolean
     invitationSentAt: Date | null
+    rsvpToken: string | null
     parentId: string | null
   }, ExtArgs["result"]["guest"]>
   composites: {}
@@ -2352,6 +2408,7 @@ export interface GuestFieldRefs {
   readonly email: Prisma.FieldRef<"Guest", 'String'>
   readonly invitationSent: Prisma.FieldRef<"Guest", 'Boolean'>
   readonly invitationSentAt: Prisma.FieldRef<"Guest", 'DateTime'>
+  readonly rsvpToken: Prisma.FieldRef<"Guest", 'String'>
   readonly parentId: Prisma.FieldRef<"Guest", 'String'>
 }
     

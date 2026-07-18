@@ -11,10 +11,14 @@ import { dashboard } from "./dashboard.routes";
 import { budget } from "./budget.routes";
 import { provider } from "./provider.routes";
 import { wedding } from "./wedding.routes";
+import { publicRoutes } from "./public.routes";
 
 export const routes = Router();
 routes.use(health);
 routes.use(auth);
+// Public routes must be registered before the protected routers: those mount
+// `router.use(requireAuth)` at root, which would otherwise intercept everything.
+routes.use(publicRoutes);
 routes.use(guest);
 routes.use(group);
 routes.use(table);

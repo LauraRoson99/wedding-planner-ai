@@ -1,8 +1,28 @@
+import { randomUUID } from "crypto";
 import { PrismaClient } from "../generated/client/client";
 import { sendMail } from "../utils/mailer";
 import { renderInvitationEmail } from "./invitation.template";
+import { env } from "../config/env";
 
 const prisma = new PrismaClient();
+
+export function buildRsvpUrl(token: string) {
+  return `${env.appBaseUrl}/rsvp/${token}`;
+}
+
+/** Returns the guest's RSVP token, generating and persisting one if missing. */
+export async function ensureRsvpToken(id: string): Promise<string | null> {
+  const guest = await prisma.guest.findUnique({
+    where: { id },
+    select: { id: true, rsvpToken: true, role: true },
+  });
+  if (!guest || guest.role !== "PRIMARY") return null;
+  if (guest.rsvpToken) return guest.rsvpToken;
+
+  const token = randomUUID();
+  await prisma.guest.update({ where: { id }, data: { rsvpToken: token } });
+  return token;
+}
 
 export function listGuests(weddingId: string) {
   return prisma.guest.findMany({
@@ -55,6 +75,7 @@ export async function createGuestWithCompanions(
         groupId: groupId ?? null,
         tableId: tableId ?? null,
         allergies: rest.allergies ?? [],
+        rsvpToken: randomUUID(),
         ...rest,
       },
     });
@@ -268,7 +289,7 @@ export async function sendInvitations(
 
   const guests = await prisma.guest.findMany({
     where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
-    select: { id: true, name: true, email: true },
+    select: { id: true, name: true, email: true, rsvpToken: true },
   });
 
   const result: SendInvitationsResult = {
@@ -285,10 +306,17 @@ export async function sendInvitations(
       continue;
     }
 
+    let token = guest.rsvpToken;
+    if (!token) {
+      token = randomUUID();
+      await prisma.guest.update({ where: { id: guest.id }, data: { rsvpToken: token } });
+    }
+
     const { subject, html, text } = renderInvitationEmail({
       guestName: guest.name,
       weddingName: wedding.name,
       weddingDate: wedding.date,
+      rsvpUrl: buildRsvpUrl(token),
     });
 
     try {
@@ -311,4 +339,81 @@ export async function sendInvitations(
   }
 
   return result;
+}
+
+// ── Public RSVP (no auth, accessed by token) ────────────────────
+
+type RsvpStatusValue = "PENDING" | "CONFIRMED" | "DECLINED";
+type DietValue = "NONE" | "VEGETARIAN" | "VEGAN" | "HALAL" | "KOSHER" | "OTHER";
+
+export type SubmitRsvpInput = {
+  rsvp: RsvpStatusValue;
+  diet?: DietValue;
+  dietNotes?: string | null;
+  allergies?: string[];
+  companions?: { id: string; rsvp: RsvpStatusValue }[];
+};
+
+export async function getRsvpByToken(token: string) {
+  const guest = await prisma.guest.findFirst({
+    where: { rsvpToken: token, role: "PRIMARY" },
+    select: {
+      id: true,
+      name: true,
+      rsvp: true,
+      diet: true,
+      dietNotes: true,
+      allergies: true,
+      wedding: { select: { name: true, date: true } },
+      companions: {
+        select: { id: true, name: true, ageGroup: true, rsvp: true },
+        orderBy: { name: "asc" },
+      },
+    },
+  });
+
+  if (!guest) return null;
+
+  return {
+    guest: {
+      id: guest.id,
+      name: guest.name,
+      rsvp: guest.rsvp,
+      diet: guest.diet,
+      dietNotes: guest.dietNotes,
+      allergies: guest.allergies,
+    },
+    wedding: guest.wedding,
+    companions: guest.companions,
+  };
+}
+
+export async function submitRsvpByToken(token: string, data: SubmitRsvpInput) {
+  const guest = await prisma.guest.findFirst({
+    where: { rsvpToken: token, role: "PRIMARY" },
+    select: { id: true },
+  });
+  if (!guest) return null;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.guest.update({
+      where: { id: guest.id },
+      data: {
+        rsvp: data.rsvp,
+        ...(data.diet !== undefined && { diet: data.diet }),
+        ...(data.dietNotes !== undefined && { dietNotes: data.dietNotes }),
+        ...(data.allergies !== undefined && { allergies: data.allergies }),
+      },
+    });
+
+    for (const companion of data.companions ?? []) {
+      // updateMany with the parentId guard ensures the companion belongs to this guest.
+      await tx.guest.updateMany({
+        where: { id: companion.id, parentId: guest.id },
+        data: { rsvp: companion.rsvp },
+      });
+    }
+  });
+
+  return { ok: true };
 }

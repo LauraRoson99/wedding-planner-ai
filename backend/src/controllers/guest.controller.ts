@@ -154,6 +154,17 @@ export async function markInvitationsNotSent(req: Request, res: Response, next: 
   }
 }
 
+export async function getRsvpLink(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { id } = IdParamSchema.parse(req.params);
+    const token = await svc.ensureRsvpToken(id);
+    if (!token) return res.status(404).json({ error: "Guest not found" });
+    res.json({ token, url: svc.buildRsvpUrl(token) });
+  } catch (e) {
+    next(e);
+  }
+}
+
 export async function sendInvitations(req: Request, res: Response, next: NextFunction) {
   try {
     const { weddingId } = QueryWeddingSchema.parse(req.query);

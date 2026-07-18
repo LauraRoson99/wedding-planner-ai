@@ -3,6 +3,8 @@ import 'dotenv/config';
 export const env = {
   port: Number(process.env.PORT || 4000),
   nodeEnv: process.env.NODE_ENV || 'development',
+  // Public base URL of the frontend, used to build guest-facing links (e.g. RSVP).
+  appBaseUrl: (process.env.APP_BASE_URL || 'http://localhost:5173').replace(/\/+$/, ''),
   jwt: {
     accessSecret: process.env.JWT_ACCESS_SECRET || 'change_me',
     refreshSecret: process.env.JWT_REFRESH_SECRET || 'change_me',
