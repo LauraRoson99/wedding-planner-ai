@@ -1,5 +1,4 @@
-import { PrismaClient } from "../generated/client/client";
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 export function listGroups(weddingId: string) {
   return prisma.group.findMany({

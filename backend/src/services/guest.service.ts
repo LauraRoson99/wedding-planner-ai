@@ -1,10 +1,8 @@
 import { randomUUID } from "crypto";
-import { PrismaClient } from "../generated/client/client";
 import { sendMail } from "../utils/mailer";
 import { renderInvitationEmail } from "./invitation.template";
 import { env } from "../config/env";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 export function buildRsvpUrl(token: string) {
   return `${env.appBaseUrl}/rsvp/${token}`;

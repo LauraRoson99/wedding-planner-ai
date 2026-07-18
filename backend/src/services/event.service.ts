@@ -1,6 +1,4 @@
-import { PrismaClient } from "../generated/client/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 export async function getEventsService(weddingId: string) {
   return prisma.event.findMany({

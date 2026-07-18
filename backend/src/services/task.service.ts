@@ -1,11 +1,9 @@
 import {
-  PrismaClient,
   TaskCategory,
   TaskPriority,
   TaskStatus,
 } from "../generated/client/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 export async function getTasksService(weddingId: string) {
   return prisma.task.findMany({

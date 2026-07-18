@@ -1,11 +1,9 @@
 import {
-    PrismaClient,
     ProviderStatus,
     RsvpStatus,
     TaskStatus,
 } from "../generated/client/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 export async function getDashboardSummaryService(weddingId: string, userId: string) {
     const wedding = await prisma.wedding.findFirst({

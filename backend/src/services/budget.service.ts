@@ -1,10 +1,8 @@
 import {
   BudgetCategory,
   BudgetItemStatus,
-  PrismaClient,
 } from "../generated/client/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../db/prisma";
 
 type CreateBudgetItemInput = {
   name: string;
