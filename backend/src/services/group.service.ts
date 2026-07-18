@@ -8,9 +8,9 @@ export function listGroups(weddingId: string) {
   });
 }
 
-export function getGroupById(groupId: string) {
-  return prisma.group.findUnique({
-    where: { id: groupId },
+export function getGroupById(groupId: string, userId: string) {
+  return prisma.group.findFirst({
+    where: { id: groupId, wedding: { ownerId: userId } },
     include: {
       guests: {
         select: {

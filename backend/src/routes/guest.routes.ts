@@ -12,10 +12,12 @@ import {
   getRsvpLink,
 } from "../controllers/guest.controller";
 import { requireAuth } from "../middleware/auth";
+import { requireWeddingOwnership } from "../middleware/weddingOwnership";
 
 export const guest = Router();
 
 guest.use(requireAuth);
+guest.use(requireWeddingOwnership);
 
 guest.get("/guests", getGuests);
 guest.get("/guests/:id", getGuest);

@@ -34,6 +34,11 @@ function toHttpErrorMessage(error: unknown) {
   return "Unexpected error";
 }
 
+function getUserId(req: Request): string | null {
+  const user = (req as any).user;
+  return user?.userId ?? user?.id ?? user?.sub ?? null;
+}
+
 export async function getTables(req: Request, res: Response, next: NextFunction) {
   try {
     const { weddingId } = QueryWeddingSchema.parse(req.query);
@@ -57,7 +62,10 @@ export async function getTablePeople(req: Request, res: Response, next: NextFunc
 export async function getTable(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
-    const table = await svc.getTableById(id);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const table = await svc.getTableById(id, userId);
 
     if (!table) {
       return res.status(404).json({ error: "Table not found" });
@@ -84,7 +92,10 @@ export async function putTable(req: Request, res: Response, next: NextFunction) 
   try {
     const { id } = IdParamSchema.parse(req.params);
     const payload = UpdateTableSchema.parse(req.body);
-    const table = await svc.updateTable(id, payload);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const table = await svc.updateTable(id, userId, payload);
     res.json(table);
   } catch (e) {
     const message = toHttpErrorMessage(e);
@@ -104,7 +115,10 @@ export async function putTable(req: Request, res: Response, next: NextFunction) 
 export async function deleteTable(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
-    await svc.deleteTable(id);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    await svc.deleteTable(id, userId);
     res.status(204).send();
   } catch (e) {
     const message = toHttpErrorMessage(e);
@@ -121,8 +135,10 @@ export async function assignSeat(req: Request, res: Response, next: NextFunction
   try {
     const { tableId, seatNumber } = TableIdSeatParamSchema.parse(req.params);
     const { guestId } = AssignSeatSchema.parse(req.body);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
 
-    const updatedGuest = await svc.assignGuestToSeat(tableId, seatNumber, guestId);
+    const updatedGuest = await svc.assignGuestToSeat(tableId, userId, seatNumber, guestId);
     res.json(updatedGuest);
   } catch (e) {
     const message = toHttpErrorMessage(e);
@@ -148,7 +164,10 @@ export async function assignSeat(req: Request, res: Response, next: NextFunction
 export async function clearSeat(req: Request, res: Response, next: NextFunction) {
   try {
     const { tableId, seatNumber } = TableIdSeatParamSchema.parse(req.params);
-    const result = await svc.clearSeat(tableId, seatNumber);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const result = await svc.clearSeat(tableId, userId, seatNumber);
     res.json(result);
   } catch (e) {
     next(e);
@@ -158,7 +177,10 @@ export async function clearSeat(req: Request, res: Response, next: NextFunction)
 export async function clearTable(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
-    const result = await svc.clearTable(id);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const result = await svc.clearTable(id, userId);
     res.json(result);
   } catch (e) {
     next(e);

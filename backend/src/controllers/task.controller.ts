@@ -22,6 +22,11 @@ function getParamId(req: Request): string | null {
   return id;
 }
 
+function getUserId(req: Request): string | null {
+  const user = (req as any).user;
+  return user?.userId ?? user?.id ?? user?.sub ?? null;
+}
+
 function isValidPriority(value: unknown): value is TaskPriority {
   return value === "LOW" || value === "MEDIUM" || value === "HIGH";
 }
@@ -88,7 +93,12 @@ export async function getTaskById(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
-    const task = await getTaskByIdService(id);
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
+    const task = await getTaskByIdService(id, userId);
 
     if (!task) {
       return res.status(404).json({ message: "Tarea no encontrada" });
@@ -186,10 +196,15 @@ export async function updateTask(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
     const { title, notes, completed, dueDate, priority, status, category } =
       req.body;
 
-    const existingTask = await getTaskByIdService(id);
+    const existingTask = await getTaskByIdService(id, userId);
 
     if (!existingTask) {
       return res.status(404).json({ message: "Tarea no encontrada" });
@@ -280,7 +295,12 @@ export async function deleteTask(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
-    const existingTask = await getTaskByIdService(id);
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
+    const existingTask = await getTaskByIdService(id, userId);
 
     if (!existingTask) {
       return res.status(404).json({ message: "Tarea no encontrada" });

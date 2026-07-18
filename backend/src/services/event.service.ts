@@ -10,9 +10,9 @@ export async function getEventsService(weddingId: string) {
   });
 }
 
-export async function getEventByIdService(id: string) {
-  return prisma.event.findUnique({
-    where: { id },
+export async function getEventByIdService(id: string, userId: string) {
+  return prisma.event.findFirst({
+    where: { id, wedding: { ownerId: userId } },
   });
 }
 

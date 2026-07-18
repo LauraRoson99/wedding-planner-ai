@@ -7,10 +7,12 @@ import {
   deleteTask,
 } from "../controllers/task.controller";
 import { requireAuth } from "../middleware/auth";
+import { requireWeddingOwnership } from "../middleware/weddingOwnership";
 
 export const task = Router();
 
 task.use(requireAuth);
+task.use(requireWeddingOwnership);
 
 task.get("/tasks", getTasks);
 task.get("/tasks/:id", getTaskById);

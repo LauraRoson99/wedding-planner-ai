@@ -17,6 +17,11 @@ function getParamId(req: Request): string | null {
   return id;
 }
 
+function getUserId(req: Request): string | null {
+  const user = (req as any).user;
+  return user?.userId ?? user?.id ?? user?.sub ?? null;
+}
+
 function parseRequiredDate(value: unknown): Date | null {
   if (!value || typeof value !== "string") return null;
 
@@ -58,7 +63,12 @@ export async function getEventById(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
-    const event = await getEventByIdService(id);
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
+    const event = await getEventByIdService(id, userId);
 
     if (!event) {
       return res.status(404).json({ message: "Evento no encontrado" });
@@ -130,9 +140,14 @@ export async function updateEvent(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
     const { title, date, time, location, description } = req.body;
 
-    const existingEvent = await getEventByIdService(id);
+    const existingEvent = await getEventByIdService(id, userId);
 
     if (!existingEvent) {
       return res.status(404).json({ message: "Evento no encontrado" });
@@ -206,7 +221,12 @@ export async function deleteEvent(req: Request, res: Response) {
       return res.status(400).json({ message: "id es obligatorio" });
     }
 
-    const existingEvent = await getEventByIdService(id);
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Sesión no válida" });
+    }
+
+    const existingEvent = await getEventByIdService(id, userId);
 
     if (!existingEvent) {
       return res.status(404).json({ message: "Evento no encontrado" });

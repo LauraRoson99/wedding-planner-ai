@@ -1,11 +1,13 @@
 import { Router } from "express";
 
 import { requireAuth } from "../middleware/auth";
+import { requireWeddingOwnership } from "../middleware/weddingOwnership";
 import { assignSeat, clearSeat, clearTable, deleteTable, getTable, getTablePeople, getTables, postTable, putTable } from "../controllers/table.controller";
 
 export const table = Router();
 
 table.use(requireAuth);
+table.use(requireWeddingOwnership);
 
 table.get("/tables", getTables);
 table.get("/tables/people", getTablePeople);

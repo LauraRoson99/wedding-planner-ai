@@ -16,9 +16,9 @@ export async function getTasksService(weddingId: string) {
   });
 }
 
-export async function getTaskByIdService(id: string) {
-  return prisma.task.findUnique({
-    where: { id },
+export async function getTaskByIdService(id: string, userId: string) {
+  return prisma.task.findFirst({
+    where: { id, wedding: { ownerId: userId } },
   });
 }
 

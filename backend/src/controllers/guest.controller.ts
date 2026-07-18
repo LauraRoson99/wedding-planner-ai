@@ -9,6 +9,11 @@ const IdParamSchema = z.object({
 
 const QueryWeddingSchema = z.object({ weddingId: z.string().min(1) });
 
+function getUserId(req: Request): string | null {
+  const user = (req as any).user;
+  return user?.userId ?? user?.id ?? user?.sub ?? null;
+}
+
 const CompanionSchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1),
@@ -67,7 +72,10 @@ export async function getGuests(req: Request, res: Response, next: NextFunction)
 export async function getGuest(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
-    const guest = await svc.getGuestById(id);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const guest = await svc.getGuestById(id, userId);
     if (!guest) return res.status(404).json({ error: "Guest not found" });
     res.json(guest);
   } catch (e) {
@@ -90,6 +98,12 @@ export async function putGuest(req: Request, res: Response, next: NextFunction) 
   try {
     const { id } = IdParamSchema.parse(req.params);
     const data = UpdateGuestSchema.parse(req.body);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const existing = await svc.getGuestById(id, userId);
+    if (!existing) return res.status(404).json({ error: "Guest not found" });
+
     const guest = await svc.updateGuestWithCompanions(id, data);
     res.json(guest);
   } catch (e) {
@@ -100,6 +114,12 @@ export async function putGuest(req: Request, res: Response, next: NextFunction) 
 export async function deleteGuest(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const existing = await svc.getGuestById(id, userId);
+    if (!existing) return res.status(404).json({ error: "Guest not found" });
+
     await svc.deleteGuest(id);
     res.status(204).send();
   } catch (e) {
@@ -157,7 +177,10 @@ export async function markInvitationsNotSent(req: Request, res: Response, next: 
 export async function getRsvpLink(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = IdParamSchema.parse(req.params);
-    const token = await svc.ensureRsvpToken(id);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const token = await svc.ensureRsvpToken(id, userId);
     if (!token) return res.status(404).json({ error: "Guest not found" });
     res.json({ token, url: svc.buildRsvpUrl(token) });
   } catch (e) {

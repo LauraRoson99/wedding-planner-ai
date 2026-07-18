@@ -7,10 +7,12 @@ import {
   updateEvent,
 } from "../controllers/event.controller";
 import { requireAuth } from "../middleware/auth";
+import { requireWeddingOwnership } from "../middleware/weddingOwnership";
 
 export const event = Router();
 
 event.use(requireAuth);
+event.use(requireWeddingOwnership);
 
 event.get("/events", getEvents);
 event.get("/events/:id", getEventById);

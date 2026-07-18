@@ -9,9 +9,9 @@ export function buildRsvpUrl(token: string) {
 }
 
 /** Returns the guest's RSVP token, generating and persisting one if missing. */
-export async function ensureRsvpToken(id: string): Promise<string | null> {
-  const guest = await prisma.guest.findUnique({
-    where: { id },
+export async function ensureRsvpToken(id: string, userId: string): Promise<string | null> {
+  const guest = await prisma.guest.findFirst({
+    where: { id, wedding: { ownerId: userId } },
     select: { id: true, rsvpToken: true, role: true },
   });
   if (!guest || guest.role !== "PRIMARY") return null;
@@ -39,9 +39,9 @@ export function listGuests(weddingId: string) {
   });
 }
 
-export function getGuestById(id: string) {
-  return prisma.guest.findUnique({
-    where: { id },
+export function getGuestById(id: string, userId: string) {
+  return prisma.guest.findFirst({
+    where: { id, wedding: { ownerId: userId } },
     include: {
       group: true,
       table: true,

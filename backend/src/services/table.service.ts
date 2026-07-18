@@ -32,9 +32,9 @@ export function listTablePeople(weddingId: string) {
   });
 }
 
-export function getTableById(id: string) {
-  return prisma.table.findUnique({
-    where: { id },
+export function getTableById(id: string, userId: string) {
+  return prisma.table.findFirst({
+    where: { id, wedding: { ownerId: userId } },
     include: {
       guests: {
         include: {
@@ -72,10 +72,11 @@ export function createTable(weddingId: string, data: { name: string; seats: numb
 
 export async function updateTable(
   id: string,
+  userId: string,
   data: { name?: string; seats?: number }
 ) {
-  const existing = await prisma.table.findUnique({
-    where: { id },
+  const existing = await prisma.table.findFirst({
+    where: { id, wedding: { ownerId: userId } },
     include: {
       guests: true,
     },
@@ -117,10 +118,10 @@ export async function updateTable(
   });
 }
 
-export async function deleteTable(id: string) {
+export async function deleteTable(id: string, userId: string) {
   return prisma.$transaction(async (tx) => {
-    const existing = await tx.table.findUnique({
-      where: { id },
+    const existing = await tx.table.findFirst({
+      where: { id, wedding: { ownerId: userId } },
     });
 
     if (!existing) {
@@ -145,12 +146,13 @@ export async function deleteTable(id: string) {
 
 export async function assignGuestToSeat(
   tableId: string,
+  userId: string,
   seatNumber: number,
   guestId: string
 ) {
   return prisma.$transaction(async (tx) => {
-    const table = await tx.table.findUnique({
-      where: { id: tableId },
+    const table = await tx.table.findFirst({
+      where: { id: tableId, wedding: { ownerId: userId } },
     });
 
     if (!table) {
@@ -198,11 +200,12 @@ export async function assignGuestToSeat(
   });
 }
 
-export async function clearSeat(tableId: string, seatNumber: number) {
+export async function clearSeat(tableId: string, userId: string, seatNumber: number) {
   await prisma.guest.updateMany({
     where: {
       tableId,
       seatNumber,
+      table: { wedding: { ownerId: userId } },
     },
     data: {
       tableId: null,
@@ -213,10 +216,11 @@ export async function clearSeat(tableId: string, seatNumber: number) {
   return { ok: true };
 }
 
-export async function clearTable(tableId: string) {
+export async function clearTable(tableId: string, userId: string) {
   await prisma.guest.updateMany({
     where: {
       tableId,
+      table: { wedding: { ownerId: userId } },
     },
     data: {
       tableId: null,
