@@ -15,6 +15,17 @@ function redirectToLogin() {
   }
 }
 
+// Auth endpoints reachable without a bearer token; these skip token attachment
+// and the 401-refresh retry.
+const NO_AUTH_PATHS = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/refresh",
+  "/auth/logout",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+];
+
 // Single-flight refresh: concurrent requests share one in-flight refresh call.
 let refreshPromise: Promise<string | null> | null = null;
 
@@ -69,11 +80,12 @@ async function authedFetch(
   init: RequestInit,
   retry = true
 ): Promise<Response> {
-  // Unauthenticated auth endpoints (login/register/refresh/logout/forgot/reset)
-  // carry no token and must not trigger the 401-refresh retry. `change-password`
-  // is authenticated, so it goes through the normal token flow.
-  const isAuthPath =
-    path.startsWith("/auth/") && !path.startsWith("/auth/change-password");
+  // These auth endpoints carry no token and must not trigger the 401-refresh
+  // retry (a failed login should surface its real error). Other /auth routes
+  // (me, profile, change-password) are authenticated and use the normal flow.
+  const isAuthPath = NO_AUTH_PATHS.some(
+    (p) => path === p || path.startsWith(`${p}?`)
+  );
   const token = isAuthPath ? null : await getValidToken();
 
   const res = await fetch(`${API_URL}${path}`, {

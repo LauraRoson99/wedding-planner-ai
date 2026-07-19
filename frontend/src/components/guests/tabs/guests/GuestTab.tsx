@@ -45,6 +45,31 @@ const DEFAULT_FORM: GuestFormState = {
 
 type CsvRow = { name: string; email: string; groupName: string };
 
+const RSVP_CSV_LABEL: Record<string, string> = {
+  PENDING: "Pendiente",
+  CONFIRMED: "Confirmado",
+  DECLINED: "No viene",
+};
+
+function guestsToCsv(list: GuestDto[]): string {
+  const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
+  const header = ["Nombre", "Email", "Grupo", "RSVP", "Invitacion enviada", "Alergias", "Acompanantes"];
+  const rows = list.map((g) =>
+    [
+      g.name ?? "",
+      g.email ?? "",
+      g.group?.name ?? "",
+      RSVP_CSV_LABEL[g.rsvp ?? "PENDING"] ?? (g.rsvp ?? ""),
+      g.invitationSent ? "Si" : "No",
+      (g.allergies ?? []).join("; "),
+      (g.companions ?? []).map((c) => c.name).join("; "),
+    ]
+      .map((x) => esc(String(x)))
+      .join(",")
+  );
+  return [header.map(esc).join(","), ...rows].join("\n");
+}
+
 type InvitationOutcome = { id: string; name: string; reason?: string };
 type SendInvitationsResult = {
   sent: string[];
@@ -236,6 +261,18 @@ export default function GuestTab() {
     }
   }
 
+  function exportCsv() {
+    // Prepend a BOM so Excel reads the UTF-8 accents correctly.
+    const csv = "﻿" + guestsToCsv(guests);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "invitados.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   function downloadTemplate() {
     const lines = [
       "# Plantilla de invitados - Planifica2",
@@ -369,6 +406,10 @@ export default function GuestTab() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          {/* Botón exportar CSV */}
+          <Button variant="outline" onClick={exportCsv} disabled={guests.length === 0} title="Exportar invitados a CSV">
+            <Download className="size-4 mr-2" /> Exportar CSV
+          </Button>
           {/* Botón importar CSV */}
           <Button variant="outline" onClick={() => { setCsvOpen(true); setImportResult(null); }}>
             <Upload className="size-4 mr-2" /> Importar CSV

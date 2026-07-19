@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Heart, Save, KeyRound } from "lucide-react";
+import { Heart, Save, KeyRound, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { apiPost } from "@/lib/api";
+import { apiGet, apiPatch, apiPost } from "@/lib/api";
 import { getWedding, updateWedding } from "@/services/weddingService";
 import {
   getWeddingId,
@@ -40,6 +40,50 @@ export default function Settings() {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  // Profile
+  const [profileName, setProfileName] = useState("");
+  const [profileEmail, setProfileEmail] = useState("");
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [profileSuccess, setProfileSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    apiGet<{ id: string; email: string; name: string | null }>("/auth/me")
+      .then((u) => {
+        setProfileName(u.name ?? "");
+        setProfileEmail(u.email);
+      })
+      .catch((err) => setProfileError(prettyApiError(err)))
+      .finally(() => setProfileLoading(false));
+  }, []);
+
+  async function onSaveProfile(e: React.FormEvent) {
+    e.preventDefault();
+    setProfileError(null);
+    setProfileSuccess(null);
+
+    if (!profileEmail.trim()) {
+      setProfileError("El email no puede estar vacío.");
+      return;
+    }
+
+    setProfileSaving(true);
+    try {
+      const updated = await apiPatch<{ email: string; name: string | null }>(
+        "/auth/profile",
+        { name: profileName.trim() || null, email: profileEmail.trim() }
+      );
+      setProfileName(updated.name ?? "");
+      setProfileEmail(updated.email);
+      setProfileSuccess("Perfil actualizado.");
+    } catch (err) {
+      setProfileError(prettyApiError(err));
+    } finally {
+      setProfileSaving(false);
+    }
+  }
 
   // Change password
   const [currentPassword, setCurrentPassword] = useState("");
@@ -188,6 +232,59 @@ export default function Settings() {
             <Button type="submit" disabled={isLoading || isSaving} className="gap-2">
               <Save className="size-4" />
               {isSaving ? "Guardando..." : "Guardar cambios"}
+            </Button>
+          </CardContent>
+        </form>
+      </Card>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <UserRound className="size-4" /> Perfil
+          </CardTitle>
+          <CardDescription>Tu nombre y email de acceso.</CardDescription>
+        </CardHeader>
+
+        <form onSubmit={onSaveProfile}>
+          <CardContent className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="profile-name">Nombre</Label>
+              <Input
+                id="profile-name"
+                placeholder="Tu nombre"
+                value={profileName}
+                onChange={(e) => setProfileName(e.target.value)}
+                disabled={profileLoading || profileSaving}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="profile-email">Email</Label>
+              <Input
+                id="profile-email"
+                type="email"
+                placeholder="tu@email.com"
+                value={profileEmail}
+                onChange={(e) => setProfileEmail(e.target.value)}
+                disabled={profileLoading || profileSaving}
+              />
+            </div>
+
+            {profileError && (
+              <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                {profileError}
+              </div>
+            )}
+
+            {profileSuccess && (
+              <div className="rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+                {profileSuccess}
+              </div>
+            )}
+
+            <Button type="submit" disabled={profileLoading || profileSaving} className="gap-2">
+              <Save className="size-4" />
+              {profileSaving ? "Guardando..." : "Guardar perfil"}
             </Button>
           </CardContent>
         </form>

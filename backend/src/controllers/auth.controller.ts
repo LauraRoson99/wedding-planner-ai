@@ -27,6 +27,11 @@ const ChangePasswordSchema = z.object({
   newPassword: z.string().min(6),
 });
 
+const UpdateProfileSchema = z.object({
+  name: z.string().max(120).nullable().optional(),
+  email: z.string().email().optional(),
+});
+
 function getUserId(req: Request): string | null {
   const user = (req as any).user;
   return user?.userId ?? user?.id ?? user?.sub ?? null;
@@ -88,5 +93,26 @@ export async function postChangePassword(req: Request, res: Response, next: Next
     const { currentPassword, newPassword } = ChangePasswordSchema.parse(req.body);
     const result = await svc.changePassword(userId, currentPassword, newPassword);
     res.json(result);
+  } catch (e) { next(e); }
+}
+
+export async function getMe(req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: 'Invalid user session' });
+
+    const user = await svc.getProfile(userId);
+    res.json(user);
+  } catch (e) { next(e); }
+}
+
+export async function patchProfile(req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: 'Invalid user session' });
+
+    const data = UpdateProfileSchema.parse(req.body);
+    const user = await svc.updateProfile(userId, data);
+    res.json(user);
   } catch (e) { next(e); }
 }

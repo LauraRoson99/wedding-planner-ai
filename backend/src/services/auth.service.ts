@@ -210,6 +210,39 @@ export async function resetPassword(rawToken: string, newPassword: string) {
   return { ok: true };
 }
 
+export async function getProfile(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true, name: true },
+  });
+  if (!user) throw { status: 401, message: 'Invalid user session' };
+  return user;
+}
+
+export async function updateProfile(
+  userId: string,
+  data: { name?: string | null | undefined; email?: string | undefined }
+) {
+  if (data.email !== undefined) {
+    const taken = await prisma.user.findFirst({
+      where: { email: data.email, id: { not: userId } },
+      select: { id: true },
+    });
+    if (taken) throw { status: 409, message: 'Email already in use' };
+  }
+
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.email !== undefined && { email: data.email }),
+    },
+    select: { id: true, email: true, name: true },
+  });
+
+  return user;
+}
+
 export async function changePassword(
   userId: string,
   currentPassword: string,

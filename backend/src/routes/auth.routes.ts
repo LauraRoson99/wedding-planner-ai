@@ -9,6 +9,8 @@ import {
   postForgotPassword,
   postResetPassword,
   postChangePassword,
+  getMe,
+  patchProfile,
 } from '../controllers/auth.controller';
 export const auth = Router();
 auth.post('/auth/register', postRegister);
@@ -18,3 +20,5 @@ auth.post('/auth/logout', postLogout);
 auth.post('/auth/forgot-password', postForgotPassword);
 auth.post('/auth/reset-password', postResetPassword);
 auth.post('/auth/change-password', requireAuth, postChangePassword);
+auth.get('/auth/me', requireAuth, getMe);
+auth.patch('/auth/profile', requireAuth, patchProfile);
