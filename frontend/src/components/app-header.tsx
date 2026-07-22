@@ -13,6 +13,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { AppLogo } from './app-logo'
+import { WeddingSwitcher } from './wedding-switcher'
 import { Button, buttonVariants } from './ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import GitHub from './icons/github'
@@ -60,6 +61,9 @@ export function AppHeader() {
                     <Link to="/">
                         <AppLogo />
                     </Link>
+                    <div className="ml-1 md:ml-3">
+                        <WeddingSwitcher />
+                    </div>
                 </div>
 
                 {weddingDate && (
