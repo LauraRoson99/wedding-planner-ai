@@ -25,11 +25,19 @@ function resolveJwtSecret(name: string, value: string | undefined): string {
   return value;
 }
 
+const corsOrigins = (process.env.CORS_ORIGINS || '')
+  .split(',')
+  .map((o) => o.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
+
 export const env = {
   port: Number(process.env.PORT || 4000),
   nodeEnv,
+  isProduction,
   // Public base URL of the frontend, used to build guest-facing links (e.g. RSVP).
   appBaseUrl: (process.env.APP_BASE_URL || 'http://localhost:5173').replace(/\/+$/, ''),
+  // Allowed CORS origins in production (comma-separated). Empty → falls back to appBaseUrl.
+  corsOrigins,
   jwt: {
     accessSecret: resolveJwtSecret('JWT_ACCESS_SECRET', process.env.JWT_ACCESS_SECRET),
     refreshSecret: resolveJwtSecret('JWT_REFRESH_SECRET', process.env.JWT_REFRESH_SECRET),
