@@ -400,6 +400,7 @@ export const ModelName = {
   Table: 'Table',
   Event: 'Event',
   Provider: 'Provider',
+  ProviderDocument: 'ProviderDocument',
   Budget: 'Budget',
   BudgetItem: 'BudgetItem'
 } as const
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "passwordResetToken" | "refreshToken" | "wedding" | "task" | "guest" | "group" | "table" | "event" | "provider" | "budget" | "budgetItem"
+    modelProps: "user" | "passwordResetToken" | "refreshToken" | "wedding" | "task" | "guest" | "group" | "table" | "event" | "provider" | "providerDocument" | "budget" | "budgetItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1161,6 +1162,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProviderDocument: {
+      payload: Prisma.$ProviderDocumentPayload<ExtArgs>
+      fields: Prisma.ProviderDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProviderDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProviderDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.ProviderDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProviderDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.ProviderDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.ProviderDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.ProviderDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProviderDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.ProviderDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        update: {
+          args: Prisma.ProviderDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProviderDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProviderDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProviderDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProviderDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProviderDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.ProviderDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProviderDocument>
+        }
+        groupBy: {
+          args: Prisma.ProviderDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProviderDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProviderDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
     Budget: {
       payload: Prisma.$BudgetPayload<ExtArgs>
       fields: Prisma.BudgetFieldRefs
@@ -1494,6 +1569,19 @@ export const ProviderScalarFieldEnum = {
 } as const
 
 export type ProviderScalarFieldEnum = (typeof ProviderScalarFieldEnum)[keyof typeof ProviderScalarFieldEnum]
+
+
+export const ProviderDocumentScalarFieldEnum = {
+  id: 'id',
+  providerId: 'providerId',
+  filename: 'filename',
+  storedName: 'storedName',
+  mimeType: 'mimeType',
+  size: 'size',
+  createdAt: 'createdAt'
+} as const
+
+export type ProviderDocumentScalarFieldEnum = (typeof ProviderDocumentScalarFieldEnum)[keyof typeof ProviderDocumentScalarFieldEnum]
 
 
 export const BudgetScalarFieldEnum = {
@@ -1872,6 +1960,7 @@ export type GlobalOmitConfig = {
   table?: Prisma.TableOmit
   event?: Prisma.EventOmit
   provider?: Prisma.ProviderOmit
+  providerDocument?: Prisma.ProviderDocumentOmit
   budget?: Prisma.BudgetOmit
   budgetItem?: Prisma.BudgetItemOmit
 }

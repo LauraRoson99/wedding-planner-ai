@@ -1,5 +1,8 @@
+import fs from "fs";
+import path from "path";
 import { prisma } from "../db/prisma";
 import { ProviderCategory, ProviderStatus } from "../generated/client/client";
+import { UPLOADS_DIR } from "../middleware/upload";
 
 type CreateProviderInput = {
   name: string;
@@ -96,5 +99,20 @@ export async function deleteProviderService(id: string, userId: string) {
   });
   if (!existing) return null;
 
-  return prisma.provider.delete({ where: { id } });
+  // Grab the document files before the cascade removes their rows, so we can
+  // clean them off disk afterwards (best-effort).
+  const documents = await prisma.providerDocument.findMany({
+    where: { providerId: id },
+    select: { storedName: true },
+  });
+
+  const deleted = await prisma.provider.delete({ where: { id } });
+
+  for (const doc of documents) {
+    fs.promises.unlink(path.join(UPLOADS_DIR, doc.storedName)).catch(() => {
+      /* best-effort cleanup */
+    });
+  }
+
+  return deleted;
 }

@@ -59,6 +59,7 @@ export const ModelName = {
   Table: 'Table',
   Event: 'Event',
   Provider: 'Provider',
+  ProviderDocument: 'ProviderDocument',
   Budget: 'Budget',
   BudgetItem: 'BudgetItem'
 } as const
@@ -225,6 +226,19 @@ export const ProviderScalarFieldEnum = {
 } as const
 
 export type ProviderScalarFieldEnum = (typeof ProviderScalarFieldEnum)[keyof typeof ProviderScalarFieldEnum]
+
+
+export const ProviderDocumentScalarFieldEnum = {
+  id: 'id',
+  providerId: 'providerId',
+  filename: 'filename',
+  storedName: 'storedName',
+  mimeType: 'mimeType',
+  size: 'size',
+  createdAt: 'createdAt'
+} as const
+
+export type ProviderDocumentScalarFieldEnum = (typeof ProviderDocumentScalarFieldEnum)[keyof typeof ProviderDocumentScalarFieldEnum]
 
 
 export const BudgetScalarFieldEnum = {

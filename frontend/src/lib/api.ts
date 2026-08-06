@@ -88,10 +88,14 @@ async function authedFetch(
   );
   const token = isAuthPath ? null : await getValidToken();
 
+  // Let the browser set the multipart boundary itself for FormData bodies.
+  const isFormData =
+    typeof FormData !== "undefined" && init.body instanceof FormData;
+
   const res = await fetch(`${API_URL}${path}`, {
     ...init,
     headers: {
-      "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(init.headers ?? {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
@@ -168,4 +172,27 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   });
   return handleResponse<T>(res, "PATCH", path);
+}
+
+/** Multipart upload (FormData); the browser sets the Content-Type boundary. */
+export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
+  const res = await authedFetch(path, { method: "POST", body: formData });
+  return handleResponse<T>(res, "POST", path);
+}
+
+/** Fetches a binary response (e.g. a file download) as a Blob. */
+export async function apiBlob(path: string): Promise<Blob> {
+  const res = await authedFetch(path, { method: "GET" });
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("Sesión expirada");
+    let message = `GET ${path} failed (${res.status})`;
+    try {
+      const body = await res.clone().json();
+      message = body?.error ?? body?.message ?? message;
+    } catch {
+      /* keep default */
+    }
+    throw new Error(message);
+  }
+  return res.blob();
 }

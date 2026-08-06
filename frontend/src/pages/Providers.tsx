@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import {
   Building2, CheckCircle2, Mail, Handshake, Pencil, Phone,
-  Plus, Trash2, Globe, Euro, XCircle, Filter,
+  Plus, Trash2, Globe, Euro, XCircle, Filter, Paperclip, Download, FileText, Upload,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,17 @@ import {
 import type {
   CreateProviderPayload, Provider, ProviderCategory, ProviderStatus,
 } from "@/services/providerService"
+import {
+  listProviderDocuments, uploadProviderDocument, deleteProviderDocument, downloadProviderDocument,
+} from "@/services/providerDocumentService"
+import type { ProviderDocument } from "@/services/providerDocumentService"
 import { getWeddingId } from "@/lib/auth"
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
 
 const STATUS_COLORS: Record<ProviderStatus, string> = {
   CONTACTED: "bg-gray-100 text-gray-700 border-gray-200",
@@ -57,6 +67,13 @@ export default function Providers() {
   const [filterCategory, setFilterCategory] = useState<ProviderCategory | "ALL">("ALL")
   const [saving, setSaving] = useState(false)
 
+  // Documents (RF-94)
+  const [docsProvider, setDocsProvider] = useState<Provider | null>(null)
+  const [docs, setDocs] = useState<ProviderDocument[]>([])
+  const [docsLoading, setDocsLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [docsError, setDocsError] = useState<string | null>(null)
+
   useEffect(() => {
     if (!weddingId) return
     setLoading(true)
@@ -64,6 +81,53 @@ export default function Providers() {
       .then(setProviders)
       .finally(() => setLoading(false))
   }, [weddingId])
+
+  async function openDocs(p: Provider) {
+    setDocsProvider(p)
+    setDocs([])
+    setDocsError(null)
+    setDocsLoading(true)
+    try {
+      setDocs(await listProviderDocuments(p.id))
+    } catch (e: any) {
+      setDocsError(e?.message ?? "Error al cargar los documentos")
+    } finally {
+      setDocsLoading(false)
+    }
+  }
+
+  async function handleUploadDoc(file: File) {
+    if (!docsProvider) return
+    setUploading(true)
+    setDocsError(null)
+    try {
+      const doc = await uploadProviderDocument(docsProvider.id, file)
+      setDocs((prev) => [doc, ...prev])
+    } catch (e: any) {
+      setDocsError(e?.message ?? "No se ha podido subir el archivo")
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function handleDeleteDoc(documentId: string) {
+    if (!docsProvider) return
+    try {
+      await deleteProviderDocument(docsProvider.id, documentId)
+      setDocs((prev) => prev.filter((d) => d.id !== documentId))
+    } catch (e: any) {
+      setDocsError(e?.message ?? "No se ha podido eliminar el documento")
+    }
+  }
+
+  async function handleDownloadDoc(doc: ProviderDocument) {
+    if (!docsProvider) return
+    try {
+      await downloadProviderDocument(docsProvider.id, doc.id, doc.filename)
+    } catch (e: any) {
+      setDocsError(e?.message ?? "No se ha podido descargar el documento")
+    }
+  }
 
   const filtered = providers.filter((p) => {
     if (filterStatus !== "ALL" && p.status !== filterStatus) return false
@@ -295,6 +359,9 @@ export default function Providers() {
                     )}
                   </CardContent>
                   <div className="flex justify-end gap-2 px-6 pb-5">
+                    <Button size="sm" variant="outline" className="rounded-xl" onClick={() => openDocs(p)} title="Documentos / contratos">
+                      <Paperclip className="size-3.5" />
+                    </Button>
                     <Button size="sm" variant="outline" className="rounded-xl" onClick={() => openEdit(p)}>
                       <Pencil className="size-3.5 mr-1" /> Editar
                     </Button>
@@ -430,6 +497,79 @@ export default function Providers() {
                 {saving ? "Guardando..." : editingId ? "Guardar cambios" : "Crear proveedor"}
               </Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Diálogo de documentos / contratos (RF-94) */}
+      <Dialog open={docsProvider !== null} onOpenChange={(open) => !open && setDocsProvider(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Paperclip className="size-4" /> Documentos · {docsProvider?.name}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div>
+              <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium hover:bg-muted">
+                <Upload className="size-4" />
+                {uploading ? "Subiendo..." : "Subir documento"}
+                <input
+                  type="file"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleUploadDoc(file)
+                    e.target.value = ""
+                  }}
+                />
+              </label>
+              <p className="mt-1 text-xs text-muted-foreground">
+                PDF, imágenes u Office · máx. 10 MB
+              </p>
+            </div>
+
+            {docsError && (
+              <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                {docsError}
+              </div>
+            )}
+
+            {docsLoading ? (
+              <p className="text-sm text-muted-foreground">Cargando...</p>
+            ) : docs.length === 0 ? (
+              <p className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+                Aún no hay documentos. Sube el contrato o presupuesto de este proveedor.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {docs.map((doc) => (
+                  <li key={doc.id} className="flex items-center justify-between gap-3 rounded-xl border p-3">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <FileText className="size-4 shrink-0 text-muted-foreground" />
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium">{doc.filename}</p>
+                        <p className="text-xs text-muted-foreground">{formatBytes(doc.size)}</p>
+                      </div>
+                    </div>
+                    <div className="flex shrink-0 gap-1">
+                      <Button size="sm" variant="ghost" title="Descargar" onClick={() => handleDownloadDoc(doc)}>
+                        <Download className="size-4" />
+                      </Button>
+                      <Button
+                        size="sm" variant="ghost" title="Eliminar"
+                        className="text-destructive hover:bg-destructive/10"
+                        onClick={() => handleDeleteDoc(doc.id)}
+                      >
+                        <Trash2 className="size-4" />
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </DialogContent>
       </Dialog>
