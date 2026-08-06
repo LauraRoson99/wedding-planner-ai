@@ -115,8 +115,18 @@ async function handleResponse<T>(res: Response, method: string, path: string): P
     if (res.status === 401) {
       throw new Error("Sesión expirada");
     }
-    const text = await res.text();
-    throw new Error(text || `${method} ${path} failed (${res.status})`);
+
+    // The backend returns a uniform { error } shape (RNF-22); fall back to raw
+    // text for anything else (e.g. proxy errors).
+    let message = `${method} ${path} failed (${res.status})`;
+    try {
+      const body = await res.clone().json();
+      message = body?.error ?? body?.message ?? message;
+    } catch {
+      const text = await res.text().catch(() => "");
+      if (text) message = text;
+    }
+    throw new Error(message);
   }
 
   if (res.status === 204) {
