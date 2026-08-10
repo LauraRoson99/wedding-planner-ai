@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AppLogo } from './app-logo'
 import { WeddingSwitcher } from './wedding-switcher'
+import { NotificationsBell } from './notifications-bell'
 import { Button, buttonVariants } from './ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import GitHub from './icons/github'
@@ -88,6 +89,7 @@ export function AppHeader() {
                         <GitHub />
                         <span className="sr-only">GitHub</span>
                     </a>
+                    <NotificationsBell />
                     <div className="hidden md:block">
                         <ModeToggle />
                     </div>

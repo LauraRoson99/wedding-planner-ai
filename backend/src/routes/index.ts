@@ -11,6 +11,7 @@ import { dashboard } from "./dashboard.routes";
 import { budget } from "./budget.routes";
 import { provider } from "./provider.routes";
 import { wedding } from "./wedding.routes";
+import { notification } from "./notification.routes";
 import { publicRoutes } from "./public.routes";
 
 export const routes = Router();
@@ -28,4 +29,5 @@ routes.use(dashboard);
 routes.use(budget);
 routes.use(provider);
 routes.use(wedding);
+routes.use(notification);
 
