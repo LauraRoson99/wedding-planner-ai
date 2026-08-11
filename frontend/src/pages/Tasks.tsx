@@ -353,7 +353,10 @@ export default function TasksPage() {
       <div className="max-w-6xl mx-auto py-10 px-4 space-y-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <CardTitle className="text-2xl">Tareas de la boda</CardTitle>
+            <div className="border-l-2 border-primary/60 pl-4">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Planificación</p>
+              <CardTitle className="mt-1 text-2xl md:text-3xl">Tareas de la boda</CardTitle>
+            </div>
             <div className="flex flex-wrap gap-2">
               {weddingId && (
                 <AiTaskSuggestions weddingId={weddingId} onCreated={loadTasks} />

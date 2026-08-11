@@ -176,7 +176,7 @@ export default function Settings() {
     <div className="mx-auto w-full max-w-2xl p-4 md:p-6">
       <div className="mb-6 space-y-1">
         <div className="inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1 text-sm font-medium text-muted-foreground">
-          <Heart className="size-4 text-rose-500" /> Ajustes de la boda
+          <Heart className="size-4 text-primary" /> Ajustes de la boda
         </div>
         <h1 className="text-2xl font-bold tracking-tight">Tu boda</h1>
         <p className="text-muted-foreground">

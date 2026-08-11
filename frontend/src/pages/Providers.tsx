@@ -200,16 +200,13 @@ export default function Providers() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
 
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-violet-50 via-background to-purple-50 p-6 shadow-sm dark:from-violet-950/20 dark:via-background dark:to-purple-950/20 md:p-8">
-          <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-violet-200/40 blur-3xl dark:bg-violet-700/20" />
-          <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-purple-200/50 blur-3xl dark:bg-purple-700/20" />
-
-          <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="space-y-3">
-              <div className="inline-flex rounded-full border bg-background/80 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur">
-                🤝 Proveedores y servicios
-              </div>
-              <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+        <section className="rounded-3xl border bg-card p-6 shadow-sm md:p-8">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="space-y-3 border-l-2 border-primary/60 pl-5 md:pl-6">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">
+                Proveedores y servicios
+              </p>
+              <h1 className="text-4xl md:text-5xl">
                 Gestiona todos tus proveedores.
               </h1>
               <p className="max-w-xl text-muted-foreground md:text-lg">

@@ -16,7 +16,16 @@ export default function GuestsPage() {
 
   return (
     <div className="min-h-screen px-4 py-10 flex flex-col items-center bg-background text-foreground">
-      <Tabs value={tab} onValueChange={handleTabChange} className="w-full">
+      <div className="w-full max-w-6xl">
+        <header className="mb-6 border-l-2 border-primary/60 pl-5 md:pl-6">
+          <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Personas</p>
+          <h1 className="mt-2 text-3xl md:text-4xl">Invitados de la boda</h1>
+          <p className="mt-2 max-w-2xl text-muted-foreground">
+            Gestiona invitados y acompañantes, organízalos en grupos y distribúyelos por mesas.
+          </p>
+        </header>
+      </div>
+      <Tabs value={tab} onValueChange={handleTabChange} className="w-full max-w-6xl">
         <TabsList className="mb-4">
           <TabsTrigger value="guests">Invitados</TabsTrigger>
           <TabsTrigger value="groups">Grupos</TabsTrigger>

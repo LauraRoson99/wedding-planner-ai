@@ -367,10 +367,10 @@ export default function Agenda() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
-        <div className="flex flex-col gap-4 rounded-3xl border bg-gradient-to-br from-rose-50 via-white to-purple-50 p-6 shadow-sm dark:from-rose-950/20 dark:via-background dark:to-purple-950/20 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-sm font-medium text-rose-500">Planificación</p>
-            <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+        <div className="flex flex-col gap-4 rounded-3xl border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+          <div className="border-l-2 border-primary/60 pl-5 md:pl-6">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Planificación</p>
+            <h1 className="mt-2 text-3xl md:text-4xl">
               Agenda de la boda
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
@@ -381,7 +381,7 @@ export default function Agenda() {
 
           <Button
             onClick={() => openCreateEventDialog()}
-            className="h-11 rounded-xl bg-rose-500 text-white hover:bg-rose-600"
+            className="h-11 rounded-xl"
           >
             <Plus className="mr-2 size-4" />
             Nuevo evento
@@ -497,7 +497,7 @@ export default function Agenda() {
 
       <Dialog open={eventDialogOpen} onOpenChange={setEventDialogOpen}>
         <DialogContent className="overflow-hidden rounded-3xl border-0 p-0 shadow-2xl sm:max-w-xl">
-          <div className="border-b bg-gradient-to-br from-rose-50 via-white to-purple-50 px-6 py-6 dark:from-rose-950/20 dark:via-background dark:to-purple-950/20">
+          <div className="border-b bg-accent/40 px-6 py-6">
             <DialogHeader>
               <DialogTitle className="text-2xl">
                 {editingEvent ? "Editar evento" : "Nuevo evento"}
@@ -577,7 +577,7 @@ export default function Agenda() {
               <Button
                 type="submit"
                 disabled={savingEvent || !eventTitle.trim() || !eventDate}
-                className="rounded-xl bg-rose-500 text-white hover:bg-rose-600"
+                className="rounded-xl"
               >
                 {savingEvent && <Loader2 className="mr-2 size-4 animate-spin" />}
                 {savingEvent
@@ -694,7 +694,7 @@ function MetricCard({ title, value, description, icon }: MetricCardProps) {
   return (
     <Card className="rounded-3xl shadow-sm">
       <CardContent className="flex items-center gap-4 p-5">
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-rose-50 text-rose-500 dark:bg-rose-950/40">
+        <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
           {icon}
         </div>
 
@@ -717,7 +717,7 @@ type InfoRowProps = {
 function InfoRow({ icon, label, value }: InfoRowProps) {
   return (
     <div className="flex items-center gap-3 rounded-2xl border p-3">
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-500 dark:bg-rose-950/40">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
         {icon}
       </div>
 

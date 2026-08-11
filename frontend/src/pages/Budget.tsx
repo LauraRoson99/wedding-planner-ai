@@ -324,15 +324,12 @@ export default function Budget() {
   return (
     <div className="min-h-screen bg-background p-4 text-foreground md:p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-rose-50 via-background to-pink-50 p-6 shadow-sm dark:from-rose-950/20 dark:via-background dark:to-pink-950/20 md:p-8">
-          <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-rose-200/40 blur-3xl dark:bg-rose-700/20" />
-          <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-pink-200/50 blur-3xl dark:bg-pink-700/20" />
-
-          <div className="relative grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
-            <div className="space-y-4">
-              <div className="inline-flex rounded-full border bg-background/80 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur">
-                💸 Presupuesto de la boda
-              </div>
+        <section className="rounded-3xl border bg-card p-6 shadow-sm md:p-8">
+          <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
+            <div className="space-y-4 border-l-2 border-primary/60 pl-5 md:pl-6">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">
+                Presupuesto de la boda
+              </p>
 
               <div>
                 <h1 className="text-4xl font-bold tracking-tight md:text-5xl">

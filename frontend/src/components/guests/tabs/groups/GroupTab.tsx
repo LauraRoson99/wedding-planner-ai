@@ -353,8 +353,8 @@ export default function GroupTab() {
                                         className="rounded-xl border bg-background p-3"
                                       >
                                         <div className="flex items-start gap-3">
-                                          <div className="mt-0.5 rounded-full border bg-pink-500/10 p-2">
-                                            <Heart className="size-4 text-pink-500" />
+                                          <div className="mt-0.5 rounded-full border bg-primary/10 p-2">
+                                            <Heart className="size-4 text-primary" />
                                           </div>
 
                                           <div className="min-w-0">
