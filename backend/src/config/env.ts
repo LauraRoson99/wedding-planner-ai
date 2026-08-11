@@ -51,5 +51,11 @@ export const env = {
     user: process.env.SMTP_USER || '',
     pass: process.env.SMTP_PASS || '',
     from: process.env.MAIL_FROM || 'Planifica2 <no-reply@planifica2.com>',
+  },
+  // OpenAI (IA-90). The key lives only on the backend; never expose it to the client.
+  ai: {
+    apiKey: process.env.OPENAI_API_KEY || '',
+    model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+    timeoutMs: Number(process.env.OPENAI_TIMEOUT_MS || 30000),
   }
 };

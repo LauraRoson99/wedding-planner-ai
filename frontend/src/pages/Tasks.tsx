@@ -31,6 +31,7 @@ import type {
 } from "@/features/tasks/types";
 import { getWeddingId } from "@/lib/auth";
 import TaskDialog from "@/components/tasks/TaskDialog";
+import AiTaskSuggestions from "@/components/tasks/AiTaskSuggestions";
 
 type SortOption =
   | "dueDateAsc"
@@ -353,10 +354,15 @@ export default function TasksPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-2xl">Tareas de la boda</CardTitle>
-            <Button onClick={openCreateDialog} className="gap-2">
-              <Plus className="size-4" />
-              Nueva tarea
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              {weddingId && (
+                <AiTaskSuggestions weddingId={weddingId} onCreated={loadTasks} />
+              )}
+              <Button onClick={openCreateDialog} className="gap-2">
+                <Plus className="size-4" />
+                Nueva tarea
+              </Button>
+            </div>
           </CardHeader>
         </Card>
 

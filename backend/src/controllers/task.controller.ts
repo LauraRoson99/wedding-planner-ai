@@ -1,4 +1,5 @@
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
+import { z } from "zod";
 import {
   TaskCategory,
   TaskPriority,
@@ -8,9 +9,28 @@ import {
   getTasksService,
   getTaskByIdService,
   createTaskService,
+  createManyTasksService,
   updateTaskService,
   deleteTaskService,
 } from "../services/task.service";
+
+const BulkTasksSchema = z.object({
+  weddingId: z.string().min(1),
+  tasks: z
+    .array(
+      z.object({
+        title: z.string().min(1),
+        category: z
+          .enum(["GUESTS", "CEREMONY", "BANQUET", "DECORATION", "PHOTO_VIDEO", "MUSIC", "TRAVEL", "OUTFITS", "PAPERWORK", "BUDGET", "OTHER"])
+          .optional(),
+        priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
+        dueDate: z.string().nullable().optional(),
+        notes: z.string().nullable().optional(),
+      })
+    )
+    .min(1)
+    .max(50),
+});
 
 function getParamId(req: Request): string | null {
   const { id } = req.params;
@@ -185,6 +205,32 @@ export async function createTask(req: Request, res: Response) {
   } catch (error) {
     console.error("Error creating task:", error);
     return res.status(500).json({ message: "Error al crear tarea" });
+  }
+}
+
+export async function createTasksBulk(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId, tasks } = BulkTasksSchema.parse(req.body);
+
+    const mapped = tasks.map((t) => {
+      let dueDate: Date | null = null;
+      if (t.dueDate) {
+        const d = new Date(t.dueDate);
+        dueDate = Number.isNaN(d.getTime()) ? null : d;
+      }
+      return {
+        title: t.title,
+        category: t.category as TaskCategory | undefined,
+        priority: t.priority as TaskPriority | undefined,
+        dueDate,
+        notes: t.notes ?? null,
+      };
+    });
+
+    const result = await createManyTasksService(weddingId, mapped);
+    return res.status(201).json(result);
+  } catch (e) {
+    next(e);
   }
 }
 

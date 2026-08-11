@@ -51,12 +51,14 @@ export function errorHandler(err: any, _req: Request, res: Response, _next: Next
     return res.status(400).json({ error: 'No se ha podido completar la operación.' });
   }
 
-  // Service-thrown { status, message } objects, or unexpected errors.
-  const status = typeof err?.status === 'number' ? err.status : 500;
-  const message =
-    status >= 500
-      ? 'Ha ocurrido un error en el servidor. Inténtalo de nuevo.'
-      : err?.message || 'Ha ocurrido un error.';
+  // A deliberate service error carries an explicit numeric `status` and a
+  // user-facing `message` — trust it (even for 5xx like a 503 "not configured").
+  // Anything else is unexpected: respond 500 and never leak its message.
+  const hasExplicitStatus = typeof err?.status === 'number';
+  const status = hasExplicitStatus ? err.status : 500;
+  const message = hasExplicitStatus
+    ? (err.message || 'Ha ocurrido un error.')
+    : 'Ha ocurrido un error en el servidor. Inténtalo de nuevo.';
 
   res.status(status).json({ error: message });
 }

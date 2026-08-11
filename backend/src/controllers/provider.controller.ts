@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import {
   createProviderService,
+  createManyProvidersService,
   deleteProviderService,
   getProviderByIdService,
   getProvidersService,
@@ -41,9 +42,36 @@ const CreateProviderSchema = z.object({
 
 const UpdateProviderSchema = CreateProviderSchema.partial();
 
+const BulkProvidersSchema = z.object({
+  weddingId: z.string().min(1),
+  providers: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        category: ProviderCategorySchema.optional(),
+        notes: z.string().nullable().optional(),
+      })
+    )
+    .min(1)
+    .max(50),
+});
+
 function getUserId(req: Request) {
   const user = (req as any).user;
   return user?.userId ?? user?.id ?? user?.sub;
+}
+
+export async function createProvidersBulk(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId, providers } = BulkProvidersSchema.parse(req.body);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const result = await createManyProvidersService(weddingId, userId, providers);
+    if (!result) return res.status(404).json({ error: "Wedding not found" });
+
+    res.status(201).json(result);
+  } catch (e) { next(e); }
 }
 
 export async function getProviders(req: Request, res: Response, next: NextFunction) {

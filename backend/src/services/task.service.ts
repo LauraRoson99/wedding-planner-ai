@@ -45,6 +45,31 @@ export async function createTaskService(data: {
   });
 }
 
+export async function createManyTasksService(
+  weddingId: string,
+  tasks: Array<{
+    title: string;
+    category?: TaskCategory;
+    priority?: TaskPriority;
+    dueDate?: Date | null;
+    notes?: string | null;
+  }>
+) {
+  const result = await prisma.task.createMany({
+    data: tasks.map((t) => ({
+      weddingId,
+      title: t.title.trim(),
+      category: t.category ?? TaskCategory.OTHER,
+      priority: t.priority ?? TaskPriority.MEDIUM,
+      status: TaskStatus.PENDING,
+      dueDate: t.dueDate ?? null,
+      notes: t.notes ?? null,
+      completed: false,
+    })),
+  });
+  return { created: result.count };
+}
+
 export async function updateTaskService(
   id: string,
   data: {

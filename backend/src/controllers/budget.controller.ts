@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import {
   createBudgetItemService,
+  createManyBudgetItemsService,
   deleteBudgetItemService,
   getBudgetSummaryService,
   updateBudgetItemService,
@@ -61,6 +62,21 @@ const CreateBudgetItemSchema = z.object({
 });
 
 const UpdateBudgetItemSchema = CreateBudgetItemSchema.partial();
+
+const BulkBudgetItemsSchema = z.object({
+  weddingId: z.string().min(1),
+  items: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        category: BudgetCategorySchema.optional(),
+        estimatedAmount: z.coerce.number().min(0),
+        notes: z.string().nullable().optional(),
+      })
+    )
+    .min(1)
+    .max(50),
+});
 
 function getUserIdFromRequest(req: Request) {
   const user = (req as any).user;
@@ -140,6 +156,25 @@ export async function createBudgetItem(
     }
 
     res.status(201).json(item);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function createBudgetItemsBulk(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { weddingId, items } = BulkBudgetItemsSchema.parse(req.body);
+    const userId = getUserIdFromRequest(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const result = await createManyBudgetItemsService(weddingId, userId, items);
+    if (!result) return res.status(404).json({ error: "Wedding not found" });
+
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }

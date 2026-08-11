@@ -2,6 +2,7 @@ import { Router } from "express";
 import { requireAuth } from "../middleware/auth";
 import {
   createProvider,
+  createProvidersBulk,
   deleteProvider,
   getProvider,
   getProviders,
@@ -19,6 +20,7 @@ export const provider = Router();
 provider.get("/providers", requireAuth, getProviders);
 provider.get("/providers/:id", requireAuth, getProvider);
 provider.post("/providers", requireAuth, createProvider);
+provider.post("/providers/bulk", requireAuth, createProvidersBulk);
 provider.put("/providers/:id", requireAuth, updateProvider);
 provider.delete("/providers/:id", requireAuth, deleteProvider);
 

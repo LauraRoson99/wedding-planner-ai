@@ -283,6 +283,34 @@ export async function createBudgetItemService(
   });
 }
 
+export async function createManyBudgetItemsService(
+  weddingId: string,
+  userId: string,
+  items: Array<{
+    name: string;
+    category?: BudgetCategory;
+    estimatedAmount: number;
+    notes?: string | null;
+  }>
+) {
+  const wedding = await prisma.wedding.findFirst({
+    where: { id: weddingId, ownerId: userId },
+    select: { id: true },
+  });
+  if (!wedding) return null;
+
+  const result = await prisma.budgetItem.createMany({
+    data: items.map((i) => ({
+      weddingId,
+      name: i.name.trim(),
+      category: i.category ?? BudgetCategory.OTHER,
+      estimatedAmount: i.estimatedAmount,
+      notes: i.notes ?? null,
+    })),
+  });
+  return { created: result.count };
+}
+
 export async function updateBudgetItemService(
   id: string,
   userId: string,

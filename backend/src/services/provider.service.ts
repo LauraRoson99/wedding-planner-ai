@@ -66,6 +66,29 @@ export async function createProviderService(
   });
 }
 
+export async function createManyProvidersService(
+  weddingId: string,
+  userId: string,
+  providers: Array<{ name: string; category?: ProviderCategory; notes?: string | null }>
+) {
+  const wedding = await prisma.wedding.findFirst({
+    where: { id: weddingId, ownerId: userId },
+    select: { id: true },
+  });
+  if (!wedding) return null;
+
+  const result = await prisma.provider.createMany({
+    data: providers.map((p) => ({
+      weddingId,
+      name: p.name.trim(),
+      category: p.category ?? ProviderCategory.OTHER,
+      status: ProviderStatus.CONTACTED,
+      notes: p.notes ?? null,
+    })),
+  });
+  return { created: result.count };
+}
+
 export async function updateProviderService(
   id: string,
   userId: string,

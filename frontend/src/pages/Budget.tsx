@@ -50,6 +50,7 @@ import type {
 } from "@/services/budgetService"
 import { getProviders } from "@/services/providerService"
 import type { Provider } from "@/services/providerService"
+import AiBudgetSuggestions from "@/components/budgets/AiBudgetSuggestions"
 import { getWeddingId } from "@/lib/auth"
 
 const NO_PROVIDER = "none"
@@ -342,6 +343,12 @@ export default function Budget() {
                   Registra pagos, compara estimaciones con gastos reales y detecta rápido
                   qué categorías se están llevando más presupuesto.
                 </p>
+
+                {weddingId && (
+                  <div className="mt-5">
+                    <AiBudgetSuggestions weddingId={weddingId} onCreated={loadBudget} />
+                  </div>
+                )}
               </div>
             </div>
 

@@ -12,6 +12,7 @@ import { budget } from "./budget.routes";
 import { provider } from "./provider.routes";
 import { wedding } from "./wedding.routes";
 import { notification } from "./notification.routes";
+import { ai } from "./ai.routes";
 import { publicRoutes } from "./public.routes";
 
 export const routes = Router();
@@ -30,4 +31,5 @@ routes.use(budget);
 routes.use(provider);
 routes.use(wedding);
 routes.use(notification);
+routes.use(ai);
 
