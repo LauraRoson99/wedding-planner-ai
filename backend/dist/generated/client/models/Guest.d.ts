@@ -1,0 +1,2659 @@
+import type * as runtime from "@prisma/client/runtime/library";
+import type * as $Enums from "../enums";
+import type * as Prisma from "../internal/prismaNamespace";
+/**
+ * Model Guest
+ *
+ */
+export type GuestModel = runtime.Types.Result.DefaultSelection<Prisma.$GuestPayload>;
+export type AggregateGuest = {
+    _count: GuestCountAggregateOutputType | null;
+    _avg: GuestAvgAggregateOutputType | null;
+    _sum: GuestSumAggregateOutputType | null;
+    _min: GuestMinAggregateOutputType | null;
+    _max: GuestMaxAggregateOutputType | null;
+};
+export type GuestAvgAggregateOutputType = {
+    seatNumber: number | null;
+};
+export type GuestSumAggregateOutputType = {
+    seatNumber: number | null;
+};
+export type GuestMinAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    weddingId: string | null;
+    groupId: string | null;
+    tableId: string | null;
+    seatNumber: number | null;
+    role: $Enums.GuestRole | null;
+    rsvp: $Enums.RsvpStatus | null;
+    diet: $Enums.DietType | null;
+    dietNotes: string | null;
+    notes: string | null;
+    ageGroup: $Enums.AgeGroup | null;
+    phone: string | null;
+    email: string | null;
+    invitationSent: boolean | null;
+    invitationSentAt: Date | null;
+    rsvpToken: string | null;
+    parentId: string | null;
+};
+export type GuestMaxAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    weddingId: string | null;
+    groupId: string | null;
+    tableId: string | null;
+    seatNumber: number | null;
+    role: $Enums.GuestRole | null;
+    rsvp: $Enums.RsvpStatus | null;
+    diet: $Enums.DietType | null;
+    dietNotes: string | null;
+    notes: string | null;
+    ageGroup: $Enums.AgeGroup | null;
+    phone: string | null;
+    email: string | null;
+    invitationSent: boolean | null;
+    invitationSentAt: Date | null;
+    rsvpToken: string | null;
+    parentId: string | null;
+};
+export type GuestCountAggregateOutputType = {
+    id: number;
+    name: number;
+    createdAt: number;
+    updatedAt: number;
+    weddingId: number;
+    groupId: number;
+    tableId: number;
+    seatNumber: number;
+    role: number;
+    rsvp: number;
+    diet: number;
+    dietNotes: number;
+    allergies: number;
+    notes: number;
+    ageGroup: number;
+    phone: number;
+    email: number;
+    invitationSent: number;
+    invitationSentAt: number;
+    rsvpToken: number;
+    parentId: number;
+    _all: number;
+};
+export type GuestAvgAggregateInputType = {
+    seatNumber?: true;
+};
+export type GuestSumAggregateInputType = {
+    seatNumber?: true;
+};
+export type GuestMinAggregateInputType = {
+    id?: true;
+    name?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    weddingId?: true;
+    groupId?: true;
+    tableId?: true;
+    seatNumber?: true;
+    role?: true;
+    rsvp?: true;
+    diet?: true;
+    dietNotes?: true;
+    notes?: true;
+    ageGroup?: true;
+    phone?: true;
+    email?: true;
+    invitationSent?: true;
+    invitationSentAt?: true;
+    rsvpToken?: true;
+    parentId?: true;
+};
+export type GuestMaxAggregateInputType = {
+    id?: true;
+    name?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    weddingId?: true;
+    groupId?: true;
+    tableId?: true;
+    seatNumber?: true;
+    role?: true;
+    rsvp?: true;
+    diet?: true;
+    dietNotes?: true;
+    notes?: true;
+    ageGroup?: true;
+    phone?: true;
+    email?: true;
+    invitationSent?: true;
+    invitationSentAt?: true;
+    rsvpToken?: true;
+    parentId?: true;
+};
+export type GuestCountAggregateInputType = {
+    id?: true;
+    name?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    weddingId?: true;
+    groupId?: true;
+    tableId?: true;
+    seatNumber?: true;
+    role?: true;
+    rsvp?: true;
+    diet?: true;
+    dietNotes?: true;
+    allergies?: true;
+    notes?: true;
+    ageGroup?: true;
+    phone?: true;
+    email?: true;
+    invitationSent?: true;
+    invitationSentAt?: true;
+    rsvpToken?: true;
+    parentId?: true;
+    _all?: true;
+};
+export type GuestAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Guest to aggregate.
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Guests to fetch.
+     */
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.GuestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Guests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Guests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Guests
+    **/
+    _count?: true | GuestCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: GuestAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: GuestSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: GuestMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: GuestMaxAggregateInputType;
+};
+export type GetGuestAggregateType<T extends GuestAggregateArgs> = {
+    [P in keyof T & keyof AggregateGuest]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateGuest[P]> : Prisma.GetScalarType<T[P], AggregateGuest[P]>;
+};
+export type GuestGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GuestWhereInput;
+    orderBy?: Prisma.GuestOrderByWithAggregationInput | Prisma.GuestOrderByWithAggregationInput[];
+    by: Prisma.GuestScalarFieldEnum[] | Prisma.GuestScalarFieldEnum;
+    having?: Prisma.GuestScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: GuestCountAggregateInputType | true;
+    _avg?: GuestAvgAggregateInputType;
+    _sum?: GuestSumAggregateInputType;
+    _min?: GuestMinAggregateInputType;
+    _max?: GuestMaxAggregateInputType;
+};
+export type GuestGroupByOutputType = {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    groupId: string | null;
+    tableId: string | null;
+    seatNumber: number | null;
+    role: $Enums.GuestRole;
+    rsvp: $Enums.RsvpStatus;
+    diet: $Enums.DietType;
+    dietNotes: string | null;
+    allergies: string[];
+    notes: string | null;
+    ageGroup: $Enums.AgeGroup;
+    phone: string | null;
+    email: string | null;
+    invitationSent: boolean;
+    invitationSentAt: Date | null;
+    rsvpToken: string | null;
+    parentId: string | null;
+    _count: GuestCountAggregateOutputType | null;
+    _avg: GuestAvgAggregateOutputType | null;
+    _sum: GuestSumAggregateOutputType | null;
+    _min: GuestMinAggregateOutputType | null;
+    _max: GuestMaxAggregateOutputType | null;
+};
+type GetGuestGroupByPayload<T extends GuestGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<GuestGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof GuestGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], GuestGroupByOutputType[P]> : Prisma.GetScalarType<T[P], GuestGroupByOutputType[P]>;
+}>>;
+export type GuestWhereInput = {
+    AND?: Prisma.GuestWhereInput | Prisma.GuestWhereInput[];
+    OR?: Prisma.GuestWhereInput[];
+    NOT?: Prisma.GuestWhereInput | Prisma.GuestWhereInput[];
+    id?: Prisma.StringFilter<"Guest"> | string;
+    name?: Prisma.StringFilter<"Guest"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    weddingId?: Prisma.StringFilter<"Guest"> | string;
+    groupId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    tableId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    seatNumber?: Prisma.IntNullableFilter<"Guest"> | number | null;
+    role?: Prisma.EnumGuestRoleFilter<"Guest"> | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFilter<"Guest"> | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFilter<"Guest"> | $Enums.DietType;
+    dietNotes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    allergies?: Prisma.StringNullableListFilter<"Guest">;
+    notes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup;
+    phone?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    email?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    invitationSent?: Prisma.BoolFilter<"Guest"> | boolean;
+    invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null;
+    rsvpToken?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    parentId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    table?: Prisma.XOR<Prisma.TableNullableScalarRelationFilter, Prisma.TableWhereInput> | null;
+    parent?: Prisma.XOR<Prisma.GuestNullableScalarRelationFilter, Prisma.GuestWhereInput> | null;
+    companions?: Prisma.GuestListRelationFilter;
+};
+export type GuestOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    weddingId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    tableId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    seatNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    rsvp?: Prisma.SortOrder;
+    diet?: Prisma.SortOrder;
+    dietNotes?: Prisma.SortOrderInput | Prisma.SortOrder;
+    allergies?: Prisma.SortOrder;
+    notes?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ageGroup?: Prisma.SortOrder;
+    phone?: Prisma.SortOrderInput | Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    invitationSent?: Prisma.SortOrder;
+    invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    rsvpToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    parentId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    wedding?: Prisma.WeddingOrderByWithRelationInput;
+    group?: Prisma.GroupOrderByWithRelationInput;
+    table?: Prisma.TableOrderByWithRelationInput;
+    parent?: Prisma.GuestOrderByWithRelationInput;
+    companions?: Prisma.GuestOrderByRelationAggregateInput;
+};
+export type GuestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    rsvpToken?: string;
+    tableId_seatNumber?: Prisma.GuestTableIdSeatNumberCompoundUniqueInput;
+    AND?: Prisma.GuestWhereInput | Prisma.GuestWhereInput[];
+    OR?: Prisma.GuestWhereInput[];
+    NOT?: Prisma.GuestWhereInput | Prisma.GuestWhereInput[];
+    name?: Prisma.StringFilter<"Guest"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    weddingId?: Prisma.StringFilter<"Guest"> | string;
+    groupId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    tableId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    seatNumber?: Prisma.IntNullableFilter<"Guest"> | number | null;
+    role?: Prisma.EnumGuestRoleFilter<"Guest"> | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFilter<"Guest"> | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFilter<"Guest"> | $Enums.DietType;
+    dietNotes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    allergies?: Prisma.StringNullableListFilter<"Guest">;
+    notes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup;
+    phone?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    email?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    invitationSent?: Prisma.BoolFilter<"Guest"> | boolean;
+    invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null;
+    parentId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    wedding?: Prisma.XOR<Prisma.WeddingScalarRelationFilter, Prisma.WeddingWhereInput>;
+    group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null;
+    table?: Prisma.XOR<Prisma.TableNullableScalarRelationFilter, Prisma.TableWhereInput> | null;
+    parent?: Prisma.XOR<Prisma.GuestNullableScalarRelationFilter, Prisma.GuestWhereInput> | null;
+    companions?: Prisma.GuestListRelationFilter;
+}, "id" | "rsvpToken" | "tableId_seatNumber">;
+export type GuestOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    weddingId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    tableId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    seatNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    rsvp?: Prisma.SortOrder;
+    diet?: Prisma.SortOrder;
+    dietNotes?: Prisma.SortOrderInput | Prisma.SortOrder;
+    allergies?: Prisma.SortOrder;
+    notes?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ageGroup?: Prisma.SortOrder;
+    phone?: Prisma.SortOrderInput | Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    invitationSent?: Prisma.SortOrder;
+    invitationSentAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    rsvpToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    parentId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    _count?: Prisma.GuestCountOrderByAggregateInput;
+    _avg?: Prisma.GuestAvgOrderByAggregateInput;
+    _max?: Prisma.GuestMaxOrderByAggregateInput;
+    _min?: Prisma.GuestMinOrderByAggregateInput;
+    _sum?: Prisma.GuestSumOrderByAggregateInput;
+};
+export type GuestScalarWhereWithAggregatesInput = {
+    AND?: Prisma.GuestScalarWhereWithAggregatesInput | Prisma.GuestScalarWhereWithAggregatesInput[];
+    OR?: Prisma.GuestScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.GuestScalarWhereWithAggregatesInput | Prisma.GuestScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"Guest"> | string;
+    name?: Prisma.StringWithAggregatesFilter<"Guest"> | string;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Guest"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Guest"> | Date | string;
+    weddingId?: Prisma.StringWithAggregatesFilter<"Guest"> | string;
+    groupId?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    tableId?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    seatNumber?: Prisma.IntNullableWithAggregatesFilter<"Guest"> | number | null;
+    role?: Prisma.EnumGuestRoleWithAggregatesFilter<"Guest"> | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusWithAggregatesFilter<"Guest"> | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeWithAggregatesFilter<"Guest"> | $Enums.DietType;
+    dietNotes?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    allergies?: Prisma.StringNullableListFilter<"Guest">;
+    notes?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    ageGroup?: Prisma.EnumAgeGroupWithAggregatesFilter<"Guest"> | $Enums.AgeGroup;
+    phone?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    email?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    invitationSent?: Prisma.BoolWithAggregatesFilter<"Guest"> | boolean;
+    invitationSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Guest"> | Date | string | null;
+    rsvpToken?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+    parentId?: Prisma.StringNullableWithAggregatesFilter<"Guest"> | string | null;
+};
+export type GuestCreateInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput;
+    group?: Prisma.GroupCreateNestedOneWithoutGuestsInput;
+    table?: Prisma.TableCreateNestedOneWithoutGuestsInput;
+    parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput;
+    companions?: Prisma.GuestCreateNestedManyWithoutParentInput;
+};
+export type GuestUncheckedCreateInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+    companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput;
+};
+export type GuestUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput;
+    table?: Prisma.TableUpdateOneWithoutGuestsNestedInput;
+    parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput;
+    companions?: Prisma.GuestUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput;
+};
+export type GuestCreateManyInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+};
+export type GuestUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestListRelationFilter = {
+    every?: Prisma.GuestWhereInput;
+    some?: Prisma.GuestWhereInput;
+    none?: Prisma.GuestWhereInput;
+};
+export type GuestOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null;
+    has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null;
+    hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>;
+    hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>;
+    isEmpty?: boolean;
+};
+export type GuestNullableScalarRelationFilter = {
+    is?: Prisma.GuestWhereInput | null;
+    isNot?: Prisma.GuestWhereInput | null;
+};
+export type GuestTableIdSeatNumberCompoundUniqueInput = {
+    tableId: string;
+    seatNumber: number;
+};
+export type GuestCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    weddingId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    tableId?: Prisma.SortOrder;
+    seatNumber?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    rsvp?: Prisma.SortOrder;
+    diet?: Prisma.SortOrder;
+    dietNotes?: Prisma.SortOrder;
+    allergies?: Prisma.SortOrder;
+    notes?: Prisma.SortOrder;
+    ageGroup?: Prisma.SortOrder;
+    phone?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    invitationSent?: Prisma.SortOrder;
+    invitationSentAt?: Prisma.SortOrder;
+    rsvpToken?: Prisma.SortOrder;
+    parentId?: Prisma.SortOrder;
+};
+export type GuestAvgOrderByAggregateInput = {
+    seatNumber?: Prisma.SortOrder;
+};
+export type GuestMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    weddingId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    tableId?: Prisma.SortOrder;
+    seatNumber?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    rsvp?: Prisma.SortOrder;
+    diet?: Prisma.SortOrder;
+    dietNotes?: Prisma.SortOrder;
+    notes?: Prisma.SortOrder;
+    ageGroup?: Prisma.SortOrder;
+    phone?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    invitationSent?: Prisma.SortOrder;
+    invitationSentAt?: Prisma.SortOrder;
+    rsvpToken?: Prisma.SortOrder;
+    parentId?: Prisma.SortOrder;
+};
+export type GuestMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    weddingId?: Prisma.SortOrder;
+    groupId?: Prisma.SortOrder;
+    tableId?: Prisma.SortOrder;
+    seatNumber?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    rsvp?: Prisma.SortOrder;
+    diet?: Prisma.SortOrder;
+    dietNotes?: Prisma.SortOrder;
+    notes?: Prisma.SortOrder;
+    ageGroup?: Prisma.SortOrder;
+    phone?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    invitationSent?: Prisma.SortOrder;
+    invitationSentAt?: Prisma.SortOrder;
+    rsvpToken?: Prisma.SortOrder;
+    parentId?: Prisma.SortOrder;
+};
+export type GuestSumOrderByAggregateInput = {
+    seatNumber?: Prisma.SortOrder;
+};
+export type GuestCreateNestedManyWithoutWeddingInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput> | Prisma.GuestCreateWithoutWeddingInput[] | Prisma.GuestUncheckedCreateWithoutWeddingInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutWeddingInput | Prisma.GuestCreateOrConnectWithoutWeddingInput[];
+    createMany?: Prisma.GuestCreateManyWeddingInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUncheckedCreateNestedManyWithoutWeddingInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput> | Prisma.GuestCreateWithoutWeddingInput[] | Prisma.GuestUncheckedCreateWithoutWeddingInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutWeddingInput | Prisma.GuestCreateOrConnectWithoutWeddingInput[];
+    createMany?: Prisma.GuestCreateManyWeddingInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUpdateManyWithoutWeddingNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput> | Prisma.GuestCreateWithoutWeddingInput[] | Prisma.GuestUncheckedCreateWithoutWeddingInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutWeddingInput | Prisma.GuestCreateOrConnectWithoutWeddingInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutWeddingInput | Prisma.GuestUpsertWithWhereUniqueWithoutWeddingInput[];
+    createMany?: Prisma.GuestCreateManyWeddingInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutWeddingInput | Prisma.GuestUpdateWithWhereUniqueWithoutWeddingInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutWeddingInput | Prisma.GuestUpdateManyWithWhereWithoutWeddingInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestUncheckedUpdateManyWithoutWeddingNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput> | Prisma.GuestCreateWithoutWeddingInput[] | Prisma.GuestUncheckedCreateWithoutWeddingInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutWeddingInput | Prisma.GuestCreateOrConnectWithoutWeddingInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutWeddingInput | Prisma.GuestUpsertWithWhereUniqueWithoutWeddingInput[];
+    createMany?: Prisma.GuestCreateManyWeddingInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutWeddingInput | Prisma.GuestUpdateWithWhereUniqueWithoutWeddingInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutWeddingInput | Prisma.GuestUpdateManyWithWhereWithoutWeddingInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestCreateallergiesInput = {
+    set: string[];
+};
+export type GuestCreateNestedOneWithoutCompanionsInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutCompanionsInput, Prisma.GuestUncheckedCreateWithoutCompanionsInput>;
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutCompanionsInput;
+    connect?: Prisma.GuestWhereUniqueInput;
+};
+export type GuestCreateNestedManyWithoutParentInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput> | Prisma.GuestCreateWithoutParentInput[] | Prisma.GuestUncheckedCreateWithoutParentInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutParentInput | Prisma.GuestCreateOrConnectWithoutParentInput[];
+    createMany?: Prisma.GuestCreateManyParentInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUncheckedCreateNestedManyWithoutParentInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput> | Prisma.GuestCreateWithoutParentInput[] | Prisma.GuestUncheckedCreateWithoutParentInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutParentInput | Prisma.GuestCreateOrConnectWithoutParentInput[];
+    createMany?: Prisma.GuestCreateManyParentInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type EnumGuestRoleFieldUpdateOperationsInput = {
+    set?: $Enums.GuestRole;
+};
+export type EnumRsvpStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RsvpStatus;
+};
+export type EnumDietTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DietType;
+};
+export type GuestUpdateallergiesInput = {
+    set?: string[];
+    push?: string | string[];
+};
+export type EnumAgeGroupFieldUpdateOperationsInput = {
+    set?: $Enums.AgeGroup;
+};
+export type GuestUpdateOneWithoutCompanionsNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutCompanionsInput, Prisma.GuestUncheckedCreateWithoutCompanionsInput>;
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutCompanionsInput;
+    upsert?: Prisma.GuestUpsertWithoutCompanionsInput;
+    disconnect?: Prisma.GuestWhereInput | boolean;
+    delete?: Prisma.GuestWhereInput | boolean;
+    connect?: Prisma.GuestWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.GuestUpdateToOneWithWhereWithoutCompanionsInput, Prisma.GuestUpdateWithoutCompanionsInput>, Prisma.GuestUncheckedUpdateWithoutCompanionsInput>;
+};
+export type GuestUpdateManyWithoutParentNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput> | Prisma.GuestCreateWithoutParentInput[] | Prisma.GuestUncheckedCreateWithoutParentInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutParentInput | Prisma.GuestCreateOrConnectWithoutParentInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutParentInput | Prisma.GuestUpsertWithWhereUniqueWithoutParentInput[];
+    createMany?: Prisma.GuestCreateManyParentInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutParentInput | Prisma.GuestUpdateWithWhereUniqueWithoutParentInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutParentInput | Prisma.GuestUpdateManyWithWhereWithoutParentInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput> | Prisma.GuestCreateWithoutParentInput[] | Prisma.GuestUncheckedCreateWithoutParentInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutParentInput | Prisma.GuestCreateOrConnectWithoutParentInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutParentInput | Prisma.GuestUpsertWithWhereUniqueWithoutParentInput[];
+    createMany?: Prisma.GuestCreateManyParentInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutParentInput | Prisma.GuestUpdateWithWhereUniqueWithoutParentInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutParentInput | Prisma.GuestUpdateManyWithWhereWithoutParentInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestCreateNestedManyWithoutGroupInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput> | Prisma.GuestCreateWithoutGroupInput[] | Prisma.GuestUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutGroupInput | Prisma.GuestCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.GuestCreateManyGroupInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput> | Prisma.GuestCreateWithoutGroupInput[] | Prisma.GuestUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutGroupInput | Prisma.GuestCreateOrConnectWithoutGroupInput[];
+    createMany?: Prisma.GuestCreateManyGroupInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUpdateManyWithoutGroupNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput> | Prisma.GuestCreateWithoutGroupInput[] | Prisma.GuestUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutGroupInput | Prisma.GuestCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutGroupInput | Prisma.GuestUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.GuestCreateManyGroupInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutGroupInput | Prisma.GuestUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutGroupInput | Prisma.GuestUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput> | Prisma.GuestCreateWithoutGroupInput[] | Prisma.GuestUncheckedCreateWithoutGroupInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutGroupInput | Prisma.GuestCreateOrConnectWithoutGroupInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutGroupInput | Prisma.GuestUpsertWithWhereUniqueWithoutGroupInput[];
+    createMany?: Prisma.GuestCreateManyGroupInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutGroupInput | Prisma.GuestUpdateWithWhereUniqueWithoutGroupInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutGroupInput | Prisma.GuestUpdateManyWithWhereWithoutGroupInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestCreateNestedManyWithoutTableInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput> | Prisma.GuestCreateWithoutTableInput[] | Prisma.GuestUncheckedCreateWithoutTableInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutTableInput | Prisma.GuestCreateOrConnectWithoutTableInput[];
+    createMany?: Prisma.GuestCreateManyTableInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUncheckedCreateNestedManyWithoutTableInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput> | Prisma.GuestCreateWithoutTableInput[] | Prisma.GuestUncheckedCreateWithoutTableInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutTableInput | Prisma.GuestCreateOrConnectWithoutTableInput[];
+    createMany?: Prisma.GuestCreateManyTableInputEnvelope;
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+};
+export type GuestUpdateManyWithoutTableNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput> | Prisma.GuestCreateWithoutTableInput[] | Prisma.GuestUncheckedCreateWithoutTableInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutTableInput | Prisma.GuestCreateOrConnectWithoutTableInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutTableInput | Prisma.GuestUpsertWithWhereUniqueWithoutTableInput[];
+    createMany?: Prisma.GuestCreateManyTableInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutTableInput | Prisma.GuestUpdateWithWhereUniqueWithoutTableInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutTableInput | Prisma.GuestUpdateManyWithWhereWithoutTableInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestUncheckedUpdateManyWithoutTableNestedInput = {
+    create?: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput> | Prisma.GuestCreateWithoutTableInput[] | Prisma.GuestUncheckedCreateWithoutTableInput[];
+    connectOrCreate?: Prisma.GuestCreateOrConnectWithoutTableInput | Prisma.GuestCreateOrConnectWithoutTableInput[];
+    upsert?: Prisma.GuestUpsertWithWhereUniqueWithoutTableInput | Prisma.GuestUpsertWithWhereUniqueWithoutTableInput[];
+    createMany?: Prisma.GuestCreateManyTableInputEnvelope;
+    set?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    disconnect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    delete?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    connect?: Prisma.GuestWhereUniqueInput | Prisma.GuestWhereUniqueInput[];
+    update?: Prisma.GuestUpdateWithWhereUniqueWithoutTableInput | Prisma.GuestUpdateWithWhereUniqueWithoutTableInput[];
+    updateMany?: Prisma.GuestUpdateManyWithWhereWithoutTableInput | Prisma.GuestUpdateManyWithWhereWithoutTableInput[];
+    deleteMany?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+};
+export type GuestCreateWithoutWeddingInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    group?: Prisma.GroupCreateNestedOneWithoutGuestsInput;
+    table?: Prisma.TableCreateNestedOneWithoutGuestsInput;
+    parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput;
+    companions?: Prisma.GuestCreateNestedManyWithoutParentInput;
+};
+export type GuestUncheckedCreateWithoutWeddingInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+    companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput;
+};
+export type GuestCreateOrConnectWithoutWeddingInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput>;
+};
+export type GuestCreateManyWeddingInputEnvelope = {
+    data: Prisma.GuestCreateManyWeddingInput | Prisma.GuestCreateManyWeddingInput[];
+    skipDuplicates?: boolean;
+};
+export type GuestUpsertWithWhereUniqueWithoutWeddingInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    update: Prisma.XOR<Prisma.GuestUpdateWithoutWeddingInput, Prisma.GuestUncheckedUpdateWithoutWeddingInput>;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutWeddingInput, Prisma.GuestUncheckedCreateWithoutWeddingInput>;
+};
+export type GuestUpdateWithWhereUniqueWithoutWeddingInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    data: Prisma.XOR<Prisma.GuestUpdateWithoutWeddingInput, Prisma.GuestUncheckedUpdateWithoutWeddingInput>;
+};
+export type GuestUpdateManyWithWhereWithoutWeddingInput = {
+    where: Prisma.GuestScalarWhereInput;
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyWithoutWeddingInput>;
+};
+export type GuestScalarWhereInput = {
+    AND?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+    OR?: Prisma.GuestScalarWhereInput[];
+    NOT?: Prisma.GuestScalarWhereInput | Prisma.GuestScalarWhereInput[];
+    id?: Prisma.StringFilter<"Guest"> | string;
+    name?: Prisma.StringFilter<"Guest"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Guest"> | Date | string;
+    weddingId?: Prisma.StringFilter<"Guest"> | string;
+    groupId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    tableId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    seatNumber?: Prisma.IntNullableFilter<"Guest"> | number | null;
+    role?: Prisma.EnumGuestRoleFilter<"Guest"> | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFilter<"Guest"> | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFilter<"Guest"> | $Enums.DietType;
+    dietNotes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    allergies?: Prisma.StringNullableListFilter<"Guest">;
+    notes?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFilter<"Guest"> | $Enums.AgeGroup;
+    phone?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    email?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    invitationSent?: Prisma.BoolFilter<"Guest"> | boolean;
+    invitationSentAt?: Prisma.DateTimeNullableFilter<"Guest"> | Date | string | null;
+    rsvpToken?: Prisma.StringNullableFilter<"Guest"> | string | null;
+    parentId?: Prisma.StringNullableFilter<"Guest"> | string | null;
+};
+export type GuestCreateWithoutCompanionsInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput;
+    group?: Prisma.GroupCreateNestedOneWithoutGuestsInput;
+    table?: Prisma.TableCreateNestedOneWithoutGuestsInput;
+    parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput;
+};
+export type GuestUncheckedCreateWithoutCompanionsInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+};
+export type GuestCreateOrConnectWithoutCompanionsInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutCompanionsInput, Prisma.GuestUncheckedCreateWithoutCompanionsInput>;
+};
+export type GuestCreateWithoutParentInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput;
+    group?: Prisma.GroupCreateNestedOneWithoutGuestsInput;
+    table?: Prisma.TableCreateNestedOneWithoutGuestsInput;
+    companions?: Prisma.GuestCreateNestedManyWithoutParentInput;
+};
+export type GuestUncheckedCreateWithoutParentInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput;
+};
+export type GuestCreateOrConnectWithoutParentInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput>;
+};
+export type GuestCreateManyParentInputEnvelope = {
+    data: Prisma.GuestCreateManyParentInput | Prisma.GuestCreateManyParentInput[];
+    skipDuplicates?: boolean;
+};
+export type GuestUpsertWithoutCompanionsInput = {
+    update: Prisma.XOR<Prisma.GuestUpdateWithoutCompanionsInput, Prisma.GuestUncheckedUpdateWithoutCompanionsInput>;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutCompanionsInput, Prisma.GuestUncheckedCreateWithoutCompanionsInput>;
+    where?: Prisma.GuestWhereInput;
+};
+export type GuestUpdateToOneWithWhereWithoutCompanionsInput = {
+    where?: Prisma.GuestWhereInput;
+    data: Prisma.XOR<Prisma.GuestUpdateWithoutCompanionsInput, Prisma.GuestUncheckedUpdateWithoutCompanionsInput>;
+};
+export type GuestUpdateWithoutCompanionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput;
+    table?: Prisma.TableUpdateOneWithoutGuestsNestedInput;
+    parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput;
+};
+export type GuestUncheckedUpdateWithoutCompanionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestUpsertWithWhereUniqueWithoutParentInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    update: Prisma.XOR<Prisma.GuestUpdateWithoutParentInput, Prisma.GuestUncheckedUpdateWithoutParentInput>;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutParentInput, Prisma.GuestUncheckedCreateWithoutParentInput>;
+};
+export type GuestUpdateWithWhereUniqueWithoutParentInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    data: Prisma.XOR<Prisma.GuestUpdateWithoutParentInput, Prisma.GuestUncheckedUpdateWithoutParentInput>;
+};
+export type GuestUpdateManyWithWhereWithoutParentInput = {
+    where: Prisma.GuestScalarWhereInput;
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyWithoutParentInput>;
+};
+export type GuestCreateWithoutGroupInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput;
+    table?: Prisma.TableCreateNestedOneWithoutGuestsInput;
+    parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput;
+    companions?: Prisma.GuestCreateNestedManyWithoutParentInput;
+};
+export type GuestUncheckedCreateWithoutGroupInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+    companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput;
+};
+export type GuestCreateOrConnectWithoutGroupInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput>;
+};
+export type GuestCreateManyGroupInputEnvelope = {
+    data: Prisma.GuestCreateManyGroupInput | Prisma.GuestCreateManyGroupInput[];
+    skipDuplicates?: boolean;
+};
+export type GuestUpsertWithWhereUniqueWithoutGroupInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    update: Prisma.XOR<Prisma.GuestUpdateWithoutGroupInput, Prisma.GuestUncheckedUpdateWithoutGroupInput>;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutGroupInput, Prisma.GuestUncheckedCreateWithoutGroupInput>;
+};
+export type GuestUpdateWithWhereUniqueWithoutGroupInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    data: Prisma.XOR<Prisma.GuestUpdateWithoutGroupInput, Prisma.GuestUncheckedUpdateWithoutGroupInput>;
+};
+export type GuestUpdateManyWithWhereWithoutGroupInput = {
+    where: Prisma.GuestScalarWhereInput;
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyWithoutGroupInput>;
+};
+export type GuestCreateWithoutTableInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    wedding: Prisma.WeddingCreateNestedOneWithoutGuestsInput;
+    group?: Prisma.GroupCreateNestedOneWithoutGuestsInput;
+    parent?: Prisma.GuestCreateNestedOneWithoutCompanionsInput;
+    companions?: Prisma.GuestCreateNestedManyWithoutParentInput;
+};
+export type GuestUncheckedCreateWithoutTableInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+    companions?: Prisma.GuestUncheckedCreateNestedManyWithoutParentInput;
+};
+export type GuestCreateOrConnectWithoutTableInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput>;
+};
+export type GuestCreateManyTableInputEnvelope = {
+    data: Prisma.GuestCreateManyTableInput | Prisma.GuestCreateManyTableInput[];
+    skipDuplicates?: boolean;
+};
+export type GuestUpsertWithWhereUniqueWithoutTableInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    update: Prisma.XOR<Prisma.GuestUpdateWithoutTableInput, Prisma.GuestUncheckedUpdateWithoutTableInput>;
+    create: Prisma.XOR<Prisma.GuestCreateWithoutTableInput, Prisma.GuestUncheckedCreateWithoutTableInput>;
+};
+export type GuestUpdateWithWhereUniqueWithoutTableInput = {
+    where: Prisma.GuestWhereUniqueInput;
+    data: Prisma.XOR<Prisma.GuestUpdateWithoutTableInput, Prisma.GuestUncheckedUpdateWithoutTableInput>;
+};
+export type GuestUpdateManyWithWhereWithoutTableInput = {
+    where: Prisma.GuestScalarWhereInput;
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyWithoutTableInput>;
+};
+export type GuestCreateManyWeddingInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+};
+export type GuestUpdateWithoutWeddingInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput;
+    table?: Prisma.TableUpdateOneWithoutGuestsNestedInput;
+    parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput;
+    companions?: Prisma.GuestUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateWithoutWeddingInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateManyWithoutWeddingInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestCreateManyParentInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+};
+export type GuestUpdateWithoutParentInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput;
+    table?: Prisma.TableUpdateOneWithoutGuestsNestedInput;
+    companions?: Prisma.GuestUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateWithoutParentInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateManyWithoutParentInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestCreateManyGroupInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    tableId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+};
+export type GuestUpdateWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput;
+    table?: Prisma.TableUpdateOneWithoutGuestsNestedInput;
+    parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput;
+    companions?: Prisma.GuestUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateManyWithoutGroupInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    tableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type GuestCreateManyTableInput = {
+    id?: string;
+    name: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    weddingId: string;
+    groupId?: string | null;
+    seatNumber?: number | null;
+    role?: $Enums.GuestRole;
+    rsvp?: $Enums.RsvpStatus;
+    diet?: $Enums.DietType;
+    dietNotes?: string | null;
+    allergies?: Prisma.GuestCreateallergiesInput | string[];
+    notes?: string | null;
+    ageGroup?: $Enums.AgeGroup;
+    phone?: string | null;
+    email?: string | null;
+    invitationSent?: boolean;
+    invitationSentAt?: Date | string | null;
+    rsvpToken?: string | null;
+    parentId?: string | null;
+};
+export type GuestUpdateWithoutTableInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    wedding?: Prisma.WeddingUpdateOneRequiredWithoutGuestsNestedInput;
+    group?: Prisma.GroupUpdateOneWithoutGuestsNestedInput;
+    parent?: Prisma.GuestUpdateOneWithoutCompanionsNestedInput;
+    companions?: Prisma.GuestUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateWithoutTableInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    companions?: Prisma.GuestUncheckedUpdateManyWithoutParentNestedInput;
+};
+export type GuestUncheckedUpdateManyWithoutTableInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    weddingId?: Prisma.StringFieldUpdateOperationsInput | string;
+    groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    seatNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    role?: Prisma.EnumGuestRoleFieldUpdateOperationsInput | $Enums.GuestRole;
+    rsvp?: Prisma.EnumRsvpStatusFieldUpdateOperationsInput | $Enums.RsvpStatus;
+    diet?: Prisma.EnumDietTypeFieldUpdateOperationsInput | $Enums.DietType;
+    dietNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    allergies?: Prisma.GuestUpdateallergiesInput | string[];
+    notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ageGroup?: Prisma.EnumAgeGroupFieldUpdateOperationsInput | $Enums.AgeGroup;
+    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    invitationSent?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    invitationSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    rsvpToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+/**
+ * Count Type GuestCountOutputType
+ */
+export type GuestCountOutputType = {
+    companions: number;
+};
+export type GuestCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    companions?: boolean | GuestCountOutputTypeCountCompanionsArgs;
+};
+/**
+ * GuestCountOutputType without action
+ */
+export type GuestCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GuestCountOutputType
+     */
+    select?: Prisma.GuestCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * GuestCountOutputType without action
+ */
+export type GuestCountOutputTypeCountCompanionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GuestWhereInput;
+};
+export type GuestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    weddingId?: boolean;
+    groupId?: boolean;
+    tableId?: boolean;
+    seatNumber?: boolean;
+    role?: boolean;
+    rsvp?: boolean;
+    diet?: boolean;
+    dietNotes?: boolean;
+    allergies?: boolean;
+    notes?: boolean;
+    ageGroup?: boolean;
+    phone?: boolean;
+    email?: boolean;
+    invitationSent?: boolean;
+    invitationSentAt?: boolean;
+    rsvpToken?: boolean;
+    parentId?: boolean;
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+    companions?: boolean | Prisma.Guest$companionsArgs<ExtArgs>;
+    _count?: boolean | Prisma.GuestCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["guest"]>;
+export type GuestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    weddingId?: boolean;
+    groupId?: boolean;
+    tableId?: boolean;
+    seatNumber?: boolean;
+    role?: boolean;
+    rsvp?: boolean;
+    diet?: boolean;
+    dietNotes?: boolean;
+    allergies?: boolean;
+    notes?: boolean;
+    ageGroup?: boolean;
+    phone?: boolean;
+    email?: boolean;
+    invitationSent?: boolean;
+    invitationSentAt?: boolean;
+    rsvpToken?: boolean;
+    parentId?: boolean;
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+}, ExtArgs["result"]["guest"]>;
+export type GuestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    weddingId?: boolean;
+    groupId?: boolean;
+    tableId?: boolean;
+    seatNumber?: boolean;
+    role?: boolean;
+    rsvp?: boolean;
+    diet?: boolean;
+    dietNotes?: boolean;
+    allergies?: boolean;
+    notes?: boolean;
+    ageGroup?: boolean;
+    phone?: boolean;
+    email?: boolean;
+    invitationSent?: boolean;
+    invitationSentAt?: boolean;
+    rsvpToken?: boolean;
+    parentId?: boolean;
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+}, ExtArgs["result"]["guest"]>;
+export type GuestSelectScalar = {
+    id?: boolean;
+    name?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    weddingId?: boolean;
+    groupId?: boolean;
+    tableId?: boolean;
+    seatNumber?: boolean;
+    role?: boolean;
+    rsvp?: boolean;
+    diet?: boolean;
+    dietNotes?: boolean;
+    allergies?: boolean;
+    notes?: boolean;
+    ageGroup?: boolean;
+    phone?: boolean;
+    email?: boolean;
+    invitationSent?: boolean;
+    invitationSentAt?: boolean;
+    rsvpToken?: boolean;
+    parentId?: boolean;
+};
+export type GuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "weddingId" | "groupId" | "tableId" | "seatNumber" | "role" | "rsvp" | "diet" | "dietNotes" | "allergies" | "notes" | "ageGroup" | "phone" | "email" | "invitationSent" | "invitationSentAt" | "rsvpToken" | "parentId", ExtArgs["result"]["guest"]>;
+export type GuestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+    companions?: boolean | Prisma.Guest$companionsArgs<ExtArgs>;
+    _count?: boolean | Prisma.GuestCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type GuestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+};
+export type GuestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    wedding?: boolean | Prisma.WeddingDefaultArgs<ExtArgs>;
+    group?: boolean | Prisma.Guest$groupArgs<ExtArgs>;
+    table?: boolean | Prisma.Guest$tableArgs<ExtArgs>;
+    parent?: boolean | Prisma.Guest$parentArgs<ExtArgs>;
+};
+export type $GuestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "Guest";
+    objects: {
+        wedding: Prisma.$WeddingPayload<ExtArgs>;
+        group: Prisma.$GroupPayload<ExtArgs> | null;
+        table: Prisma.$TablePayload<ExtArgs> | null;
+        parent: Prisma.$GuestPayload<ExtArgs> | null;
+        companions: Prisma.$GuestPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        weddingId: string;
+        groupId: string | null;
+        tableId: string | null;
+        seatNumber: number | null;
+        role: $Enums.GuestRole;
+        rsvp: $Enums.RsvpStatus;
+        diet: $Enums.DietType;
+        dietNotes: string | null;
+        allergies: string[];
+        notes: string | null;
+        ageGroup: $Enums.AgeGroup;
+        phone: string | null;
+        email: string | null;
+        invitationSent: boolean;
+        invitationSentAt: Date | null;
+        rsvpToken: string | null;
+        parentId: string | null;
+    }, ExtArgs["result"]["guest"]>;
+    composites: {};
+};
+export type GuestGetPayload<S extends boolean | null | undefined | GuestDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$GuestPayload, S>;
+export type GuestCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<GuestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: GuestCountAggregateInputType | true;
+};
+export interface GuestDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['Guest'];
+        meta: {
+            name: 'Guest';
+        };
+    };
+    /**
+     * Find zero or one Guest that matches the filter.
+     * @param {GuestFindUniqueArgs} args - Arguments to find a Guest
+     * @example
+     * // Get one Guest
+     * const guest = await prisma.guest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GuestFindUniqueArgs>(args: Prisma.SelectSubset<T, GuestFindUniqueArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one Guest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GuestFindUniqueOrThrowArgs} args - Arguments to find a Guest
+     * @example
+     * // Get one Guest
+     * const guest = await prisma.guest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GuestFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, GuestFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Guest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestFindFirstArgs} args - Arguments to find a Guest
+     * @example
+     * // Get one Guest
+     * const guest = await prisma.guest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GuestFindFirstArgs>(args?: Prisma.SelectSubset<T, GuestFindFirstArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Guest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestFindFirstOrThrowArgs} args - Arguments to find a Guest
+     * @example
+     * // Get one Guest
+     * const guest = await prisma.guest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GuestFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, GuestFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Guests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Guests
+     * const guests = await prisma.guest.findMany()
+     *
+     * // Get first 10 Guests
+     * const guests = await prisma.guest.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const guestWithIdOnly = await prisma.guest.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends GuestFindManyArgs>(args?: Prisma.SelectSubset<T, GuestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a Guest.
+     * @param {GuestCreateArgs} args - Arguments to create a Guest.
+     * @example
+     * // Create one Guest
+     * const Guest = await prisma.guest.create({
+     *   data: {
+     *     // ... data to create a Guest
+     *   }
+     * })
+     *
+     */
+    create<T extends GuestCreateArgs>(args: Prisma.SelectSubset<T, GuestCreateArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Guests.
+     * @param {GuestCreateManyArgs} args - Arguments to create many Guests.
+     * @example
+     * // Create many Guests
+     * const guest = await prisma.guest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends GuestCreateManyArgs>(args?: Prisma.SelectSubset<T, GuestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Guests and returns the data saved in the database.
+     * @param {GuestCreateManyAndReturnArgs} args - Arguments to create many Guests.
+     * @example
+     * // Create many Guests
+     * const guest = await prisma.guest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Guests and only return the `id`
+     * const guestWithIdOnly = await prisma.guest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends GuestCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, GuestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a Guest.
+     * @param {GuestDeleteArgs} args - Arguments to delete one Guest.
+     * @example
+     * // Delete one Guest
+     * const Guest = await prisma.guest.delete({
+     *   where: {
+     *     // ... filter to delete one Guest
+     *   }
+     * })
+     *
+     */
+    delete<T extends GuestDeleteArgs>(args: Prisma.SelectSubset<T, GuestDeleteArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one Guest.
+     * @param {GuestUpdateArgs} args - Arguments to update one Guest.
+     * @example
+     * // Update one Guest
+     * const guest = await prisma.guest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends GuestUpdateArgs>(args: Prisma.SelectSubset<T, GuestUpdateArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Guests.
+     * @param {GuestDeleteManyArgs} args - Arguments to filter Guests to delete.
+     * @example
+     * // Delete a few Guests
+     * const { count } = await prisma.guest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends GuestDeleteManyArgs>(args?: Prisma.SelectSubset<T, GuestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Guests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Guests
+     * const guest = await prisma.guest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends GuestUpdateManyArgs>(args: Prisma.SelectSubset<T, GuestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Guests and returns the data updated in the database.
+     * @param {GuestUpdateManyAndReturnArgs} args - Arguments to update many Guests.
+     * @example
+     * // Update many Guests
+     * const guest = await prisma.guest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Guests and only return the `id`
+     * const guestWithIdOnly = await prisma.guest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends GuestUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, GuestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one Guest.
+     * @param {GuestUpsertArgs} args - Arguments to update or create a Guest.
+     * @example
+     * // Update or create a Guest
+     * const guest = await prisma.guest.upsert({
+     *   create: {
+     *     // ... data to create a Guest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Guest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GuestUpsertArgs>(args: Prisma.SelectSubset<T, GuestUpsertArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Guests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestCountArgs} args - Arguments to filter Guests to count.
+     * @example
+     * // Count the number of Guests
+     * const count = await prisma.guest.count({
+     *   where: {
+     *     // ... the filter for the Guests we want to count
+     *   }
+     * })
+    **/
+    count<T extends GuestCountArgs>(args?: Prisma.Subset<T, GuestCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], GuestCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a Guest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GuestAggregateArgs>(args: Prisma.Subset<T, GuestAggregateArgs>): Prisma.PrismaPromise<GetGuestAggregateType<T>>;
+    /**
+     * Group by Guest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GuestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends GuestGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: GuestGroupByArgs['orderBy'];
+    } : {
+        orderBy?: GuestGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, GuestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGuestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Guest model
+     */
+    readonly fields: GuestFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for Guest.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__GuestClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    wedding<T extends Prisma.WeddingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WeddingDefaultArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    group<T extends Prisma.Guest$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guest$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    table<T extends Prisma.Guest$tableArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guest$tableArgs<ExtArgs>>): Prisma.Prisma__TableClient<runtime.Types.Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    parent<T extends Prisma.Guest$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guest$parentArgs<ExtArgs>>): Prisma.Prisma__GuestClient<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    companions<T extends Prisma.Guest$companionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guest$companionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the Guest model
+ */
+export interface GuestFieldRefs {
+    readonly id: Prisma.FieldRef<"Guest", 'String'>;
+    readonly name: Prisma.FieldRef<"Guest", 'String'>;
+    readonly createdAt: Prisma.FieldRef<"Guest", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"Guest", 'DateTime'>;
+    readonly weddingId: Prisma.FieldRef<"Guest", 'String'>;
+    readonly groupId: Prisma.FieldRef<"Guest", 'String'>;
+    readonly tableId: Prisma.FieldRef<"Guest", 'String'>;
+    readonly seatNumber: Prisma.FieldRef<"Guest", 'Int'>;
+    readonly role: Prisma.FieldRef<"Guest", 'GuestRole'>;
+    readonly rsvp: Prisma.FieldRef<"Guest", 'RsvpStatus'>;
+    readonly diet: Prisma.FieldRef<"Guest", 'DietType'>;
+    readonly dietNotes: Prisma.FieldRef<"Guest", 'String'>;
+    readonly allergies: Prisma.FieldRef<"Guest", 'String[]'>;
+    readonly notes: Prisma.FieldRef<"Guest", 'String'>;
+    readonly ageGroup: Prisma.FieldRef<"Guest", 'AgeGroup'>;
+    readonly phone: Prisma.FieldRef<"Guest", 'String'>;
+    readonly email: Prisma.FieldRef<"Guest", 'String'>;
+    readonly invitationSent: Prisma.FieldRef<"Guest", 'Boolean'>;
+    readonly invitationSentAt: Prisma.FieldRef<"Guest", 'DateTime'>;
+    readonly rsvpToken: Prisma.FieldRef<"Guest", 'String'>;
+    readonly parentId: Prisma.FieldRef<"Guest", 'String'>;
+}
+/**
+ * Guest findUnique
+ */
+export type GuestFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter, which Guest to fetch.
+     */
+    where: Prisma.GuestWhereUniqueInput;
+};
+/**
+ * Guest findUniqueOrThrow
+ */
+export type GuestFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter, which Guest to fetch.
+     */
+    where: Prisma.GuestWhereUniqueInput;
+};
+/**
+ * Guest findFirst
+ */
+export type GuestFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter, which Guest to fetch.
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Guests to fetch.
+     */
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Guests.
+     */
+    cursor?: Prisma.GuestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Guests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Guests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Guests.
+     */
+    distinct?: Prisma.GuestScalarFieldEnum | Prisma.GuestScalarFieldEnum[];
+};
+/**
+ * Guest findFirstOrThrow
+ */
+export type GuestFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter, which Guest to fetch.
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Guests to fetch.
+     */
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Guests.
+     */
+    cursor?: Prisma.GuestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Guests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Guests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Guests.
+     */
+    distinct?: Prisma.GuestScalarFieldEnum | Prisma.GuestScalarFieldEnum[];
+};
+/**
+ * Guest findMany
+ */
+export type GuestFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter, which Guests to fetch.
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Guests to fetch.
+     */
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Guests.
+     */
+    cursor?: Prisma.GuestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Guests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Guests.
+     */
+    skip?: number;
+    distinct?: Prisma.GuestScalarFieldEnum | Prisma.GuestScalarFieldEnum[];
+};
+/**
+ * Guest create
+ */
+export type GuestCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Guest.
+     */
+    data: Prisma.XOR<Prisma.GuestCreateInput, Prisma.GuestUncheckedCreateInput>;
+};
+/**
+ * Guest createMany
+ */
+export type GuestCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Guests.
+     */
+    data: Prisma.GuestCreateManyInput | Prisma.GuestCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * Guest createManyAndReturn
+ */
+export type GuestCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Guests.
+     */
+    data: Prisma.GuestCreateManyInput | Prisma.GuestCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Guest update
+ */
+export type GuestUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Guest.
+     */
+    data: Prisma.XOR<Prisma.GuestUpdateInput, Prisma.GuestUncheckedUpdateInput>;
+    /**
+     * Choose, which Guest to update.
+     */
+    where: Prisma.GuestWhereUniqueInput;
+};
+/**
+ * Guest updateMany
+ */
+export type GuestUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Guests.
+     */
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyInput>;
+    /**
+     * Filter which Guests to update
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * Limit how many Guests to update.
+     */
+    limit?: number;
+};
+/**
+ * Guest updateManyAndReturn
+ */
+export type GuestUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * The data used to update Guests.
+     */
+    data: Prisma.XOR<Prisma.GuestUpdateManyMutationInput, Prisma.GuestUncheckedUpdateManyInput>;
+    /**
+     * Filter which Guests to update
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * Limit how many Guests to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Guest upsert
+ */
+export type GuestUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Guest to update in case it exists.
+     */
+    where: Prisma.GuestWhereUniqueInput;
+    /**
+     * In case the Guest found by the `where` argument doesn't exist, create a new Guest with this data.
+     */
+    create: Prisma.XOR<Prisma.GuestCreateInput, Prisma.GuestUncheckedCreateInput>;
+    /**
+     * In case the Guest was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.GuestUpdateInput, Prisma.GuestUncheckedUpdateInput>;
+};
+/**
+ * Guest delete
+ */
+export type GuestDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    /**
+     * Filter which Guest to delete.
+     */
+    where: Prisma.GuestWhereUniqueInput;
+};
+/**
+ * Guest deleteMany
+ */
+export type GuestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Guests to delete
+     */
+    where?: Prisma.GuestWhereInput;
+    /**
+     * Limit how many Guests to delete.
+     */
+    limit?: number;
+};
+/**
+ * Guest.group
+ */
+export type Guest$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: Prisma.GroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    where?: Prisma.GroupWhereInput;
+};
+/**
+ * Guest.table
+ */
+export type Guest$tableArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Table
+     */
+    select?: Prisma.TableSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Table
+     */
+    omit?: Prisma.TableOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TableInclude<ExtArgs> | null;
+    where?: Prisma.TableWhereInput;
+};
+/**
+ * Guest.parent
+ */
+export type Guest$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    where?: Prisma.GuestWhereInput;
+};
+/**
+ * Guest.companions
+ */
+export type Guest$companionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    where?: Prisma.GuestWhereInput;
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    cursor?: Prisma.GuestWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GuestScalarFieldEnum | Prisma.GuestScalarFieldEnum[];
+};
+/**
+ * Guest without action
+ */
+export type GuestDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+};
+export {};
+//# sourceMappingURL=Guest.d.ts.map

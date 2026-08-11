@@ -1,0 +1,103 @@
+import { ProviderCategory, ProviderStatus } from "../generated/client/client";
+type CreateProviderInput = {
+    name: string;
+    category?: ProviderCategory;
+    status?: ProviderStatus;
+    contactName?: string | null;
+    phone?: string | null;
+    email?: string | null;
+    website?: string | null;
+    estimatedPrice?: number | null;
+    finalPrice?: number | null;
+    notes?: string | null;
+};
+type UpdateProviderInput = Partial<CreateProviderInput>;
+export declare function getProvidersService(weddingId: string, userId: string): Promise<{
+    name: string;
+    email: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    notes: string | null;
+    phone: string | null;
+    status: ProviderStatus;
+    category: ProviderCategory;
+    contactName: string | null;
+    website: string | null;
+    estimatedPrice: number | null;
+    finalPrice: number | null;
+}[] | null>;
+export declare function getProviderByIdService(id: string, userId: string): Promise<{
+    name: string;
+    email: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    notes: string | null;
+    phone: string | null;
+    status: ProviderStatus;
+    category: ProviderCategory;
+    contactName: string | null;
+    website: string | null;
+    estimatedPrice: number | null;
+    finalPrice: number | null;
+} | null>;
+export declare function createProviderService(weddingId: string, userId: string, data: CreateProviderInput): Promise<{
+    name: string;
+    email: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    notes: string | null;
+    phone: string | null;
+    status: ProviderStatus;
+    category: ProviderCategory;
+    contactName: string | null;
+    website: string | null;
+    estimatedPrice: number | null;
+    finalPrice: number | null;
+} | null>;
+export declare function createManyProvidersService(weddingId: string, userId: string, providers: Array<{
+    name: string;
+    category?: ProviderCategory;
+    notes?: string | null;
+}>): Promise<{
+    created: number;
+} | null>;
+export declare function updateProviderService(id: string, userId: string, data: UpdateProviderInput): Promise<{
+    name: string;
+    email: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    notes: string | null;
+    phone: string | null;
+    status: ProviderStatus;
+    category: ProviderCategory;
+    contactName: string | null;
+    website: string | null;
+    estimatedPrice: number | null;
+    finalPrice: number | null;
+} | null>;
+export declare function deleteProviderService(id: string, userId: string): Promise<{
+    name: string;
+    email: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    weddingId: string;
+    notes: string | null;
+    phone: string | null;
+    status: ProviderStatus;
+    category: ProviderCategory;
+    contactName: string | null;
+    website: string | null;
+    estimatedPrice: number | null;
+    finalPrice: number | null;
+} | null>;
+export {};
+//# sourceMappingURL=provider.service.d.ts.map

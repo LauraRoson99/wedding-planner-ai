@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.table = void 0;
+const express_1 = require("express");
+const auth_1 = require("../middleware/auth");
+const weddingOwnership_1 = require("../middleware/weddingOwnership");
+const table_controller_1 = require("../controllers/table.controller");
+exports.table = (0, express_1.Router)();
+exports.table.use(auth_1.requireAuth);
+exports.table.use(weddingOwnership_1.requireWeddingOwnership);
+exports.table.get("/tables", table_controller_1.getTables);
+exports.table.get("/tables/people", table_controller_1.getTablePeople);
+exports.table.get("/tables/:id", table_controller_1.getTable);
+exports.table.post("/tables", table_controller_1.postTable);
+exports.table.put("/tables/:id", table_controller_1.putTable);
+exports.table.delete("/tables/:id", table_controller_1.deleteTable);
+exports.table.post("/tables/seating/apply", table_controller_1.applySeating);
+exports.table.put("/tables/:tableId/seats/:seatNumber/assign", table_controller_1.assignSeat);
+exports.table.delete("/tables/:tableId/seats/:seatNumber", table_controller_1.clearSeat);
+exports.table.delete("/tables/:id/guests", table_controller_1.clearTable);
+//# sourceMappingURL=table.routes.js.map

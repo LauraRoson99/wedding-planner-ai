@@ -1,0 +1,2267 @@
+import type * as runtime from "@prisma/client/runtime/library";
+import type * as Prisma from "../internal/prismaNamespace";
+/**
+ * Model Wedding
+ *
+ */
+export type WeddingModel = runtime.Types.Result.DefaultSelection<Prisma.$WeddingPayload>;
+export type AggregateWedding = {
+    _count: WeddingCountAggregateOutputType | null;
+    _min: WeddingMinAggregateOutputType | null;
+    _max: WeddingMaxAggregateOutputType | null;
+};
+export type WeddingMinAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    date: Date | null;
+    ownerId: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type WeddingMaxAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    date: Date | null;
+    ownerId: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type WeddingCountAggregateOutputType = {
+    id: number;
+    name: number;
+    date: number;
+    ownerId: number;
+    createdAt: number;
+    updatedAt: number;
+    _all: number;
+};
+export type WeddingMinAggregateInputType = {
+    id?: true;
+    name?: true;
+    date?: true;
+    ownerId?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type WeddingMaxAggregateInputType = {
+    id?: true;
+    name?: true;
+    date?: true;
+    ownerId?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type WeddingCountAggregateInputType = {
+    id?: true;
+    name?: true;
+    date?: true;
+    ownerId?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    _all?: true;
+};
+export type WeddingAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Wedding to aggregate.
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Weddings to fetch.
+     */
+    orderBy?: Prisma.WeddingOrderByWithRelationInput | Prisma.WeddingOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.WeddingWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Weddings from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Weddings.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Weddings
+    **/
+    _count?: true | WeddingCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: WeddingMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: WeddingMaxAggregateInputType;
+};
+export type GetWeddingAggregateType<T extends WeddingAggregateArgs> = {
+    [P in keyof T & keyof AggregateWedding]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateWedding[P]> : Prisma.GetScalarType<T[P], AggregateWedding[P]>;
+};
+export type WeddingGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.WeddingWhereInput;
+    orderBy?: Prisma.WeddingOrderByWithAggregationInput | Prisma.WeddingOrderByWithAggregationInput[];
+    by: Prisma.WeddingScalarFieldEnum[] | Prisma.WeddingScalarFieldEnum;
+    having?: Prisma.WeddingScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: WeddingCountAggregateInputType | true;
+    _min?: WeddingMinAggregateInputType;
+    _max?: WeddingMaxAggregateInputType;
+};
+export type WeddingGroupByOutputType = {
+    id: string;
+    name: string;
+    date: Date | null;
+    ownerId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    _count: WeddingCountAggregateOutputType | null;
+    _min: WeddingMinAggregateOutputType | null;
+    _max: WeddingMaxAggregateOutputType | null;
+};
+type GetWeddingGroupByPayload<T extends WeddingGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<WeddingGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof WeddingGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], WeddingGroupByOutputType[P]> : Prisma.GetScalarType<T[P], WeddingGroupByOutputType[P]>;
+}>>;
+export type WeddingWhereInput = {
+    AND?: Prisma.WeddingWhereInput | Prisma.WeddingWhereInput[];
+    OR?: Prisma.WeddingWhereInput[];
+    NOT?: Prisma.WeddingWhereInput | Prisma.WeddingWhereInput[];
+    id?: Prisma.StringFilter<"Wedding"> | string;
+    name?: Prisma.StringFilter<"Wedding"> | string;
+    date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null;
+    ownerId?: Prisma.StringFilter<"Wedding"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+    owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    guests?: Prisma.GuestListRelationFilter;
+    groups?: Prisma.GroupListRelationFilter;
+    tables?: Prisma.TableListRelationFilter;
+    events?: Prisma.EventListRelationFilter;
+    tasks?: Prisma.TaskListRelationFilter;
+    budget?: Prisma.XOR<Prisma.BudgetNullableScalarRelationFilter, Prisma.BudgetWhereInput> | null;
+    budgetItems?: Prisma.BudgetItemListRelationFilter;
+    providers?: Prisma.ProviderListRelationFilter;
+};
+export type WeddingOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    date?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ownerId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    owner?: Prisma.UserOrderByWithRelationInput;
+    guests?: Prisma.GuestOrderByRelationAggregateInput;
+    groups?: Prisma.GroupOrderByRelationAggregateInput;
+    tables?: Prisma.TableOrderByRelationAggregateInput;
+    events?: Prisma.EventOrderByRelationAggregateInput;
+    tasks?: Prisma.TaskOrderByRelationAggregateInput;
+    budget?: Prisma.BudgetOrderByWithRelationInput;
+    budgetItems?: Prisma.BudgetItemOrderByRelationAggregateInput;
+    providers?: Prisma.ProviderOrderByRelationAggregateInput;
+};
+export type WeddingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    AND?: Prisma.WeddingWhereInput | Prisma.WeddingWhereInput[];
+    OR?: Prisma.WeddingWhereInput[];
+    NOT?: Prisma.WeddingWhereInput | Prisma.WeddingWhereInput[];
+    name?: Prisma.StringFilter<"Wedding"> | string;
+    date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null;
+    ownerId?: Prisma.StringFilter<"Wedding"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+    owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    guests?: Prisma.GuestListRelationFilter;
+    groups?: Prisma.GroupListRelationFilter;
+    tables?: Prisma.TableListRelationFilter;
+    events?: Prisma.EventListRelationFilter;
+    tasks?: Prisma.TaskListRelationFilter;
+    budget?: Prisma.XOR<Prisma.BudgetNullableScalarRelationFilter, Prisma.BudgetWhereInput> | null;
+    budgetItems?: Prisma.BudgetItemListRelationFilter;
+    providers?: Prisma.ProviderListRelationFilter;
+}, "id">;
+export type WeddingOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    date?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ownerId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    _count?: Prisma.WeddingCountOrderByAggregateInput;
+    _max?: Prisma.WeddingMaxOrderByAggregateInput;
+    _min?: Prisma.WeddingMinOrderByAggregateInput;
+};
+export type WeddingScalarWhereWithAggregatesInput = {
+    AND?: Prisma.WeddingScalarWhereWithAggregatesInput | Prisma.WeddingScalarWhereWithAggregatesInput[];
+    OR?: Prisma.WeddingScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.WeddingScalarWhereWithAggregatesInput | Prisma.WeddingScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"Wedding"> | string;
+    name?: Prisma.StringWithAggregatesFilter<"Wedding"> | string;
+    date?: Prisma.DateTimeNullableWithAggregatesFilter<"Wedding"> | Date | string | null;
+    ownerId?: Prisma.StringWithAggregatesFilter<"Wedding"> | string;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Wedding"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Wedding"> | Date | string;
+};
+export type WeddingCreateInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateManyInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type WeddingUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type WeddingUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type WeddingListRelationFilter = {
+    every?: Prisma.WeddingWhereInput;
+    some?: Prisma.WeddingWhereInput;
+    none?: Prisma.WeddingWhereInput;
+};
+export type WeddingOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type WeddingCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    date?: Prisma.SortOrder;
+    ownerId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type WeddingMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    date?: Prisma.SortOrder;
+    ownerId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type WeddingMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    date?: Prisma.SortOrder;
+    ownerId?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type WeddingScalarRelationFilter = {
+    is?: Prisma.WeddingWhereInput;
+    isNot?: Prisma.WeddingWhereInput;
+};
+export type WeddingCreateNestedManyWithoutOwnerInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput> | Prisma.WeddingCreateWithoutOwnerInput[] | Prisma.WeddingUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutOwnerInput | Prisma.WeddingCreateOrConnectWithoutOwnerInput[];
+    createMany?: Prisma.WeddingCreateManyOwnerInputEnvelope;
+    connect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+};
+export type WeddingUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput> | Prisma.WeddingCreateWithoutOwnerInput[] | Prisma.WeddingUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutOwnerInput | Prisma.WeddingCreateOrConnectWithoutOwnerInput[];
+    createMany?: Prisma.WeddingCreateManyOwnerInputEnvelope;
+    connect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+};
+export type WeddingUpdateManyWithoutOwnerNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput> | Prisma.WeddingCreateWithoutOwnerInput[] | Prisma.WeddingUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutOwnerInput | Prisma.WeddingCreateOrConnectWithoutOwnerInput[];
+    upsert?: Prisma.WeddingUpsertWithWhereUniqueWithoutOwnerInput | Prisma.WeddingUpsertWithWhereUniqueWithoutOwnerInput[];
+    createMany?: Prisma.WeddingCreateManyOwnerInputEnvelope;
+    set?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    disconnect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    delete?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    connect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    update?: Prisma.WeddingUpdateWithWhereUniqueWithoutOwnerInput | Prisma.WeddingUpdateWithWhereUniqueWithoutOwnerInput[];
+    updateMany?: Prisma.WeddingUpdateManyWithWhereWithoutOwnerInput | Prisma.WeddingUpdateManyWithWhereWithoutOwnerInput[];
+    deleteMany?: Prisma.WeddingScalarWhereInput | Prisma.WeddingScalarWhereInput[];
+};
+export type WeddingUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput> | Prisma.WeddingCreateWithoutOwnerInput[] | Prisma.WeddingUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutOwnerInput | Prisma.WeddingCreateOrConnectWithoutOwnerInput[];
+    upsert?: Prisma.WeddingUpsertWithWhereUniqueWithoutOwnerInput | Prisma.WeddingUpsertWithWhereUniqueWithoutOwnerInput[];
+    createMany?: Prisma.WeddingCreateManyOwnerInputEnvelope;
+    set?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    disconnect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    delete?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    connect?: Prisma.WeddingWhereUniqueInput | Prisma.WeddingWhereUniqueInput[];
+    update?: Prisma.WeddingUpdateWithWhereUniqueWithoutOwnerInput | Prisma.WeddingUpdateWithWhereUniqueWithoutOwnerInput[];
+    updateMany?: Prisma.WeddingUpdateManyWithWhereWithoutOwnerInput | Prisma.WeddingUpdateManyWithWhereWithoutOwnerInput[];
+    deleteMany?: Prisma.WeddingScalarWhereInput | Prisma.WeddingScalarWhereInput[];
+};
+export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null;
+};
+export type WeddingCreateNestedOneWithoutTasksInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTasksInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTasksInput;
+    upsert?: Prisma.WeddingUpsertWithoutTasksInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutTasksInput, Prisma.WeddingUpdateWithoutTasksInput>, Prisma.WeddingUncheckedUpdateWithoutTasksInput>;
+};
+export type WeddingCreateNestedOneWithoutGuestsInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutGuestsInput, Prisma.WeddingUncheckedCreateWithoutGuestsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutGuestsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutGuestsNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutGuestsInput, Prisma.WeddingUncheckedCreateWithoutGuestsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutGuestsInput;
+    upsert?: Prisma.WeddingUpsertWithoutGuestsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutGuestsInput, Prisma.WeddingUpdateWithoutGuestsInput>, Prisma.WeddingUncheckedUpdateWithoutGuestsInput>;
+};
+export type WeddingCreateNestedOneWithoutGroupsInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutGroupsInput, Prisma.WeddingUncheckedCreateWithoutGroupsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutGroupsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutGroupsNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutGroupsInput, Prisma.WeddingUncheckedCreateWithoutGroupsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutGroupsInput;
+    upsert?: Prisma.WeddingUpsertWithoutGroupsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutGroupsInput, Prisma.WeddingUpdateWithoutGroupsInput>, Prisma.WeddingUncheckedUpdateWithoutGroupsInput>;
+};
+export type WeddingCreateNestedOneWithoutTablesInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutTablesInput, Prisma.WeddingUncheckedCreateWithoutTablesInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTablesInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutTablesNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutTablesInput, Prisma.WeddingUncheckedCreateWithoutTablesInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutTablesInput;
+    upsert?: Prisma.WeddingUpsertWithoutTablesInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutTablesInput, Prisma.WeddingUpdateWithoutTablesInput>, Prisma.WeddingUncheckedUpdateWithoutTablesInput>;
+};
+export type WeddingCreateNestedOneWithoutEventsInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutEventsInput, Prisma.WeddingUncheckedCreateWithoutEventsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutEventsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutEventsInput, Prisma.WeddingUncheckedCreateWithoutEventsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutEventsInput;
+    upsert?: Prisma.WeddingUpsertWithoutEventsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutEventsInput, Prisma.WeddingUpdateWithoutEventsInput>, Prisma.WeddingUncheckedUpdateWithoutEventsInput>;
+};
+export type WeddingCreateNestedOneWithoutProvidersInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutProvidersInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutProvidersNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutProvidersInput;
+    upsert?: Prisma.WeddingUpsertWithoutProvidersInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutProvidersInput, Prisma.WeddingUpdateWithoutProvidersInput>, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>;
+};
+export type WeddingCreateNestedOneWithoutBudgetInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetInput, Prisma.WeddingUncheckedCreateWithoutBudgetInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutBudgetInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutBudgetNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetInput, Prisma.WeddingUncheckedCreateWithoutBudgetInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutBudgetInput;
+    upsert?: Prisma.WeddingUpsertWithoutBudgetInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutBudgetInput, Prisma.WeddingUpdateWithoutBudgetInput>, Prisma.WeddingUncheckedUpdateWithoutBudgetInput>;
+};
+export type WeddingCreateNestedOneWithoutBudgetItemsInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetItemsInput, Prisma.WeddingUncheckedCreateWithoutBudgetItemsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutBudgetItemsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+};
+export type WeddingUpdateOneRequiredWithoutBudgetItemsNestedInput = {
+    create?: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetItemsInput, Prisma.WeddingUncheckedCreateWithoutBudgetItemsInput>;
+    connectOrCreate?: Prisma.WeddingCreateOrConnectWithoutBudgetItemsInput;
+    upsert?: Prisma.WeddingUpsertWithoutBudgetItemsInput;
+    connect?: Prisma.WeddingWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.WeddingUpdateToOneWithWhereWithoutBudgetItemsInput, Prisma.WeddingUpdateWithoutBudgetItemsInput>, Prisma.WeddingUncheckedUpdateWithoutBudgetItemsInput>;
+};
+export type WeddingCreateWithoutOwnerInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutOwnerInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutOwnerInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput>;
+};
+export type WeddingCreateManyOwnerInputEnvelope = {
+    data: Prisma.WeddingCreateManyOwnerInput | Prisma.WeddingCreateManyOwnerInput[];
+    skipDuplicates?: boolean;
+};
+export type WeddingUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutOwnerInput, Prisma.WeddingUncheckedUpdateWithoutOwnerInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutOwnerInput, Prisma.WeddingUncheckedCreateWithoutOwnerInput>;
+};
+export type WeddingUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutOwnerInput, Prisma.WeddingUncheckedUpdateWithoutOwnerInput>;
+};
+export type WeddingUpdateManyWithWhereWithoutOwnerInput = {
+    where: Prisma.WeddingScalarWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateManyMutationInput, Prisma.WeddingUncheckedUpdateManyWithoutOwnerInput>;
+};
+export type WeddingScalarWhereInput = {
+    AND?: Prisma.WeddingScalarWhereInput | Prisma.WeddingScalarWhereInput[];
+    OR?: Prisma.WeddingScalarWhereInput[];
+    NOT?: Prisma.WeddingScalarWhereInput | Prisma.WeddingScalarWhereInput[];
+    id?: Prisma.StringFilter<"Wedding"> | string;
+    name?: Prisma.StringFilter<"Wedding"> | string;
+    date?: Prisma.DateTimeNullableFilter<"Wedding"> | Date | string | null;
+    ownerId?: Prisma.StringFilter<"Wedding"> | string;
+    createdAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Wedding"> | Date | string;
+};
+export type WeddingCreateWithoutTasksInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutTasksInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutTasksInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>;
+};
+export type WeddingUpsertWithoutTasksInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutTasksInput, Prisma.WeddingUncheckedUpdateWithoutTasksInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutTasksInput, Prisma.WeddingUncheckedCreateWithoutTasksInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutTasksInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutTasksInput, Prisma.WeddingUncheckedUpdateWithoutTasksInput>;
+};
+export type WeddingUpdateWithoutTasksInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutTasksInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutGuestsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutGuestsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutGuestsInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutGuestsInput, Prisma.WeddingUncheckedCreateWithoutGuestsInput>;
+};
+export type WeddingUpsertWithoutGuestsInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutGuestsInput, Prisma.WeddingUncheckedUpdateWithoutGuestsInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutGuestsInput, Prisma.WeddingUncheckedCreateWithoutGuestsInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutGuestsInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutGuestsInput, Prisma.WeddingUncheckedUpdateWithoutGuestsInput>;
+};
+export type WeddingUpdateWithoutGuestsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutGuestsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutGroupsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutGroupsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutGroupsInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutGroupsInput, Prisma.WeddingUncheckedCreateWithoutGroupsInput>;
+};
+export type WeddingUpsertWithoutGroupsInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutGroupsInput, Prisma.WeddingUncheckedUpdateWithoutGroupsInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutGroupsInput, Prisma.WeddingUncheckedCreateWithoutGroupsInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutGroupsInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutGroupsInput, Prisma.WeddingUncheckedUpdateWithoutGroupsInput>;
+};
+export type WeddingUpdateWithoutGroupsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutGroupsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutTablesInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutTablesInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutTablesInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutTablesInput, Prisma.WeddingUncheckedCreateWithoutTablesInput>;
+};
+export type WeddingUpsertWithoutTablesInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutTablesInput, Prisma.WeddingUncheckedUpdateWithoutTablesInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutTablesInput, Prisma.WeddingUncheckedCreateWithoutTablesInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutTablesInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutTablesInput, Prisma.WeddingUncheckedUpdateWithoutTablesInput>;
+};
+export type WeddingUpdateWithoutTablesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutTablesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutEventsInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutEventsInput, Prisma.WeddingUncheckedCreateWithoutEventsInput>;
+};
+export type WeddingUpsertWithoutEventsInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutEventsInput, Prisma.WeddingUncheckedUpdateWithoutEventsInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutEventsInput, Prisma.WeddingUncheckedCreateWithoutEventsInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutEventsInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutEventsInput, Prisma.WeddingUncheckedUpdateWithoutEventsInput>;
+};
+export type WeddingUpdateWithoutEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutEventsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutProvidersInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutProvidersInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutProvidersInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>;
+};
+export type WeddingUpsertWithoutProvidersInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutProvidersInput, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutProvidersInput, Prisma.WeddingUncheckedCreateWithoutProvidersInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutProvidersInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutProvidersInput, Prisma.WeddingUncheckedUpdateWithoutProvidersInput>;
+};
+export type WeddingUpdateWithoutProvidersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutProvidersInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutBudgetInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutBudgetInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutBudgetInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetInput, Prisma.WeddingUncheckedCreateWithoutBudgetInput>;
+};
+export type WeddingUpsertWithoutBudgetInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutBudgetInput, Prisma.WeddingUncheckedUpdateWithoutBudgetInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetInput, Prisma.WeddingUncheckedCreateWithoutBudgetInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutBudgetInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutBudgetInput, Prisma.WeddingUncheckedUpdateWithoutBudgetInput>;
+};
+export type WeddingUpdateWithoutBudgetInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutBudgetInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateWithoutBudgetItemsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    owner: Prisma.UserCreateNestedOneWithoutWeddingsInput;
+    guests?: Prisma.GuestCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetCreateNestedOneWithoutWeddingInput;
+    providers?: Prisma.ProviderCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingUncheckedCreateWithoutBudgetItemsInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    ownerId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    guests?: Prisma.GuestUncheckedCreateNestedManyWithoutWeddingInput;
+    groups?: Prisma.GroupUncheckedCreateNestedManyWithoutWeddingInput;
+    tables?: Prisma.TableUncheckedCreateNestedManyWithoutWeddingInput;
+    events?: Prisma.EventUncheckedCreateNestedManyWithoutWeddingInput;
+    tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutWeddingInput;
+    budget?: Prisma.BudgetUncheckedCreateNestedOneWithoutWeddingInput;
+    providers?: Prisma.ProviderUncheckedCreateNestedManyWithoutWeddingInput;
+};
+export type WeddingCreateOrConnectWithoutBudgetItemsInput = {
+    where: Prisma.WeddingWhereUniqueInput;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetItemsInput, Prisma.WeddingUncheckedCreateWithoutBudgetItemsInput>;
+};
+export type WeddingUpsertWithoutBudgetItemsInput = {
+    update: Prisma.XOR<Prisma.WeddingUpdateWithoutBudgetItemsInput, Prisma.WeddingUncheckedUpdateWithoutBudgetItemsInput>;
+    create: Prisma.XOR<Prisma.WeddingCreateWithoutBudgetItemsInput, Prisma.WeddingUncheckedCreateWithoutBudgetItemsInput>;
+    where?: Prisma.WeddingWhereInput;
+};
+export type WeddingUpdateToOneWithWhereWithoutBudgetItemsInput = {
+    where?: Prisma.WeddingWhereInput;
+    data: Prisma.XOR<Prisma.WeddingUpdateWithoutBudgetItemsInput, Prisma.WeddingUncheckedUpdateWithoutBudgetItemsInput>;
+};
+export type WeddingUpdateWithoutBudgetItemsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: Prisma.UserUpdateOneRequiredWithoutWeddingsNestedInput;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutBudgetItemsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingCreateManyOwnerInput = {
+    id?: string;
+    name: string;
+    date?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type WeddingUpdateWithoutOwnerInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateWithoutOwnerInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    guests?: Prisma.GuestUncheckedUpdateManyWithoutWeddingNestedInput;
+    groups?: Prisma.GroupUncheckedUpdateManyWithoutWeddingNestedInput;
+    tables?: Prisma.TableUncheckedUpdateManyWithoutWeddingNestedInput;
+    events?: Prisma.EventUncheckedUpdateManyWithoutWeddingNestedInput;
+    tasks?: Prisma.TaskUncheckedUpdateManyWithoutWeddingNestedInput;
+    budget?: Prisma.BudgetUncheckedUpdateOneWithoutWeddingNestedInput;
+    budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutWeddingNestedInput;
+    providers?: Prisma.ProviderUncheckedUpdateManyWithoutWeddingNestedInput;
+};
+export type WeddingUncheckedUpdateManyWithoutOwnerInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type WeddingCountOutputType
+ */
+export type WeddingCountOutputType = {
+    guests: number;
+    groups: number;
+    tables: number;
+    events: number;
+    tasks: number;
+    budgetItems: number;
+    providers: number;
+};
+export type WeddingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    guests?: boolean | WeddingCountOutputTypeCountGuestsArgs;
+    groups?: boolean | WeddingCountOutputTypeCountGroupsArgs;
+    tables?: boolean | WeddingCountOutputTypeCountTablesArgs;
+    events?: boolean | WeddingCountOutputTypeCountEventsArgs;
+    tasks?: boolean | WeddingCountOutputTypeCountTasksArgs;
+    budgetItems?: boolean | WeddingCountOutputTypeCountBudgetItemsArgs;
+    providers?: boolean | WeddingCountOutputTypeCountProvidersArgs;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WeddingCountOutputType
+     */
+    select?: Prisma.WeddingCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountGuestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GuestWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountGroupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.GroupWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountTablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.TableWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.EventWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.TaskWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountBudgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BudgetItemWhereInput;
+};
+/**
+ * WeddingCountOutputType without action
+ */
+export type WeddingCountOutputTypeCountProvidersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProviderWhereInput;
+};
+export type WeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    date?: boolean;
+    ownerId?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    guests?: boolean | Prisma.Wedding$guestsArgs<ExtArgs>;
+    groups?: boolean | Prisma.Wedding$groupsArgs<ExtArgs>;
+    tables?: boolean | Prisma.Wedding$tablesArgs<ExtArgs>;
+    events?: boolean | Prisma.Wedding$eventsArgs<ExtArgs>;
+    tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>;
+    budget?: boolean | Prisma.Wedding$budgetArgs<ExtArgs>;
+    budgetItems?: boolean | Prisma.Wedding$budgetItemsArgs<ExtArgs>;
+    providers?: boolean | Prisma.Wedding$providersArgs<ExtArgs>;
+    _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["wedding"]>;
+export type WeddingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    date?: boolean;
+    ownerId?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["wedding"]>;
+export type WeddingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    name?: boolean;
+    date?: boolean;
+    ownerId?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["wedding"]>;
+export type WeddingSelectScalar = {
+    id?: boolean;
+    name?: boolean;
+    date?: boolean;
+    ownerId?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+};
+export type WeddingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "date" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["wedding"]>;
+export type WeddingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    guests?: boolean | Prisma.Wedding$guestsArgs<ExtArgs>;
+    groups?: boolean | Prisma.Wedding$groupsArgs<ExtArgs>;
+    tables?: boolean | Prisma.Wedding$tablesArgs<ExtArgs>;
+    events?: boolean | Prisma.Wedding$eventsArgs<ExtArgs>;
+    tasks?: boolean | Prisma.Wedding$tasksArgs<ExtArgs>;
+    budget?: boolean | Prisma.Wedding$budgetArgs<ExtArgs>;
+    budgetItems?: boolean | Prisma.Wedding$budgetItemsArgs<ExtArgs>;
+    providers?: boolean | Prisma.Wedding$providersArgs<ExtArgs>;
+    _count?: boolean | Prisma.WeddingCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type WeddingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type WeddingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type $WeddingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "Wedding";
+    objects: {
+        owner: Prisma.$UserPayload<ExtArgs>;
+        guests: Prisma.$GuestPayload<ExtArgs>[];
+        groups: Prisma.$GroupPayload<ExtArgs>[];
+        tables: Prisma.$TablePayload<ExtArgs>[];
+        events: Prisma.$EventPayload<ExtArgs>[];
+        tasks: Prisma.$TaskPayload<ExtArgs>[];
+        budget: Prisma.$BudgetPayload<ExtArgs> | null;
+        budgetItems: Prisma.$BudgetItemPayload<ExtArgs>[];
+        providers: Prisma.$ProviderPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        name: string;
+        date: Date | null;
+        ownerId: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }, ExtArgs["result"]["wedding"]>;
+    composites: {};
+};
+export type WeddingGetPayload<S extends boolean | null | undefined | WeddingDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$WeddingPayload, S>;
+export type WeddingCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<WeddingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: WeddingCountAggregateInputType | true;
+};
+export interface WeddingDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['Wedding'];
+        meta: {
+            name: 'Wedding';
+        };
+    };
+    /**
+     * Find zero or one Wedding that matches the filter.
+     * @param {WeddingFindUniqueArgs} args - Arguments to find a Wedding
+     * @example
+     * // Get one Wedding
+     * const wedding = await prisma.wedding.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WeddingFindUniqueArgs>(args: Prisma.SelectSubset<T, WeddingFindUniqueArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one Wedding that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WeddingFindUniqueOrThrowArgs} args - Arguments to find a Wedding
+     * @example
+     * // Get one Wedding
+     * const wedding = await prisma.wedding.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WeddingFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, WeddingFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Wedding that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingFindFirstArgs} args - Arguments to find a Wedding
+     * @example
+     * // Get one Wedding
+     * const wedding = await prisma.wedding.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WeddingFindFirstArgs>(args?: Prisma.SelectSubset<T, WeddingFindFirstArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Wedding that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingFindFirstOrThrowArgs} args - Arguments to find a Wedding
+     * @example
+     * // Get one Wedding
+     * const wedding = await prisma.wedding.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WeddingFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, WeddingFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Weddings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Weddings
+     * const weddings = await prisma.wedding.findMany()
+     *
+     * // Get first 10 Weddings
+     * const weddings = await prisma.wedding.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const weddingWithIdOnly = await prisma.wedding.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends WeddingFindManyArgs>(args?: Prisma.SelectSubset<T, WeddingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a Wedding.
+     * @param {WeddingCreateArgs} args - Arguments to create a Wedding.
+     * @example
+     * // Create one Wedding
+     * const Wedding = await prisma.wedding.create({
+     *   data: {
+     *     // ... data to create a Wedding
+     *   }
+     * })
+     *
+     */
+    create<T extends WeddingCreateArgs>(args: Prisma.SelectSubset<T, WeddingCreateArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Weddings.
+     * @param {WeddingCreateManyArgs} args - Arguments to create many Weddings.
+     * @example
+     * // Create many Weddings
+     * const wedding = await prisma.wedding.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends WeddingCreateManyArgs>(args?: Prisma.SelectSubset<T, WeddingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Weddings and returns the data saved in the database.
+     * @param {WeddingCreateManyAndReturnArgs} args - Arguments to create many Weddings.
+     * @example
+     * // Create many Weddings
+     * const wedding = await prisma.wedding.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Weddings and only return the `id`
+     * const weddingWithIdOnly = await prisma.wedding.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends WeddingCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, WeddingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a Wedding.
+     * @param {WeddingDeleteArgs} args - Arguments to delete one Wedding.
+     * @example
+     * // Delete one Wedding
+     * const Wedding = await prisma.wedding.delete({
+     *   where: {
+     *     // ... filter to delete one Wedding
+     *   }
+     * })
+     *
+     */
+    delete<T extends WeddingDeleteArgs>(args: Prisma.SelectSubset<T, WeddingDeleteArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one Wedding.
+     * @param {WeddingUpdateArgs} args - Arguments to update one Wedding.
+     * @example
+     * // Update one Wedding
+     * const wedding = await prisma.wedding.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends WeddingUpdateArgs>(args: Prisma.SelectSubset<T, WeddingUpdateArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Weddings.
+     * @param {WeddingDeleteManyArgs} args - Arguments to filter Weddings to delete.
+     * @example
+     * // Delete a few Weddings
+     * const { count } = await prisma.wedding.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends WeddingDeleteManyArgs>(args?: Prisma.SelectSubset<T, WeddingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Weddings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Weddings
+     * const wedding = await prisma.wedding.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends WeddingUpdateManyArgs>(args: Prisma.SelectSubset<T, WeddingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Weddings and returns the data updated in the database.
+     * @param {WeddingUpdateManyAndReturnArgs} args - Arguments to update many Weddings.
+     * @example
+     * // Update many Weddings
+     * const wedding = await prisma.wedding.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Weddings and only return the `id`
+     * const weddingWithIdOnly = await prisma.wedding.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends WeddingUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, WeddingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one Wedding.
+     * @param {WeddingUpsertArgs} args - Arguments to update or create a Wedding.
+     * @example
+     * // Update or create a Wedding
+     * const wedding = await prisma.wedding.upsert({
+     *   create: {
+     *     // ... data to create a Wedding
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Wedding we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WeddingUpsertArgs>(args: Prisma.SelectSubset<T, WeddingUpsertArgs<ExtArgs>>): Prisma.Prisma__WeddingClient<runtime.Types.Result.GetResult<Prisma.$WeddingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Weddings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingCountArgs} args - Arguments to filter Weddings to count.
+     * @example
+     * // Count the number of Weddings
+     * const count = await prisma.wedding.count({
+     *   where: {
+     *     // ... the filter for the Weddings we want to count
+     *   }
+     * })
+    **/
+    count<T extends WeddingCountArgs>(args?: Prisma.Subset<T, WeddingCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], WeddingCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a Wedding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WeddingAggregateArgs>(args: Prisma.Subset<T, WeddingAggregateArgs>): Prisma.PrismaPromise<GetWeddingAggregateType<T>>;
+    /**
+     * Group by Wedding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WeddingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends WeddingGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: WeddingGroupByArgs['orderBy'];
+    } : {
+        orderBy?: WeddingGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, WeddingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWeddingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Wedding model
+     */
+    readonly fields: WeddingFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for Wedding.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__WeddingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    guests<T extends Prisma.Wedding$guestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$guestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    groups<T extends Prisma.Wedding$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    tables<T extends Prisma.Wedding$tablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$tablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    events<T extends Prisma.Wedding$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    tasks<T extends Prisma.Wedding$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    budget<T extends Prisma.Wedding$budgetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$budgetArgs<ExtArgs>>): Prisma.Prisma__BudgetClient<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    budgetItems<T extends Prisma.Wedding$budgetItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$budgetItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    providers<T extends Prisma.Wedding$providersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Wedding$providersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the Wedding model
+ */
+export interface WeddingFieldRefs {
+    readonly id: Prisma.FieldRef<"Wedding", 'String'>;
+    readonly name: Prisma.FieldRef<"Wedding", 'String'>;
+    readonly date: Prisma.FieldRef<"Wedding", 'DateTime'>;
+    readonly ownerId: Prisma.FieldRef<"Wedding", 'String'>;
+    readonly createdAt: Prisma.FieldRef<"Wedding", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"Wedding", 'DateTime'>;
+}
+/**
+ * Wedding findUnique
+ */
+export type WeddingFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter, which Wedding to fetch.
+     */
+    where: Prisma.WeddingWhereUniqueInput;
+};
+/**
+ * Wedding findUniqueOrThrow
+ */
+export type WeddingFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter, which Wedding to fetch.
+     */
+    where: Prisma.WeddingWhereUniqueInput;
+};
+/**
+ * Wedding findFirst
+ */
+export type WeddingFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter, which Wedding to fetch.
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Weddings to fetch.
+     */
+    orderBy?: Prisma.WeddingOrderByWithRelationInput | Prisma.WeddingOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Weddings.
+     */
+    cursor?: Prisma.WeddingWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Weddings from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Weddings.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Weddings.
+     */
+    distinct?: Prisma.WeddingScalarFieldEnum | Prisma.WeddingScalarFieldEnum[];
+};
+/**
+ * Wedding findFirstOrThrow
+ */
+export type WeddingFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter, which Wedding to fetch.
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Weddings to fetch.
+     */
+    orderBy?: Prisma.WeddingOrderByWithRelationInput | Prisma.WeddingOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Weddings.
+     */
+    cursor?: Prisma.WeddingWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Weddings from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Weddings.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Weddings.
+     */
+    distinct?: Prisma.WeddingScalarFieldEnum | Prisma.WeddingScalarFieldEnum[];
+};
+/**
+ * Wedding findMany
+ */
+export type WeddingFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter, which Weddings to fetch.
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Weddings to fetch.
+     */
+    orderBy?: Prisma.WeddingOrderByWithRelationInput | Prisma.WeddingOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Weddings.
+     */
+    cursor?: Prisma.WeddingWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Weddings from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Weddings.
+     */
+    skip?: number;
+    distinct?: Prisma.WeddingScalarFieldEnum | Prisma.WeddingScalarFieldEnum[];
+};
+/**
+ * Wedding create
+ */
+export type WeddingCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Wedding.
+     */
+    data: Prisma.XOR<Prisma.WeddingCreateInput, Prisma.WeddingUncheckedCreateInput>;
+};
+/**
+ * Wedding createMany
+ */
+export type WeddingCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Weddings.
+     */
+    data: Prisma.WeddingCreateManyInput | Prisma.WeddingCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * Wedding createManyAndReturn
+ */
+export type WeddingCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Weddings.
+     */
+    data: Prisma.WeddingCreateManyInput | Prisma.WeddingCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Wedding update
+ */
+export type WeddingUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Wedding.
+     */
+    data: Prisma.XOR<Prisma.WeddingUpdateInput, Prisma.WeddingUncheckedUpdateInput>;
+    /**
+     * Choose, which Wedding to update.
+     */
+    where: Prisma.WeddingWhereUniqueInput;
+};
+/**
+ * Wedding updateMany
+ */
+export type WeddingUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Weddings.
+     */
+    data: Prisma.XOR<Prisma.WeddingUpdateManyMutationInput, Prisma.WeddingUncheckedUpdateManyInput>;
+    /**
+     * Filter which Weddings to update
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * Limit how many Weddings to update.
+     */
+    limit?: number;
+};
+/**
+ * Wedding updateManyAndReturn
+ */
+export type WeddingUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * The data used to update Weddings.
+     */
+    data: Prisma.XOR<Prisma.WeddingUpdateManyMutationInput, Prisma.WeddingUncheckedUpdateManyInput>;
+    /**
+     * Filter which Weddings to update
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * Limit how many Weddings to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Wedding upsert
+ */
+export type WeddingUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Wedding to update in case it exists.
+     */
+    where: Prisma.WeddingWhereUniqueInput;
+    /**
+     * In case the Wedding found by the `where` argument doesn't exist, create a new Wedding with this data.
+     */
+    create: Prisma.XOR<Prisma.WeddingCreateInput, Prisma.WeddingUncheckedCreateInput>;
+    /**
+     * In case the Wedding was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.WeddingUpdateInput, Prisma.WeddingUncheckedUpdateInput>;
+};
+/**
+ * Wedding delete
+ */
+export type WeddingDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+    /**
+     * Filter which Wedding to delete.
+     */
+    where: Prisma.WeddingWhereUniqueInput;
+};
+/**
+ * Wedding deleteMany
+ */
+export type WeddingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Weddings to delete
+     */
+    where?: Prisma.WeddingWhereInput;
+    /**
+     * Limit how many Weddings to delete.
+     */
+    limit?: number;
+};
+/**
+ * Wedding.guests
+ */
+export type Wedding$guestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Guest
+     */
+    select?: Prisma.GuestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Guest
+     */
+    omit?: Prisma.GuestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GuestInclude<ExtArgs> | null;
+    where?: Prisma.GuestWhereInput;
+    orderBy?: Prisma.GuestOrderByWithRelationInput | Prisma.GuestOrderByWithRelationInput[];
+    cursor?: Prisma.GuestWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GuestScalarFieldEnum | Prisma.GuestScalarFieldEnum[];
+};
+/**
+ * Wedding.groups
+ */
+export type Wedding$groupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: Prisma.GroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Group
+     */
+    omit?: Prisma.GroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.GroupInclude<ExtArgs> | null;
+    where?: Prisma.GroupWhereInput;
+    orderBy?: Prisma.GroupOrderByWithRelationInput | Prisma.GroupOrderByWithRelationInput[];
+    cursor?: Prisma.GroupWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.GroupScalarFieldEnum | Prisma.GroupScalarFieldEnum[];
+};
+/**
+ * Wedding.tables
+ */
+export type Wedding$tablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Table
+     */
+    select?: Prisma.TableSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Table
+     */
+    omit?: Prisma.TableOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TableInclude<ExtArgs> | null;
+    where?: Prisma.TableWhereInput;
+    orderBy?: Prisma.TableOrderByWithRelationInput | Prisma.TableOrderByWithRelationInput[];
+    cursor?: Prisma.TableWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.TableScalarFieldEnum | Prisma.TableScalarFieldEnum[];
+};
+/**
+ * Wedding.events
+ */
+export type Wedding$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: Prisma.EventSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: Prisma.EventOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.EventInclude<ExtArgs> | null;
+    where?: Prisma.EventWhereInput;
+    orderBy?: Prisma.EventOrderByWithRelationInput | Prisma.EventOrderByWithRelationInput[];
+    cursor?: Prisma.EventWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[];
+};
+/**
+ * Wedding.tasks
+ */
+export type Wedding$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: Prisma.TaskSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: Prisma.TaskOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TaskInclude<ExtArgs> | null;
+    where?: Prisma.TaskWhereInput;
+    orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[];
+    cursor?: Prisma.TaskWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[];
+};
+/**
+ * Wedding.budget
+ */
+export type Wedding$budgetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: Prisma.BudgetSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: Prisma.BudgetOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BudgetInclude<ExtArgs> | null;
+    where?: Prisma.BudgetWhereInput;
+};
+/**
+ * Wedding.budgetItems
+ */
+export type Wedding$budgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BudgetItem
+     */
+    select?: Prisma.BudgetItemSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the BudgetItem
+     */
+    omit?: Prisma.BudgetItemOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BudgetItemInclude<ExtArgs> | null;
+    where?: Prisma.BudgetItemWhereInput;
+    orderBy?: Prisma.BudgetItemOrderByWithRelationInput | Prisma.BudgetItemOrderByWithRelationInput[];
+    cursor?: Prisma.BudgetItemWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BudgetItemScalarFieldEnum | Prisma.BudgetItemScalarFieldEnum[];
+};
+/**
+ * Wedding.providers
+ */
+export type Wedding$providersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Provider
+     */
+    select?: Prisma.ProviderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Provider
+     */
+    omit?: Prisma.ProviderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProviderInclude<ExtArgs> | null;
+    where?: Prisma.ProviderWhereInput;
+    orderBy?: Prisma.ProviderOrderByWithRelationInput | Prisma.ProviderOrderByWithRelationInput[];
+    cursor?: Prisma.ProviderWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ProviderScalarFieldEnum | Prisma.ProviderScalarFieldEnum[];
+};
+/**
+ * Wedding without action
+ */
+export type WeddingDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wedding
+     */
+    select?: Prisma.WeddingSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wedding
+     */
+    omit?: Prisma.WeddingOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WeddingInclude<ExtArgs> | null;
+};
+export {};
+//# sourceMappingURL=Wedding.d.ts.map

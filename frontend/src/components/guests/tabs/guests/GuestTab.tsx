@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { getWeddingId } from "@/lib/auth";
 import { toast, toastError } from "@/lib/toast";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 
 function normalizeTag(t: string) {
   return t.trim().replace(/\s+/g, " ").normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -44,7 +45,14 @@ const DEFAULT_FORM: GuestFormState = {
   name: "", email: "", groupId: "", rsvp: "PENDING", allergies: [], notes: "", companions: [],
 };
 
-type CsvRow = { name: string; email: string; groupName: string };
+type CsvRow = {
+  name: string;
+  email: string;
+  phone: string;
+  groupName: string;
+  allergies: string[];
+  companions: string[];
+};
 
 const RSVP_CSV_LABEL: Record<string, string> = {
   PENDING: "Pendiente",
@@ -66,9 +74,11 @@ function guestsToCsv(list: GuestDto[]): string {
       (g.companions ?? []).map((c) => c.name).join("; "),
     ]
       .map((x) => esc(String(x)))
-      .join(",")
+      .join(";")
   );
-  return [header.map(esc).join(","), ...rows].join("\n");
+  // ";" is Excel's list separator in Spanish/EU locales, so each field gets its
+  // own column; the UTF-8 BOM added in exportCsv keeps accents and "ñ" intact.
+  return [header.map(esc).join(";"), ...rows].join("\r\n");
 }
 
 type InvitationOutcome = { id: string; name: string; reason?: string };
@@ -81,15 +91,29 @@ type SendInvitationsResult = {
 
 function parseCsv(raw: string): CsvRow[] {
   return raw
+    .replace(/^﻿/, "") // strip the UTF-8 BOM Excel keeps in the file
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean)
     .filter((line) => !line.startsWith("#"))
+    .filter((line) => !/^sep=/i.test(line)) // ignore the "sep=;" Excel directive
     .map((line) => {
       const cols = line.split(/[,;]/).map((c) => c.trim());
-      return { name: cols[0] ?? "", email: cols[1] ?? "", groupName: cols[2] ?? "" };
+      // Multi-value cells (allergies/companions) use "|" as an inner separator,
+      // since "," and ";" are already the column delimiters.
+      const list = (v: string) =>
+        (v ?? "").split("|").map((x) => x.trim()).filter(Boolean);
+      return {
+        name: cols[0] ?? "",
+        email: cols[1] ?? "",
+        phone: cols[2] ?? "",
+        groupName: cols[3] ?? "",
+        allergies: list(cols[4] ?? ""),
+        companions: list(cols[5] ?? ""),
+      };
     })
-    .filter((r) => r.name.length > 0);
+    .filter((r) => r.name.length > 0)
+    .filter((r) => r.name.toLowerCase() !== "nombre"); // drop the header row
 }
 
 export default function GuestTab() {
@@ -112,6 +136,12 @@ export default function GuestTab() {
   const [sending, setSending] = useState(false);
   const [inviteResult, setInviteResult] = useState<SendInvitationsResult | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Confirmación de borrado (individual o masivo)
+  const [pendingDelete, setPendingDelete] = useState<
+    { type: "one"; guest: GuestDto } | { type: "bulk"; ids: string[] } | null
+  >(null);
+  const [deleting, setDeleting] = useState(false);
 
   // Modal importar CSV
   const [csvOpen, setCsvOpen] = useState(false);
@@ -283,23 +313,26 @@ export default function GuestTab() {
   }
 
   function downloadTemplate() {
-    const lines = [
-      "# Plantilla de invitados - Planifica2",
-      "# Columnas: Nombre (obligatorio), Email (opcional), Grupo (opcional)",
-      "# Los grupos deben existir previamente en la aplicacion",
-      "# Elimina estas lineas de comentario antes de importar, o dejaslas (se ignoran)",
-      "#",
-      "Nombre,Email,Grupo",
-      "Ana García,ana.garcia@email.com,Familia novia",
-      "Carlos García,,Familia novia",
-      "Pedro López,pedro@email.com,Amigos novio",
-      "Laura Martínez,laura.m@email.com,Amigos novia",
-      "Roberto Sánchez,,Compañeros trabajo",
-      "Isabel Fernández,isabel@email.com,Familia novio",
-      "Miguel Torres,,",
-      "Sofía Ramírez,sofia@email.com,Amigos novia",
-    ].join("\n");
-    const blob = new Blob([lines], { type: "text/csv;charset=utf-8;" });
+    // Columns: Nombre; Email; Teléfono; Grupo; Alergias; Acompañantes.
+    // Multiple allergies/companions in one cell are separated by "|".
+    const rows = [
+      ["Nombre", "Email", "Teléfono", "Grupo", "Alergias", "Acompañantes"],
+      ["Ana García", "ana.garcia@email.com", "600111222", "Familia novia", "Gluten | Lactosa", "Juan Pérez"],
+      ["Carlos García", "", "", "Familia novia", "", ""],
+      ["Pedro López", "pedro@email.com", "600333444", "Amigos novio", "Frutos secos", "María Ruiz | Luis Gómez"],
+      ["Laura Martínez", "laura.m@email.com", "", "Amigos novia", "", ""],
+      ["Roberto Sánchez", "", "", "Compañeros trabajo", "", ""],
+      ["Isabel Fernández", "isabel@email.com", "", "Familia novio", "Marisco", ""],
+      ["Miguel Torres", "", "", "", "", ""],
+      ["Sofía Ramírez", "sofia@email.com", "", "Amigos novia", "", "Pareja"],
+    ];
+    // Use ";" as the delimiter (Excel's list separator in Spanish/EU locales) so
+    // each field lands in its own column, and prepend a UTF-8 BOM (﻿) so accents
+    // and "ñ" are decoded correctly. (A "sep=;" hint would make Excel ignore the
+    // BOM and fall back to ANSI, breaking the accents.)
+    const body = rows.map((r) => r.join(";")).join("\r\n");
+    const csv = "﻿" + body;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url; a.download = "plantilla_invitados.csv"; a.click();
@@ -395,13 +428,30 @@ export default function GuestTab() {
     } catch (e: any) { setError(e?.message ?? "Error guardando invitado"); toastError(e); }
   }
 
-  async function handleDeleteGuest(guest: GuestDto) {
-    if (!window.confirm(`¿Eliminar a "${guest.name}"?`)) return;
+  async function confirmDelete() {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    setError(null);
     try {
-      await apiDelete(`/guests/${encodeURIComponent(guest.id)}`);
-      toast.success("Invitado eliminado");
+      if (pendingDelete.type === "one") {
+        await apiDelete(`/guests/${encodeURIComponent(pendingDelete.guest.id)}`);
+        toast.success("Invitado eliminado");
+      } else {
+        const { deleted } = await apiPost<{ deleted: number }>(
+          `/guests/bulk-delete?weddingId=${encodeURIComponent(weddingId)}`,
+          { guestIds: pendingDelete.ids }
+        );
+        setSelected(new Set());
+        toast.success(`${deleted} invitado${deleted === 1 ? "" : "s"} eliminado${deleted === 1 ? "" : "s"}`);
+      }
+      setPendingDelete(null);
       await loadGuests();
-    } catch (e: any) { setError(e?.message ?? "Error eliminando invitado"); toastError(e); }
+    } catch (e: any) {
+      setError(e?.message ?? "Error eliminando invitado");
+      toastError(e);
+    } finally {
+      setDeleting(false);
+    }
   }
 
   const pendingInvitation = filteredGuests.filter((g) => !g.invitationSent).length;
@@ -596,6 +646,14 @@ export default function GuestTab() {
           <Button size="sm" variant="outline" onClick={() => sendInvitations(Array.from(selected))} disabled={sending}>
             <SendHorizonal className="size-4 mr-1" /> {sending ? "Enviando..." : "Enviar invitaciones"}
           </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-destructive hover:bg-destructive hover:text-white"
+            onClick={() => setPendingDelete({ type: "bulk", ids: Array.from(selected) })}
+          >
+            <Trash2 className="size-4 mr-1" /> Eliminar seleccionados
+          </Button>
           <Button size="sm" variant="ghost" onClick={clearSelection}>Cancelar selección</Button>
         </div>
       )}
@@ -750,7 +808,7 @@ export default function GuestTab() {
                 <Button variant="ghost" size="icon" onClick={() => openEdit(guest)} title="Editar">
                   <Pencil className="size-4" />
                 </Button>
-                <Button variant="ghost" size="icon" onClick={() => handleDeleteGuest(guest)}
+                <Button variant="ghost" size="icon" onClick={() => setPendingDelete({ type: "one", guest })}
                   className="text-destructive hover:bg-destructive/10" title="Eliminar">
                   <Trash2 className="size-4" />
                 </Button>
@@ -765,11 +823,12 @@ export default function GuestTab() {
 
       {/* Modal importar CSV */}
       <Dialog open={csvOpen} onOpenChange={(v) => { setCsvOpen(v); if (!v) { setCsvRaw(""); setCsvPreview([]); setImportResult(null); } }}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] sm:max-w-5xl max-h-[92vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Importar invitados desde CSV</DialogTitle>
             <DialogDescription>
-              Pega el contenido del CSV o sube un fichero. Formato: <code>Nombre, Email, Grupo</code> (email y grupo son opcionales).
+              Pega el contenido del CSV o sube un fichero. Columnas: <code>Nombre; Email; Teléfono; Grupo; Alergias; Acompañantes</code> (solo el nombre es obligatorio).
+              Para varias alergias o acompañantes en una celda, sepáralos con <code>|</code>. Descarga la plantilla para verlo.
             </DialogDescription>
           </DialogHeader>
 
@@ -790,8 +849,8 @@ export default function GuestTab() {
             <div className="space-y-2">
               <Label>O pegar el contenido aquí</Label>
               <Textarea
-                className="font-mono text-xs min-h-32"
-                placeholder={"Ana García, ana@gmail.com, Familia novia\nPedro López\nMaría Ruiz, maria@email.com"}
+                className="font-mono text-xs min-h-44"
+                placeholder={"Ana García; ana@gmail.com; 600111222; Familia novia; Gluten | Lactosa; Juan Pérez\nPedro López\nMaría Ruiz; maria@email.com; ; Amigos novia"}
                 value={csvRaw}
                 onChange={(e) => handleCsvChange(e.target.value)}
               />
@@ -807,7 +866,10 @@ export default function GuestTab() {
                       <tr>
                         <th className="px-3 py-2 text-left font-medium">Nombre</th>
                         <th className="px-3 py-2 text-left font-medium">Email</th>
+                        <th className="px-3 py-2 text-left font-medium">Teléfono</th>
                         <th className="px-3 py-2 text-left font-medium">Grupo</th>
+                        <th className="px-3 py-2 text-left font-medium">Alergias</th>
+                        <th className="px-3 py-2 text-left font-medium">Acompañantes</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -815,11 +877,14 @@ export default function GuestTab() {
                         <tr key={i} className="border-t">
                           <td className="px-3 py-2">{row.name}</td>
                           <td className="px-3 py-2 text-muted-foreground">{row.email || "—"}</td>
+                          <td className="px-3 py-2 text-muted-foreground">{row.phone || "—"}</td>
                           <td className="px-3 py-2 text-muted-foreground">{row.groupName || "—"}</td>
+                          <td className="px-3 py-2 text-muted-foreground">{row.allergies.join(", ") || "—"}</td>
+                          <td className="px-3 py-2 text-muted-foreground">{row.companions.join(", ") || "—"}</td>
                         </tr>
                       ))}
                       {csvPreview.length > 20 && (
-                        <tr className="border-t"><td colSpan={3} className="px-3 py-2 text-muted-foreground text-xs">... y {csvPreview.length - 20} más</td></tr>
+                        <tr className="border-t"><td colSpan={6} className="px-3 py-2 text-muted-foreground text-xs">... y {csvPreview.length - 20} más</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -853,6 +918,24 @@ export default function GuestTab() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Confirmación de borrado */}
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null); }}
+        title={pendingDelete?.type === "bulk" ? "Eliminar invitados seleccionados" : "Eliminar invitado"}
+        description={
+          pendingDelete?.type === "bulk"
+            ? `Se eliminarán ${pendingDelete.ids.length} invitado${pendingDelete.ids.length === 1 ? "" : "s"} y sus acompañantes. Esta acción no se puede deshacer.`
+            : pendingDelete?.type === "one"
+              ? `Se eliminará a "${pendingDelete.guest.name}" y sus acompañantes. Esta acción no se puede deshacer.`
+              : undefined
+        }
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }

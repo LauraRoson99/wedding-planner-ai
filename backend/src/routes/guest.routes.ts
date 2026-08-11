@@ -6,6 +6,7 @@ import {
   putGuest,
   deleteGuest,
   importGuests,
+  bulkDeleteGuests,
   markInvitationsSent,
   markInvitationsNotSent,
   sendInvitations,
@@ -24,6 +25,7 @@ guest.get("/guests", getGuests);
 guest.get("/guests/:id", getGuest);
 guest.post("/guests", postGuest);
 guest.post("/guests/import", importGuests);
+guest.post("/guests/bulk-delete", bulkDeleteGuests);
 guest.patch("/guests/group", assignGuestsToGroup);
 guest.patch("/guests/invitation/sent", markInvitationsSent);
 guest.patch("/guests/invitation/unsent", markInvitationsNotSent);

@@ -130,7 +130,10 @@ export async function deleteGuest(req: Request, res: Response, next: NextFunctio
 const ImportGuestSchema = z.object({
   name: z.string().min(1),
   email: z.string().optional(),
+  phone: z.string().optional(),
   groupName: z.string().optional(),
+  allergies: z.array(z.string()).optional(),
+  companions: z.array(z.string()).optional(),
 });
 
 const ImportPayloadSchema = z.object({
@@ -162,6 +165,17 @@ export async function assignGuestsToGroup(req: Request, res: Response, next: Nex
     const { weddingId } = QueryWeddingSchema.parse(req.query);
     const { groupId, guestIds } = AssignGroupSchema.parse(req.body);
     const result = await svc.assignGuestsToGroup(weddingId, groupId, guestIds);
+    res.json(result);
+  } catch (e) {
+    next(e);
+  }
+}
+
+export async function bulkDeleteGuests(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { guestIds } = InvitationPayloadSchema.parse(req.body);
+    const result = await svc.bulkDeleteGuests(weddingId, guestIds);
     res.json(result);
   } catch (e) {
     next(e);

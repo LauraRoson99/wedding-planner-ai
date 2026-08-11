@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.guest = void 0;
+const express_1 = require("express");
+const guest_controller_1 = require("../controllers/guest.controller");
+const auth_1 = require("../middleware/auth");
+const weddingOwnership_1 = require("../middleware/weddingOwnership");
+exports.guest = (0, express_1.Router)();
+exports.guest.use(auth_1.requireAuth);
+exports.guest.use(weddingOwnership_1.requireWeddingOwnership);
+exports.guest.get("/guests", guest_controller_1.getGuests);
+exports.guest.get("/guests/:id", guest_controller_1.getGuest);
+exports.guest.post("/guests", guest_controller_1.postGuest);
+exports.guest.post("/guests/import", guest_controller_1.importGuests);
+exports.guest.post("/guests/bulk-delete", guest_controller_1.bulkDeleteGuests);
+exports.guest.patch("/guests/group", guest_controller_1.assignGuestsToGroup);
+exports.guest.patch("/guests/invitation/sent", guest_controller_1.markInvitationsSent);
+exports.guest.patch("/guests/invitation/unsent", guest_controller_1.markInvitationsNotSent);
+exports.guest.post("/guests/invitation/send", guest_controller_1.sendInvitations);
+exports.guest.post("/guests/:id/rsvp-link", guest_controller_1.getRsvpLink);
+exports.guest.put("/guests/:id", guest_controller_1.putGuest);
+exports.guest.delete("/guests/:id", guest_controller_1.deleteGuest);
+//# sourceMappingURL=guest.routes.js.map

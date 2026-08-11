@@ -209,7 +209,14 @@ export function deleteGuest(id: string) {
 
 export async function importGuests(
   weddingId: string,
-  guests: Array<{ name: string; email?: string; groupName?: string }>
+  guests: Array<{
+    name: string;
+    email?: string;
+    phone?: string;
+    groupName?: string;
+    allergies?: string[];
+    companions?: string[];
+  }>
 ) {
   const groups = await prisma.group.findMany({ where: { weddingId } });
   const groupMap = new Map(groups.map((g) => [g.name.toLowerCase(), g.id]));
@@ -221,13 +228,23 @@ export async function importGuests(
     const name = g.name.trim();
     if (!name) continue;
 
-    const groupId = g.groupName
-      ? groupMap.get(g.groupName.trim().toLowerCase()) ?? null
-      : null;
+    const groupName = g.groupName?.trim();
+    let groupId: string | null = null;
 
-    if (g.groupName && !groupId) {
-      errors.push(`Grupo "${g.groupName}" no encontrado para "${name}"`);
+    if (groupName) {
+      groupId = groupMap.get(groupName.toLowerCase()) ?? null;
+      // Create the group on the fly if it doesn't exist yet.
+      if (!groupId) {
+        const newGroup = await prisma.group.create({
+          data: { weddingId, name: groupName },
+        });
+        groupId = newGroup.id;
+        groupMap.set(groupName.toLowerCase(), newGroup.id);
+      }
     }
+
+    const allergies = (g.allergies ?? []).map((a) => a.trim()).filter(Boolean);
+    const companions = (g.companions ?? []).map((c) => c.trim()).filter(Boolean);
 
     try {
       await prisma.guest.create({
@@ -236,8 +253,17 @@ export async function importGuests(
           name,
           role: "PRIMARY",
           email: g.email?.trim() || null,
+          phone: g.phone?.trim() || null,
           groupId,
-          allergies: [],
+          allergies,
+          companions: {
+            create: companions.map((companionName) => ({
+              weddingId,
+              role: "COMPANION",
+              groupId,
+              name: companionName,
+            })),
+          },
         },
       });
       created.push(name);
@@ -268,6 +294,15 @@ export async function assignGuestsToGroup(
     data: { groupId },
   });
   return { updated: result.count };
+}
+
+export async function bulkDeleteGuests(weddingId: string, guestIds: string[]) {
+  // Scope by weddingId (ownership is already enforced by the route middleware).
+  // Only PRIMARY guests are deletable here; their companions cascade automatically.
+  const result = await prisma.guest.deleteMany({
+    where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
+  });
+  return { deleted: result.count };
 }
 
 export async function markInvitationsSent(weddingId: string, guestIds: string[]) {
