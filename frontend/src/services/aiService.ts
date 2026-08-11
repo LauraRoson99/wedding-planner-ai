@@ -62,3 +62,30 @@ export function createBudgetItemsBulk(weddingId: string, items: SuggestedBudgetI
 export function createProvidersBulk(weddingId: string, providers: SuggestedProvider[]) {
   return apiPost<{ created: number }>(`/providers/bulk`, { weddingId, providers });
 }
+
+export type SeatingAssignment = {
+  guestId: string;
+  guestName: string;
+  tableId: string;
+  tableName: string;
+  seatNumber: number;
+};
+
+export type SuggestSeatingResponse = {
+  assignments: SeatingAssignment[];
+  stats: { guests: number; tables: number; assigned: number; unassigned: number };
+};
+
+export function suggestSeating(weddingId: string) {
+  return apiPost<SuggestSeatingResponse>(
+    `/ai/seating/suggest?weddingId=${encodeURIComponent(weddingId)}`,
+    {}
+  );
+}
+
+export function applySeating(
+  weddingId: string,
+  assignments: { guestId: string; tableId: string; seatNumber: number }[]
+) {
+  return apiPost<{ applied: number }>(`/tables/seating/apply`, { weddingId, assignments });
+}

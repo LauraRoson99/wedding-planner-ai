@@ -1,4 +1,6 @@
 import { prisma } from "../db/prisma";
+import { validateAssignments } from "../utils/seating";
+import type { SeatingAssignment } from "../utils/seating";
 
 export function listTables(weddingId: string) {
   return prisma.table.findMany({
@@ -214,6 +216,45 @@ export async function clearSeat(tableId: string, userId: string, seatNumber: num
   });
 
   return { ok: true };
+}
+
+export async function applySeatingService(
+  weddingId: string,
+  userId: string,
+  assignments: SeatingAssignment[]
+) {
+  const wedding = await prisma.wedding.findFirst({
+    where: { id: weddingId, ownerId: userId },
+    select: { id: true },
+  });
+  if (!wedding) return null;
+
+  const [tables, guests] = await Promise.all([
+    prisma.table.findMany({ where: { weddingId }, select: { id: true, seats: true } }),
+    prisma.guest.findMany({ where: { weddingId }, select: { id: true } }),
+  ]);
+
+  const tableSeats = new Map(tables.map((t) => [t.id, t.seats]));
+  const validGuestIds = new Set(guests.map((g) => g.id));
+  const valid = validateAssignments(assignments, tableSeats, validGuestIds);
+
+  await prisma.$transaction(async (tx) => {
+    // Applying a full plan replaces the current seating in this wedding, so we
+    // clear it first — this also avoids @@unique([tableId, seatNumber]) clashes.
+    await tx.guest.updateMany({
+      where: { weddingId, OR: [{ tableId: { not: null } }, { seatNumber: { not: null } }] },
+      data: { tableId: null, seatNumber: null },
+    });
+
+    for (const a of valid) {
+      await tx.guest.update({
+        where: { id: a.guestId },
+        data: { tableId: a.tableId, seatNumber: a.seatNumber },
+      });
+    }
+  });
+
+  return { applied: valid.length };
 }
 
 export async function clearTable(tableId: string, userId: string) {

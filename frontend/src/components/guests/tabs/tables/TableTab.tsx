@@ -3,6 +3,7 @@ import { apiDelete, apiGet, apiPost, apiPut } from "@/lib/api";
 import { TableControls } from "./TableControls";
 import { TableMap } from "./TableMap";
 import { GuestList } from "./GuestList";
+import AiSeatingSuggestions from "./AiSeatingSuggestions";
 import type {
   CreateTableDto,
   TableDto,
@@ -148,6 +149,10 @@ export default function TableTab({ weddingId }: Props) {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-end">
+        <AiSeatingSuggestions weddingId={weddingId} onApplied={loadData} />
+      </div>
+
       <TableControls onCreateTable={handleCreateTable} disabled={saving || loading} />
 
       {error && (

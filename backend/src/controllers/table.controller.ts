@@ -29,6 +29,19 @@ const AssignSeatSchema = z.object({
   guestId: z.string().min(1),
 });
 
+const ApplySeatingSchema = z.object({
+  weddingId: z.string().min(1),
+  assignments: z
+    .array(
+      z.object({
+        guestId: z.string().min(1),
+        tableId: z.string().min(1),
+        seatNumber: z.coerce.number().int().min(1),
+      })
+    )
+    .max(500),
+});
+
 function toHttpErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message;
   return "Unexpected error";
@@ -129,6 +142,19 @@ export async function deleteTable(req: Request, res: Response, next: NextFunctio
 
     next(e);
   }
+}
+
+export async function applySeating(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId, assignments } = ApplySeatingSchema.parse(req.body);
+    const userId = getUserId(req);
+    if (!userId) return res.status(401).json({ error: "Invalid user session" });
+
+    const result = await svc.applySeatingService(weddingId, userId, assignments);
+    if (!result) return res.status(404).json({ error: "Wedding not found" });
+
+    res.json(result);
+  } catch (e) { next(e); }
 }
 
 export async function assignSeat(req: Request, res: Response, next: NextFunction) {
