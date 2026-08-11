@@ -471,6 +471,7 @@ export default function TasksPage() {
                       Prioridad: {priorityLabel(value)}
                       <button
                         type="button"
+                        aria-label={`Quitar filtro de prioridad ${priorityLabel(value)}`}
                         onClick={() =>
                           setPriorityFilter((prev) => prev.filter((v) => v !== value))
                         }
@@ -485,6 +486,7 @@ export default function TasksPage() {
                       Estado: {statusLabel(value)}
                       <button
                         type="button"
+                        aria-label={`Quitar filtro de estado ${statusLabel(value)}`}
                         onClick={() =>
                           setStatusFilter((prev) => prev.filter((v) => v !== value))
                         }
@@ -499,6 +501,7 @@ export default function TasksPage() {
                       Categoría: {categoryLabel(value)}
                       <button
                         type="button"
+                        aria-label={`Quitar filtro de categoría ${categoryLabel(value)}`}
                         onClick={() =>
                           setCategoryFilter((prev) => prev.filter((v) => v !== value))
                         }
@@ -551,6 +554,7 @@ export default function TasksPage() {
                                 type="checkbox"
                                 checked={task.completed}
                                 onChange={() => toggleTask(task.id, task.completed)}
+                                aria-label={`Marcar "${task.title}" como completada`}
                                 className="mt-1"
                               />
 
@@ -639,6 +643,7 @@ export default function TasksPage() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => openEditDialog(task)}
+                                aria-label="Editar tarea" title="Editar tarea"
                               >
                                 <Pencil className="size-4" />
                               </Button>
@@ -647,6 +652,7 @@ export default function TasksPage() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => deleteTask(task.id)}
+                                aria-label="Eliminar tarea" title="Eliminar tarea"
                               >
                                 <Trash2 className="size-4" />
                               </Button>

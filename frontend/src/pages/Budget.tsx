@@ -908,6 +908,7 @@ export default function Budget() {
                                 disabled={isSaving}
                                 onClick={() => handleDeleteItem(item.id)}
                                 className="rounded-xl"
+                                aria-label="Eliminar gasto" title="Eliminar gasto"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>

@@ -3,7 +3,7 @@ import { mainMenu } from '@/config/menu'
 
 export function AppSidebar() {
   return (
-    <aside className="w-48 pr-4 pt-8 space-y-4 text-sm">
+    <aside className="hidden md:block w-48 pr-4 pt-8 space-y-4 text-sm">
       <nav className="space-y-2">
         {mainMenu.map((item) => {
           const Icon = item.icon

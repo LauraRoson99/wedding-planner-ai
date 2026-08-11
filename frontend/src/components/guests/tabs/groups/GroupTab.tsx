@@ -249,7 +249,8 @@ export default function GroupTab() {
                     Ver personas
                   </Button>
 
-                  <Button variant="ghost" size="icon" onClick={() => setEditingGroup({ ...group })}>
+                  <Button variant="ghost" size="icon" onClick={() => setEditingGroup({ ...group })}
+                    aria-label="Editar grupo" title="Editar grupo">
                     <Pencil className="size-4" />
                   </Button>
 
@@ -258,6 +259,7 @@ export default function GroupTab() {
                     size="icon"
                     onClick={() => handleDeleteGroup(group.id)}
                     className="text-destructive hover:bg-destructive/10"
+                    aria-label="Eliminar grupo" title="Eliminar grupo"
                   >
                     <Trash2 className="size-4" />
                   </Button>

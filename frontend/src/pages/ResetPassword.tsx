@@ -67,8 +67,9 @@ export default function ResetPassword() {
         ) : (
           <form onSubmit={onSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Nueva contraseña</label>
+              <label htmlFor="reset-password" className="text-sm font-medium">Nueva contraseña</label>
               <Input
+                id="reset-password"
                 type="password"
                 placeholder="••••••••"
                 value={password}
@@ -78,8 +79,9 @@ export default function ResetPassword() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Repite la contraseña</label>
+              <label htmlFor="reset-confirm" className="text-sm font-medium">Repite la contraseña</label>
               <Input
+                id="reset-confirm"
                 type="password"
                 placeholder="••••••••"
                 value={confirm}

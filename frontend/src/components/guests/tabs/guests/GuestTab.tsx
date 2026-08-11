@@ -598,7 +598,7 @@ export default function GuestTab() {
               {inviteResult.skipped.length > 0 && ` · ${inviteResult.skipped.length} sin email`}
               {inviteResult.failed.length > 0 && ` · ${inviteResult.failed.length} con error`}
             </span>
-            <button type="button" onClick={() => setInviteResult(null)} className="text-muted-foreground hover:text-foreground">
+            <button type="button" onClick={() => setInviteResult(null)} aria-label="Cerrar" title="Cerrar" className="text-muted-foreground hover:text-foreground">
               <X className="size-4" />
             </button>
           </div>

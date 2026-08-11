@@ -103,7 +103,7 @@ export function TableMap({
       return (
         <div
           key={table.id}
-          className="rounded-2xl border bg-white p-4 shadow-sm transition hover:shadow-md"
+          className="rounded-2xl border bg-card p-4 shadow-sm transition hover:shadow-md"
         >
           <div className="mb-4 flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
@@ -208,7 +208,7 @@ export function TableMap({
                     disabled ? "cursor-not-allowed opacity-70" : "hover:scale-[1.01]"
                   }`}
                 >
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/70 text-xs font-semibold shadow-sm">
+                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-card/70 text-xs font-semibold shadow-sm">
                     {guest ? getGuestInitials(guest.name) : <Armchair className="h-4 w-4" />}
                   </div>
 
@@ -267,11 +267,11 @@ export function TableMap({
       </div>
 
       {loading ? (
-        <div className="rounded-2xl border border-dashed bg-white p-6 text-sm text-muted-foreground">
+        <div className="rounded-2xl border border-dashed bg-card p-6 text-sm text-muted-foreground">
           Cargando mesas...
         </div>
       ) : tables.length === 0 ? (
-        <div className="rounded-2xl border border-dashed bg-white p-6 text-sm text-muted-foreground">
+        <div className="rounded-2xl border border-dashed bg-card p-6 text-sm text-muted-foreground">
           No hay mesas todavía. Crea la primera desde la parte superior.
         </div>
       ) : (

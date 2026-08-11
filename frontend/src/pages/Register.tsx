@@ -79,8 +79,9 @@ export default function Register() {
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Nombre (opcional)</label>
+            <label htmlFor="register-name" className="text-sm font-medium">Nombre (opcional)</label>
             <Input
+              id="register-name"
               placeholder="Laura"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -89,8 +90,9 @@ export default function Register() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Email</label>
+            <label htmlFor="register-email" className="text-sm font-medium">Email</label>
             <Input
+              id="register-email"
               placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -99,8 +101,9 @@ export default function Register() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Contraseña</label>
+            <label htmlFor="register-password" className="text-sm font-medium">Contraseña</label>
             <Input
+              id="register-password"
               placeholder="Mínimo 6 caracteres"
               type="password"
               value={password}

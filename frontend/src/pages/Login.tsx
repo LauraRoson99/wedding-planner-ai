@@ -74,8 +74,9 @@ export default function Login() {
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Email</label>
+            <label htmlFor="login-email" className="text-sm font-medium">Email</label>
             <Input
+              id="login-email"
               placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -84,8 +85,9 @@ export default function Login() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Contraseña</label>
+            <label htmlFor="login-password" className="text-sm font-medium">Contraseña</label>
             <Input
+              id="login-password"
               placeholder="••••••••"
               type="password"
               value={password}

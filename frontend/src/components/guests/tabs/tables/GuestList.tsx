@@ -105,7 +105,7 @@ export function GuestList({
   };
 
   return (
-    <aside className="w-full xl:w-80 shrink-0 rounded-2xl border bg-white p-4 shadow-sm">
+    <aside className="w-full xl:w-80 shrink-0 rounded-2xl border bg-card p-4 shadow-sm">
       <div className="mb-4 space-y-3">
         <div>
           <h3 className="text-lg font-semibold">Invitados</h3>

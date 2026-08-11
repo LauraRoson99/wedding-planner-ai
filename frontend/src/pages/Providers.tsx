@@ -368,6 +368,7 @@ export default function Providers() {
                     <Button
                       size="sm" variant="outline" className="rounded-xl text-destructive hover:bg-destructive hover:text-white"
                       onClick={() => handleDelete(p.id)}
+                      aria-label="Eliminar proveedor" title="Eliminar proveedor"
                     >
                       <Trash2 className="size-3.5" />
                     </Button>
