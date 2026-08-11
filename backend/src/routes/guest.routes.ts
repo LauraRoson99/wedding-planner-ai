@@ -10,6 +10,7 @@ import {
   markInvitationsNotSent,
   sendInvitations,
   getRsvpLink,
+  assignGuestsToGroup,
 } from "../controllers/guest.controller";
 import { requireAuth } from "../middleware/auth";
 import { requireWeddingOwnership } from "../middleware/weddingOwnership";
@@ -23,6 +24,7 @@ guest.get("/guests", getGuests);
 guest.get("/guests/:id", getGuest);
 guest.post("/guests", postGuest);
 guest.post("/guests/import", importGuests);
+guest.patch("/guests/group", assignGuestsToGroup);
 guest.patch("/guests/invitation/sent", markInvitationsSent);
 guest.patch("/guests/invitation/unsent", markInvitationsNotSent);
 guest.post("/guests/invitation/send", sendInvitations);

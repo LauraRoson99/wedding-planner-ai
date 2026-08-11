@@ -17,6 +17,7 @@ import {
 } from "@/services/aiService";
 import type { SuggestedTask } from "@/services/aiService";
 import { prettyApiError } from "@/lib/errors";
+import { toast } from "@/lib/toast";
 
 const CATEGORY_LABELS: Record<string, string> = {
   GUESTS: "Invitados",
@@ -98,6 +99,7 @@ export default function AiTaskSuggestions({
         }))
       );
       setOpen(false);
+      toast.success(`${selected.length} tarea${selected.length === 1 ? "" : "s"} añadida${selected.length === 1 ? "" : "s"}`);
       onCreated();
     } catch (e) {
       setError(prettyApiError(e));

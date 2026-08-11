@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { apiDelete, apiGet, apiPost, apiPut } from "@/lib/api";
+import { toast, toastError } from "@/lib/toast";
 import { getWeddingId } from "@/lib/auth";
 import type { TaskDto, TaskStatus } from "@/features/tasks/types";
 import type { EventDto } from "@/features/events/types";
@@ -265,6 +266,7 @@ export default function Agenda() {
             event.id === updatedEvent.id ? updatedEvent : event
           )
         );
+        toast.success("Evento actualizado");
       } else {
         const newEvent = await apiPost<EventDto>("/events", {
           ...payload,
@@ -272,6 +274,7 @@ export default function Agenda() {
         });
 
         setEvents((prev) => [...prev, newEvent]);
+        toast.success("Evento añadido");
       }
 
       resetEventForm();
@@ -279,6 +282,7 @@ export default function Agenda() {
     } catch (err: any) {
       console.error(err);
       setError(err?.message ?? "No se pudo guardar el evento");
+      toastError(err);
     } finally {
       setSavingEvent(false);
     }
@@ -293,9 +297,11 @@ export default function Agenda() {
       setEvents((prev) => prev.filter((event) => event.id !== id));
       setDetailDialogOpen(false);
       setSelectedItem(null);
+      toast.success("Evento eliminado");
     } catch (err) {
       console.error(err);
       setError("No se pudo eliminar el evento");
+      toastError(err);
     }
   }
 

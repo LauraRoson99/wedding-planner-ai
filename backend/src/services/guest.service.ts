@@ -249,6 +249,27 @@ export async function importGuests(
   return { created: created.length, errors };
 }
 
+export async function assignGuestsToGroup(
+  weddingId: string,
+  groupId: string | null,
+  guestIds: string[]
+) {
+  // A non-null group must belong to this wedding (avoid cross-wedding linking).
+  if (groupId) {
+    const group = await prisma.group.findFirst({
+      where: { id: groupId, weddingId },
+      select: { id: true },
+    });
+    if (!group) throw { status: 400, message: "Grupo no válido" };
+  }
+
+  const result = await prisma.guest.updateMany({
+    where: { id: { in: guestIds }, weddingId, role: "PRIMARY" },
+    data: { groupId },
+  });
+  return { updated: result.count };
+}
+
 export async function markInvitationsSent(weddingId: string, guestIds: string[]) {
   const now = new Date();
   await prisma.guest.updateMany({

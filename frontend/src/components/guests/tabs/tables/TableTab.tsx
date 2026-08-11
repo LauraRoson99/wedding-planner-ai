@@ -4,6 +4,7 @@ import { TableControls } from "./TableControls";
 import { TableMap } from "./TableMap";
 import { GuestList } from "./GuestList";
 import AiSeatingSuggestions from "./AiSeatingSuggestions";
+import { toast, toastError } from "@/lib/toast";
 import type {
   CreateTableDto,
   TableDto,
@@ -63,9 +64,11 @@ export default function TableTab({ weddingId }: Props) {
 
     try {
       await apiPost<TableDto>(`/tables?weddingId=${weddingId}`, payload);
+      toast.success("Mesa creada");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo crear la mesa");
+      toastError(err);
     } finally {
       setSaving(false);
     }
@@ -77,9 +80,11 @@ export default function TableTab({ weddingId }: Props) {
 
     try {
       await apiPut<TableDto>(`/tables/${tableId}`, payload);
+      toast.success("Mesa actualizada");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo actualizar la mesa");
+      toastError(err);
     } finally {
       setSaving(false);
     }
@@ -91,9 +96,11 @@ export default function TableTab({ weddingId }: Props) {
 
     try {
       await apiDelete(`/tables/${tableId}`);
+      toast.success("Mesa eliminada");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo borrar la mesa");
+      toastError(err);
     } finally {
       setSaving(false);
     }
@@ -111,9 +118,11 @@ export default function TableTab({ weddingId }: Props) {
       });
 
       setSelectedPerson(null);
+      toast.success("Invitado asignado a la mesa");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo asignar la persona");
+      toastError(err);
     } finally {
       setSaving(false);
     }
@@ -125,9 +134,11 @@ export default function TableTab({ weddingId }: Props) {
 
     try {
       await apiDelete(`/tables/${tableId}/seats/${seatNumber}`);
+      toast.success("Asiento liberado");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo liberar la silla");
+      toastError(err);
     } finally {
       setSaving(false);
     }
@@ -139,9 +150,11 @@ export default function TableTab({ weddingId }: Props) {
 
     try {
       await apiDelete(`/tables/${tableId}/guests`);
+      toast.success("Mesa vaciada");
       await loadData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo vaciar la mesa");
+      toastError(err);
     } finally {
       setSaving(false);
     }

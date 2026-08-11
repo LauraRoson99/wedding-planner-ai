@@ -18,6 +18,7 @@ import {
   Upload, Send, SendHorizonal, CheckSquare, Square, Download, Link2, Check,
 } from "lucide-react";
 import { getWeddingId } from "@/lib/auth";
+import { toast, toastError } from "@/lib/toast";
 
 function normalizeTag(t: string) {
   return t.trim().replace(/\s+/g, " ").normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -193,8 +194,14 @@ export default function GuestTab() {
       ));
       setSelected(new Set());
       setInviteResult(res);
+      if (res.sent.length > 0) {
+        toast.success(`${res.sent.length} invitación${res.sent.length === 1 ? "" : "es"} enviada${res.sent.length === 1 ? "" : "s"}`);
+      } else {
+        toast.info("No se envió ninguna invitación");
+      }
     } catch (e: any) {
       setError(e?.message ?? "Error enviando invitaciones");
+      toastError(e);
     } finally {
       setSending(false);
     }
@@ -249,6 +256,7 @@ export default function GuestTab() {
         { guests: csvPreview }
       );
       setImportResult(result);
+      toast.success(`${result.created} invitado${result.created === 1 ? "" : "s"} importado${result.created === 1 ? "" : "s"}`);
       await loadGuests();
       if (result.errors.length === 0) {
         setCsvRaw("");
@@ -256,6 +264,7 @@ export default function GuestTab() {
       }
     } catch (e: any) {
       setError(e?.message ?? "Error en la importación");
+      toastError(e);
     } finally {
       setImporting(false);
     }
@@ -381,16 +390,18 @@ export default function GuestTab() {
     try {
       if (mode === "create") await apiPost(`/guests?weddingId=${encodeURIComponent(weddingId)}`, payload);
       else if (editingId) await apiPut(`/guests/${encodeURIComponent(editingId)}`, payload);
+      toast.success(mode === "create" ? "Invitado añadido" : "Invitado actualizado");
       setOpen(false); setForm(DEFAULT_FORM); setEditingId(null); await loadGuests();
-    } catch (e: any) { setError(e?.message ?? "Error guardando invitado"); }
+    } catch (e: any) { setError(e?.message ?? "Error guardando invitado"); toastError(e); }
   }
 
   async function handleDeleteGuest(guest: GuestDto) {
     if (!window.confirm(`¿Eliminar a "${guest.name}"?`)) return;
     try {
       await apiDelete(`/guests/${encodeURIComponent(guest.id)}`);
+      toast.success("Invitado eliminado");
       await loadGuests();
-    } catch (e: any) { setError(e?.message ?? "Error eliminando invitado"); }
+    } catch (e: any) { setError(e?.message ?? "Error eliminando invitado"); toastError(e); }
   }
 
   const pendingInvitation = filteredGuests.filter((g) => !g.invitationSent).length;

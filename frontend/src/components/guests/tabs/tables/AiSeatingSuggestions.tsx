@@ -16,6 +16,7 @@ import {
 } from "@/services/aiService";
 import type { SeatingAssignment } from "@/services/aiService";
 import { prettyApiError } from "@/lib/errors";
+import { toast } from "@/lib/toast";
 
 export default function AiSeatingSuggestions({
   weddingId,
@@ -68,6 +69,7 @@ export default function AiSeatingSuggestions({
         assignments.map((a) => ({ guestId: a.guestId, tableId: a.tableId, seatNumber: a.seatNumber }))
       );
       setOpen(false);
+      toast.success("Distribución de mesas aplicada");
       onApplied();
     } catch (e) {
       setError(prettyApiError(e));

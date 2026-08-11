@@ -27,6 +27,7 @@ import {
 } from "@/services/providerDocumentService"
 import type { ProviderDocument } from "@/services/providerDocumentService"
 import { getWeddingId } from "@/lib/auth"
+import { toast, toastError } from "@/lib/toast"
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -103,8 +104,10 @@ export default function Providers() {
     try {
       const doc = await uploadProviderDocument(docsProvider.id, file)
       setDocs((prev) => [doc, ...prev])
+      toast.success("Documento subido")
     } catch (e: any) {
       setDocsError(e?.message ?? "No se ha podido subir el archivo")
+      toastError(e)
     } finally {
       setUploading(false)
     }
@@ -115,8 +118,10 @@ export default function Providers() {
     try {
       await deleteProviderDocument(docsProvider.id, documentId)
       setDocs((prev) => prev.filter((d) => d.id !== documentId))
+      toast.success("Documento eliminado")
     } catch (e: any) {
       setDocsError(e?.message ?? "No se ha podido eliminar el documento")
+      toastError(e)
     }
   }
 
@@ -180,19 +185,28 @@ export default function Providers() {
       if (editingId) {
         const updated = await updateProvider(editingId, payload)
         setProviders((prev) => prev.map((p) => (p.id === editingId ? updated : p)))
+        toast.success("Proveedor actualizado")
       } else {
         const created = await createProvider(weddingId, payload)
         setProviders((prev) => [...prev, created])
+        toast.success("Proveedor añadido")
       }
       setDialogOpen(false)
+    } catch (e) {
+      toastError(e)
     } finally {
       setSaving(false)
     }
   }
 
   async function handleDelete(id: string) {
-    await deleteProvider(id)
-    setProviders((prev) => prev.filter((p) => p.id !== id))
+    try {
+      await deleteProvider(id)
+      setProviders((prev) => prev.filter((p) => p.id !== id))
+      toast.success("Proveedor eliminado")
+    } catch (e) {
+      toastError(e)
+    }
   }
 
   return (

@@ -21,6 +21,7 @@ import type { SuggestedBudgetItem, SuggestedProvider } from "@/services/aiServic
 import { PROVIDER_CATEGORY_LABELS } from "@/services/providerService";
 import type { ProviderCategory } from "@/services/providerService";
 import { prettyApiError } from "@/lib/errors";
+import { toast } from "@/lib/toast";
 
 const BUDGET_CATEGORY_LABELS: Record<string, string> = {
   VENUE: "Finca / espacio",
@@ -114,6 +115,7 @@ export default function AiBudgetSuggestions({
         );
       }
       setOpen(false);
+      toast.success(`${selItems.length + selProviders.length} elemento${selItems.length + selProviders.length === 1 ? "" : "s"} añadido${selItems.length + selProviders.length === 1 ? "" : "s"}`);
       onCreated();
     } catch (e) {
       setError(prettyApiError(e));

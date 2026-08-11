@@ -52,6 +52,7 @@ import { getProviders } from "@/services/providerService"
 import type { Provider } from "@/services/providerService"
 import AiBudgetSuggestions from "@/components/budgets/AiBudgetSuggestions"
 import { getWeddingId } from "@/lib/auth"
+import { toast, toastError } from "@/lib/toast"
 
 const NO_PROVIDER = "none"
 
@@ -180,12 +181,14 @@ export default function Budget() {
       })
 
       await loadBudget()
+      toast.success("Presupuesto actualizado")
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "No se ha podido guardar el presupuesto."
       )
+      toastError(err)
     } finally {
       setIsSaving(false)
     }
@@ -226,12 +229,14 @@ export default function Budget() {
 
       setForm(initialForm)
       await loadBudget()
+      toast.success("Gasto añadido")
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "No se ha podido crear el gasto."
       )
+      toastError(err)
     } finally {
       setIsSaving(false)
     }
@@ -242,12 +247,14 @@ export default function Budget() {
       setIsSaving(true)
       await deleteBudgetItem(id)
       await loadBudget()
+      toast.success("Gasto eliminado")
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "No se ha podido eliminar el gasto."
       )
+      toastError(err)
     } finally {
       setIsSaving(false)
     }
@@ -264,12 +271,14 @@ export default function Budget() {
       })
 
       await loadBudget()
+      toast.success("Gasto marcado como pagado")
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "No se ha podido marcar como pagado."
       )
+      toastError(err)
     } finally {
       setIsSaving(false)
     }

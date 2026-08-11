@@ -152,6 +152,22 @@ const InvitationPayloadSchema = z.object({
   guestIds: z.array(z.string().min(1)).min(1),
 });
 
+const AssignGroupSchema = z.object({
+  groupId: z.string().min(1).nullable(),
+  guestIds: z.array(z.string().min(1)).min(1),
+});
+
+export async function assignGuestsToGroup(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { weddingId } = QueryWeddingSchema.parse(req.query);
+    const { groupId, guestIds } = AssignGroupSchema.parse(req.body);
+    const result = await svc.assignGuestsToGroup(weddingId, groupId, guestIds);
+    res.json(result);
+  } catch (e) {
+    next(e);
+  }
+}
+
 export async function markInvitationsSent(req: Request, res: Response, next: NextFunction) {
   try {
     const { weddingId } = QueryWeddingSchema.parse(req.query);

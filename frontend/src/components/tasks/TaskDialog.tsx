@@ -21,6 +21,7 @@ import type {
 } from "@/features/tasks/types";
 import { apiPost, apiPut } from "@/lib/api";
 import { getWeddingId } from "@/lib/auth";
+import { toast, toastError } from "@/lib/toast";
 
 import {
   Dialog,
@@ -165,6 +166,7 @@ export default function TaskDialog({
       if (isEdit && task) {
         const updatedTask = await apiPut<TaskDto>(`/tasks/${task.id}`, payload);
         onSaved(updatedTask);
+        toast.success("Tarea actualizada");
       } else {
         const newTask = await apiPost<TaskDto>("/tasks", {
           ...payload,
@@ -172,6 +174,7 @@ export default function TaskDialog({
         });
 
         onSaved(newTask);
+        toast.success("Tarea añadida");
       }
 
       resetForm();
@@ -179,6 +182,7 @@ export default function TaskDialog({
     } catch (err: any) {
       console.error(err);
       setError(err?.message ?? "No se pudo guardar la tarea");
+      toastError(err);
     } finally {
       setSaving(false);
     }

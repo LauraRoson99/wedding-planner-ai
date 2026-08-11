@@ -13,6 +13,54 @@ import { apiDelete, apiGet, apiPost, apiPatch } from "@/lib/api"
 import type { GroupDto } from "@/features/groups/types"
 import type { GuestDto, CompanionDto } from "@/features/guests/types"
 import { getWeddingId } from "@/lib/auth"
+import { toast, toastError } from "@/lib/toast"
+
+function GuestPicker({
+  ungrouped,
+  selected,
+  onToggle,
+  getName,
+}: {
+  ungrouped: GuestDto[]
+  selected: Set<string>
+  onToggle: (id: string) => void
+  getName: (g: GuestDto) => string
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-sm font-medium">
+        Añadir invitados sin grupo{" "}
+        <span className="font-normal text-muted-foreground">(opcional)</span>
+      </p>
+      {ungrouped.length === 0 ? (
+        <p className="rounded-xl border border-dashed p-3 text-sm text-muted-foreground">
+          No hay invitados sin grupo.
+        </p>
+      ) : (
+        <div className="max-h-52 space-y-0.5 overflow-y-auto rounded-xl border p-2">
+          {ungrouped.map((g) => (
+            <label
+              key={g.id}
+              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted"
+            >
+              <input
+                type="checkbox"
+                checked={selected.has(g.id)}
+                onChange={() => onToggle(g.id)}
+              />
+              <span className="text-sm">{getName(g)}</span>
+            </label>
+          ))}
+        </div>
+      )}
+      {selected.size > 0 && (
+        <p className="text-xs text-muted-foreground">
+          {selected.size} seleccionado{selected.size > 1 ? "s" : ""}
+        </p>
+      )}
+    </div>
+  )
+}
 
 export default function GroupTab() {
   const [groups, setGroups] = useState<GroupDto[]>([])
@@ -25,7 +73,23 @@ export default function GroupTab() {
   const [selectedGroup, setSelectedGroup] = useState<GroupDto | null>(null)
   const [search, setSearch] = useState("")
 
+  const [createOpen, setCreateOpen] = useState(false)
+  const [newGroupGuestIds, setNewGroupGuestIds] = useState<Set<string>>(new Set())
+  const [editGroupGuestIds, setEditGroupGuestIds] = useState<Set<string>>(new Set())
+
   const weddingId = getWeddingId() ?? "";
+
+  function toggleInSet(
+    setState: (updater: (prev: Set<string>) => Set<string>) => void,
+    id: string
+  ) {
+    setState((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
 
   async function loadData() {
     if (!weddingId) {
@@ -75,6 +139,11 @@ export default function GroupTab() {
     return map
   }, [guests])
 
+  const ungroupedGuests = useMemo(
+    () => guests.filter((g) => !g.group?.id),
+    [guests]
+  )
+
   async function handleAddGroup() {
     if (!weddingId) {
       setError("Falta weddingId en localStorage.")
@@ -83,13 +152,28 @@ export default function GroupTab() {
     if (!newGroupName.trim()) return
 
     try {
-      await apiPost(`/groups?weddingId=${encodeURIComponent(weddingId)}`, {
-        name: newGroupName.trim(),
-      })
+      const created = await apiPost<GroupDto>(
+        `/groups?weddingId=${encodeURIComponent(weddingId)}`,
+        { name: newGroupName.trim() }
+      )
+      if (newGroupGuestIds.size > 0) {
+        await apiPatch(`/guests/group?weddingId=${encodeURIComponent(weddingId)}`, {
+          groupId: created.id,
+          guestIds: [...newGroupGuestIds],
+        })
+      }
+      toast.success(
+        newGroupGuestIds.size > 0
+          ? `Grupo creado con ${newGroupGuestIds.size} invitado${newGroupGuestIds.size === 1 ? "" : "s"}`
+          : "Grupo creado"
+      )
       setNewGroupName("")
+      setNewGroupGuestIds(new Set())
+      setCreateOpen(false)
       await loadData()
     } catch (e: any) {
       setError(e?.message ?? "Error creando grupo")
+      toastError(e)
     }
   }
 
@@ -99,9 +183,11 @@ export default function GroupTab() {
     try {
       await apiDelete(`/groups/${encodeURIComponent(groupId)}`)
       if (selectedGroup?.id === groupId) setSelectedGroup(null)
+      toast.success("Grupo eliminado")
       await loadData()
     } catch (e: any) {
       setError(e?.message ?? "Error eliminando grupo")
+      toastError(e)
     }
   }
 
@@ -113,10 +199,19 @@ export default function GroupTab() {
       await apiPatch(`/groups/${encodeURIComponent(editingGroup.id)}`, {
         name: editingGroup.name.trim(),
       })
+      if (editGroupGuestIds.size > 0) {
+        await apiPatch(`/guests/group?weddingId=${encodeURIComponent(weddingId)}`, {
+          groupId: editingGroup.id,
+          guestIds: [...editGroupGuestIds],
+        })
+      }
+      toast.success("Grupo actualizado")
+      setEditGroupGuestIds(new Set())
       await loadData()
       setEditingGroup(null)
     } catch (e: any) {
       setError(e?.message ?? "Error actualizando grupo")
+      toastError(e)
     }
   }
 
@@ -145,7 +240,16 @@ export default function GroupTab() {
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
         <h3 className="text-xl font-semibold">Grupos</h3>
 
-        <Dialog>
+        <Dialog
+          open={createOpen}
+          onOpenChange={(o) => {
+            setCreateOpen(o)
+            if (!o) {
+              setNewGroupName("")
+              setNewGroupGuestIds(new Set())
+            }
+          }}
+        >
           <DialogTrigger asChild>
             <Button>
               <UsersRound className="size-4 mr-2" />
@@ -158,13 +262,29 @@ export default function GroupTab() {
               <DialogTitle>Nuevo grupo</DialogTitle>
             </DialogHeader>
 
-            <div className="mt-4 flex gap-2">
-              <Input
-                placeholder="Nombre del grupo"
-                value={newGroupName}
-                onChange={(e) => setNewGroupName(e.target.value)}
+            <div className="mt-2 space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Nombre del grupo</label>
+                <Input
+                  placeholder="Ej: Familia de la novia"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  autoFocus
+                />
+              </div>
+
+              <GuestPicker
+                ungrouped={ungroupedGuests}
+                selected={newGroupGuestIds}
+                onToggle={(id) => toggleInSet(setNewGroupGuestIds, id)}
+                getName={getGuestName}
               />
-              <Button onClick={handleAddGroup}>Guardar</Button>
+
+              <div className="flex justify-end">
+                <Button onClick={handleAddGroup} disabled={!newGroupName.trim()}>
+                  Crear grupo
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
@@ -275,20 +395,42 @@ export default function GroupTab() {
       )}
 
       {editingGroup && (
-        <Dialog open onOpenChange={() => setEditingGroup(null)}>
+        <Dialog
+          open
+          onOpenChange={() => {
+            setEditingGroup(null)
+            setEditGroupGuestIds(new Set())
+          }}
+        >
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Editar grupo</DialogTitle>
             </DialogHeader>
 
-            <div className="mt-4 flex gap-2">
-              <Input
-                value={editingGroup.name}
-                onChange={(e) =>
-                  setEditingGroup({ ...editingGroup, name: e.target.value })
-                }
+            <div className="mt-2 space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Nombre del grupo</label>
+                <Input
+                  value={editingGroup.name}
+                  onChange={(e) =>
+                    setEditingGroup({ ...editingGroup, name: e.target.value })
+                  }
+                  autoFocus
+                />
+              </div>
+
+              <GuestPicker
+                ungrouped={ungroupedGuests}
+                selected={editGroupGuestIds}
+                onToggle={(id) => toggleInSet(setEditGroupGuestIds, id)}
+                getName={getGuestName}
               />
-              <Button onClick={handleUpdateGroup}>Actualizar</Button>
+
+              <div className="flex justify-end">
+                <Button onClick={handleUpdateGroup} disabled={!editingGroup.name.trim()}>
+                  Guardar cambios
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>

@@ -19,6 +19,7 @@ import {
   WEDDING_UPDATED_EVENT,
 } from "@/lib/auth";
 import { prettyApiError } from "@/lib/errors";
+import { toast } from "@/lib/toast";
 
 /** Converts an ISO datetime to the "YYYY-MM-DD" value an <input type="date"> expects. */
 function toDateInputValue(iso: string | null): string {
@@ -78,6 +79,7 @@ export default function Settings() {
       setProfileName(updated.name ?? "");
       setProfileEmail(updated.email);
       setProfileSuccess("Perfil actualizado.");
+      toast.success("Perfil actualizado");
     } catch (err) {
       setProfileError(prettyApiError(err));
     } finally {
@@ -111,6 +113,7 @@ export default function Settings() {
     try {
       await apiPost("/auth/change-password", { currentPassword, newPassword });
       setPwSuccess("Contraseña actualizada.");
+      toast.success("Contraseña actualizada");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -165,6 +168,7 @@ export default function Settings() {
       window.dispatchEvent(new Event(WEDDING_UPDATED_EVENT));
 
       setSuccess("Cambios guardados.");
+      toast.success("Datos de la boda actualizados");
     } catch (err) {
       setError(prettyApiError(err));
     } finally {

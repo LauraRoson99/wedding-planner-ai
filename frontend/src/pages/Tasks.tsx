@@ -28,6 +28,7 @@ import type {
   TaskStatus,
 } from "@/features/tasks/types";
 import { getWeddingId } from "@/lib/auth";
+import { toast, toastError } from "@/lib/toast";
 import TaskDialog from "@/components/tasks/TaskDialog";
 import AiTaskSuggestions from "@/components/tasks/AiTaskSuggestions";
 
@@ -139,9 +140,11 @@ export default function TasksPage() {
       setTasks((prev) =>
         prev.map((task) => (task.id === id ? updatedTask : task))
       );
+      toast.success("Tarea actualizada");
     } catch (err) {
       console.error(err);
       setError("No se pudo actualizar la tarea");
+      toastError(err);
     }
   }
 
@@ -156,9 +159,11 @@ export default function TasksPage() {
 
       await apiDelete(`/tasks/${id}`);
       setTasks((prev) => prev.filter((task) => task.id !== id));
+      toast.success("Tarea eliminada");
     } catch (err) {
       console.error(err);
       setError("No se pudo eliminar la tarea");
+      toastError(err);
     }
   }
 
