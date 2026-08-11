@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom"
+import { UsersRound, Users, Armchair } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import GuestTab from "@/components/guests/tabs/guests/GuestTab"
 import GroupTab from "@/components/guests/tabs/groups/GroupTab"
@@ -26,10 +27,16 @@ export default function GuestsPage() {
         </div>
       </section>
       <Tabs value={tab} onValueChange={handleTabChange} className="w-full max-w-7xl">
-        <TabsList className="mb-4">
-          <TabsTrigger value="guests">Invitados</TabsTrigger>
-          <TabsTrigger value="groups">Grupos</TabsTrigger>
-          <TabsTrigger value="tables">Mesas</TabsTrigger>
+        <TabsList className="mb-6 h-auto gap-1.5 rounded-2xl p-1.5">
+          <TabsTrigger value="guests" className="gap-2 rounded-xl px-5 py-2.5 text-base data-[state=active]:text-primary">
+            <UsersRound className="size-[1.15rem]" /> Invitados
+          </TabsTrigger>
+          <TabsTrigger value="groups" className="gap-2 rounded-xl px-5 py-2.5 text-base data-[state=active]:text-primary">
+            <Users className="size-[1.15rem]" /> Grupos
+          </TabsTrigger>
+          <TabsTrigger value="tables" className="gap-2 rounded-xl px-5 py-2.5 text-base data-[state=active]:text-primary">
+            <Armchair className="size-[1.15rem]" /> Mesas
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="guests">
