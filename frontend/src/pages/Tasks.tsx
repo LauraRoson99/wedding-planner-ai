@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -350,24 +348,25 @@ export default function TasksPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-6xl mx-auto py-10 px-4 space-y-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <div className="border-l-2 border-primary/60 pl-4">
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Planificación</p>
-              <CardTitle className="mt-1 text-2xl md:text-3xl">Tareas de la boda</CardTitle>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {weddingId && (
-                <AiTaskSuggestions weddingId={weddingId} onCreated={loadTasks} />
-              )}
-              <Button onClick={openCreateDialog} className="gap-2">
-                <Plus className="size-4" />
-                Nueva tarea
-              </Button>
-            </div>
-          </CardHeader>
-        </Card>
+      <div className="max-w-7xl mx-auto py-10 px-4 space-y-6">
+        <section className="animate-rise flex flex-col gap-4 rounded-3xl border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between md:p-8">
+          <div className="border-l-2 border-primary/60 pl-5 md:pl-6">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Planificación</p>
+            <h1 className="mt-2 text-3xl md:text-4xl">Tareas de la boda</h1>
+            <p className="mt-2 max-w-2xl text-muted-foreground">
+              Organiza todo lo que hay que hacer, con prioridad, categoría y fechas límite.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {weddingId && (
+              <AiTaskSuggestions weddingId={weddingId} onCreated={loadTasks} />
+            )}
+            <Button onClick={openCreateDialog} className="gap-2">
+              <Plus className="size-4" />
+              Nueva tarea
+            </Button>
+          </div>
+        </section>
 
         <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
           <Card>
