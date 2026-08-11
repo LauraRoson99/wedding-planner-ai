@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { appConfig, baseUrl } from '@/config/app'
+import { appConfig } from '@/config/app'
 import { useNavigate } from "react-router-dom";
+import { Settings } from 'lucide-react'
 import { logout, getWeddingDate, WEDDING_UPDATED_EVENT } from "@/lib/auth";
+import { apiGet } from '@/lib/api'
 import { cn } from '@/lib/utils'
 import { mainMenu } from '@/config/menu'
 import {
@@ -24,15 +26,25 @@ import { AppLogo } from './app-logo'
 import { WeddingSwitcher } from './wedding-switcher'
 import { NotificationsBell } from './notifications-bell'
 import { Button, buttonVariants } from './ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Avatar, AvatarFallback } from './ui/avatar'
 import GitHub from './icons/github'
 import { ModeToggle } from './mode-toggle'
 import Countdown from './navbar/Countdown'
+
+type CurrentUser = { name: string | null; email: string };
+
+function initialsFrom(user: CurrentUser | null): string {
+    const base = (user?.name && user.name.trim()) || user?.email || "";
+    const parts = base.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0]!.charAt(0) + parts[1]!.charAt(0)).toUpperCase();
+    return base.slice(0, 2).toUpperCase() || "U";
+}
 
 export function AppHeader() {
     const nav = useNavigate();
     const [weddingDate, setWeddingDate] = useState<string | null>(getWeddingDate());
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
+    const [user, setUser] = useState<CurrentUser | null>(null);
 
     useEffect(() => {
         const sync = () => setWeddingDate(getWeddingDate());
@@ -45,14 +57,23 @@ export function AppHeader() {
         };
     }, []);
 
+    useEffect(() => {
+        apiGet<{ name: string | null; email: string }>("/auth/me")
+            .then((u) => setUser({ name: u.name, email: u.email }))
+            .catch(() => {
+                /* header stays usable if this fails */
+            });
+    }, []);
+
     async function handleLogout() {
         await logout();
         nav("/login", { replace: true });
     }
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
-            <div className="w-full max-w-7xl mx-auto flex justify-between items-center gap-2 h-14 mt-2 ps-4 md:pe-8">
-                <div className='flex items-center gap-2 md:gap-0 min-w-0'>
+            <div className="w-full flex items-center gap-2 h-14 mt-2 px-4 md:px-6">
+                {/* LEFT: mobile menu + logo */}
+                <div className='flex flex-1 items-center gap-2 min-w-0'>
                     {/* Mobile navigation drawer (the desktop sidebar is hidden on small screens) */}
                     <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
                         <SheetTrigger asChild>
@@ -103,18 +124,20 @@ export function AppHeader() {
                     <Link to="/">
                         <AppLogo />
                     </Link>
-                    <div className="ml-1 md:ml-3 min-w-0">
-                        <WeddingSwitcher />
-                    </div>
                 </div>
 
-                {weddingDate && (
-                    <div className="hidden md:block">
-                        <Countdown weddingDate={weddingDate} />
-                    </div>
-                )}
+                {/* CENTER: wedding switcher + countdown */}
+                <div className="flex shrink-0 items-center justify-center gap-3 min-w-0">
+                    <WeddingSwitcher />
+                    {weddingDate && (
+                        <div className="hidden lg:block">
+                            <Countdown weddingDate={weddingDate} />
+                        </div>
+                    )}
+                </div>
 
-                <nav className="flex gap-1 items-center">
+                {/* RIGHT: github, notifications, theme, profile */}
+                <nav className="flex flex-1 gap-1 items-center justify-end">
                     <a
                         href={appConfig.github.url}
                         title={appConfig.github.title}
@@ -125,7 +148,7 @@ export function AppHeader() {
                                 variant: "ghost",
                                 size: "icon",
                             }),
-                            "size-8"
+                            "size-8 hidden sm:inline-flex"
                         )}>
                         <GitHub />
                         <span className="sr-only">GitHub</span>
@@ -138,22 +161,30 @@ export function AppHeader() {
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant='ghost'
+                                aria-label="Abrir menú de perfil"
                                 className='relative h-8 w-8 rounded-full cursor-pointer ml-2'>
                                 <Avatar className='h-8 w-8'>
-                                    <AvatarImage src={baseUrl + '/avatars/shadcn.jpg'} alt='shadcn' />
-                                    <AvatarFallback className="rounded-lg">SC</AvatarFallback>
+                                    <AvatarFallback className="rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                                        {initialsFrom(user)}
+                                    </AvatarFallback>
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className='w-56' align='end' forceMount>
                             <DropdownMenuLabel className='font-normal'>
                                 <div className='flex flex-col space-y-1'>
-                                    <p className='text-sm font-medium leading-none'>shadcn</p>
-                                    <p className='text-xs leading-none text-muted-foreground'>
-                                        m@example.com
-                                    </p>
+                                    <p className='text-sm font-medium leading-none'>{user?.name || 'Mi cuenta'}</p>
+                                    {user?.email && (
+                                        <p className='text-xs leading-none text-muted-foreground'>
+                                            {user.email}
+                                        </p>
+                                    )}
                                 </div>
                             </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => nav('/settings')}>
+                                <Settings className="size-4 mr-2" /> Ajustes
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={handleLogout}>Cerrar sesión</DropdownMenuItem>
                         </DropdownMenuContent>
