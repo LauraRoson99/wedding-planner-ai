@@ -106,15 +106,20 @@ export function AppHeader() {
                                             end={item.url === '/'}
                                             onClick={() => setMobileNavOpen(false)}
                                             className={({ isActive }) =>
-                                                `flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                                `flex items-start gap-3 px-3 py-2 rounded-md transition-colors ${
                                                     isActive
                                                         ? 'bg-primary text-white'
-                                                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                                                        : 'text-foreground hover:bg-muted'
                                                 }`
                                             }
                                         >
-                                            {Icon && <Icon className="size-5" />}
-                                            {item.title}
+                                            {Icon && <Icon className="mt-0.5 size-5 shrink-0" />}
+                                            <span className="min-w-0">
+                                                <span className="block text-sm font-medium">{item.title}</span>
+                                                {item.description && (
+                                                    <span className="block text-xs opacity-70">{item.description}</span>
+                                                )}
+                                            </span>
                                         </NavLink>
                                     )
                                 })}

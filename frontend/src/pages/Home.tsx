@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { getDashboardSummary } from "@/services/dashboardService"
 import type { DashboardSummary } from "@/services/dashboardService"
+import { mainMenu } from "@/config/menu"
 import { getWeddingId } from "@/lib/auth"
 
 function formatDate(iso: string) {
@@ -295,21 +296,32 @@ export default function Home() {
 
         {/* Acciones rápidas */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3">Acceso rápido</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              { label: "Invitados", href: "/guests", icon: Users },
-              { label: "Tareas", href: "/tasks", icon: ListCheck },
-              { label: "Agenda", href: "/agenda", icon: CalendarDays },
-              { label: "Proveedores", href: "/providers", icon: Handshake },
-              { label: "Presupuesto", href: "/budget", icon: Euro },
-            ].map(({ label, href, icon: Icon }) => (
-              <Button key={href} asChild variant="outline" className="h-12 rounded-2xl justify-start gap-2">
-                <Link to={href}>
-                  <Icon className="size-4" /> {label}
-                </Link>
-              </Button>
-            ))}
+          <h2 className="mb-1 text-lg font-semibold">Explora tu planificador</h2>
+          <p className="mb-4 text-sm text-muted-foreground">Cada sección se ocupa de una parte de tu boda.</p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {mainMenu
+              .filter((item) => item.url !== "/")
+              .map((item) => {
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.url}
+                    to={item.url}
+                    className="group flex items-start gap-3 rounded-2xl border bg-card p-4 transition hover:border-primary/40 hover:shadow-md"
+                  >
+                    <span className="shrink-0 rounded-xl bg-primary/10 p-2.5 text-primary">
+                      {Icon && <Icon className="size-5" />}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="flex items-center gap-1 font-medium">
+                        {item.title}
+                        <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100" />
+                      </span>
+                      <span className="mt-0.5 block text-sm text-muted-foreground">{item.description}</span>
+                    </span>
+                  </Link>
+                )
+              })}
           </div>
         </section>
 

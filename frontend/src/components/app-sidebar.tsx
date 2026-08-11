@@ -12,6 +12,7 @@ export function AppSidebar() {
               key={item.url}
               to={item.url}
               end={item.url === '/'}
+              title={item.description}
               className={({ isActive }) =>
                 `flex items-center gap-2 px-3 py-2 rounded-md font-medium transition-colors ${
                   isActive
