@@ -50,7 +50,7 @@ export default function Home() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
 
         {/* Hero — editorial */}
-        <section className="rounded-3xl border bg-card p-8 shadow-sm md:p-12">
+        <section className="animate-rise rounded-3xl border bg-card p-8 shadow-sm md:p-12">
           <div className="border-l-2 border-primary/60 pl-5 md:pl-6">
             <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">
               Planifica2 · Tu boda bajo control
@@ -71,10 +71,10 @@ export default function Home() {
         )}
 
         {/* 4 tarjetas de progreso */}
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="animate-rise delay-1 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
 
           {/* Invitaciones */}
-          <Card className="flex flex-col">
+          <Card className="flex flex-col hover-lift">
             <CardContent className="flex flex-col gap-3 p-5 flex-1">
               <div className="flex items-center justify-between">
                 <div className="rounded-2xl bg-muted p-2.5"><Send className="h-5 w-5" /></div>
@@ -97,7 +97,7 @@ export default function Home() {
           </Card>
 
           {/* Proveedores */}
-          <Card className="flex flex-col">
+          <Card className="flex flex-col hover-lift">
             <CardContent className="flex flex-col gap-3 p-5 flex-1">
               <div className="flex items-center justify-between">
                 <div className="rounded-2xl bg-muted p-2.5"><Handshake className="h-5 w-5" /></div>
@@ -122,7 +122,7 @@ export default function Home() {
           </Card>
 
           {/* Tareas */}
-          <Card className="flex flex-col">
+          <Card className="flex flex-col hover-lift">
             <CardContent className="flex flex-col gap-3 p-5 flex-1">
               <div className="flex items-center justify-between">
                 <div className="rounded-2xl bg-muted p-2.5"><ListCheck className="h-5 w-5" /></div>
@@ -150,7 +150,7 @@ export default function Home() {
           </Card>
 
           {/* Presupuesto */}
-          <Card className="flex flex-col">
+          <Card className="flex flex-col hover-lift">
             <CardContent className="flex flex-col gap-3 p-5 flex-1">
               <div className="flex items-center justify-between">
                 <div className="rounded-2xl bg-muted p-2.5"><Euro className="h-5 w-5" /></div>
@@ -188,7 +188,7 @@ export default function Home() {
         </section>
 
         {/* Sección central: tareas próximas + invitados */}
-        <section className="grid gap-6 lg:grid-cols-2">
+        <section className="animate-rise delay-2 grid gap-6 lg:grid-cols-2">
 
           {/* Próximas tareas con fecha */}
           <Card>
@@ -295,7 +295,7 @@ export default function Home() {
         </section>
 
         {/* Acciones rápidas */}
-        <section>
+        <section className="animate-rise delay-3">
           <h2 className="mb-1 text-lg font-semibold">Explora tu planificador</h2>
           <p className="mb-4 text-sm text-muted-foreground">Cada sección se ocupa de una parte de tu boda.</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -307,7 +307,7 @@ export default function Home() {
                   <Link
                     key={item.url}
                     to={item.url}
-                    className="group flex items-start gap-3 rounded-2xl border bg-card p-4 transition hover:border-primary/40 hover:shadow-md"
+                    className="group hover-lift flex items-start gap-3 rounded-2xl border bg-card p-4 hover:border-primary/40"
                   >
                     <span className="shrink-0 rounded-xl bg-primary/10 p-2.5 text-primary">
                       {Icon && <Icon className="size-5" />}

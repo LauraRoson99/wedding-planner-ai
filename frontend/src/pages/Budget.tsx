@@ -324,7 +324,7 @@ export default function Budget() {
   return (
     <div className="min-h-screen bg-background p-4 text-foreground md:p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <section className="rounded-3xl border bg-card p-6 shadow-sm md:p-8">
+        <section className="animate-rise rounded-3xl border bg-card p-6 shadow-sm md:p-8">
           <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
             <div className="space-y-4 border-l-2 border-primary/60 pl-5 md:pl-6">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">

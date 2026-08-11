@@ -367,7 +367,7 @@ export default function Agenda() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
-        <div className="flex flex-col gap-4 rounded-3xl border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+        <div className="animate-rise flex flex-col gap-4 rounded-3xl border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between">
           <div className="border-l-2 border-primary/60 pl-5 md:pl-6">
             <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">Planificación</p>
             <h1 className="mt-2 text-3xl md:text-4xl">

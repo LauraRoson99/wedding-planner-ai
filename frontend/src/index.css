@@ -150,6 +150,36 @@
   .animate-heartbeat {
     animation: heartbeat 1.8s ease-in-out infinite;
   }
+
+  /* Elevación sutil al pasar el ratón (tarjetas interactivas) */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -14px oklch(0.55 0.16 12 / 0.28);
+  }
+
+  /* Entrada suave (aparece deslizando desde abajo) */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-rise { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  /* Retardos para escalonar varias tarjetas */
+  .delay-1 { animation-delay: 0.06s; }
+  .delay-2 { animation-delay: 0.12s; }
+  .delay-3 { animation-delay: 0.18s; }
+  .delay-4 { animation-delay: 0.24s; }
+
+  /* Respeta la preferencia de menos movimiento (accesibilidad) */
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift, .animate-rise, .animate-heartbeat {
+      transition: none !important;
+      animation: none !important;
+    }
+    .hover-lift:hover { transform: none; box-shadow: none; }
+  }
 }
 
 .agenda-calendar .fc {

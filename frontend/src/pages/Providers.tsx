@@ -200,7 +200,7 @@ export default function Providers() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
 
         {/* Hero */}
-        <section className="rounded-3xl border bg-card p-6 shadow-sm md:p-8">
+        <section className="animate-rise rounded-3xl border bg-card p-6 shadow-sm md:p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="space-y-3 border-l-2 border-primary/60 pl-5 md:pl-6">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-primary">
@@ -228,7 +228,7 @@ export default function Providers() {
             { label: "En gestión", value: stats.pending, icon: Phone },
             { label: "Cancelados", value: stats.cancelled, icon: XCircle },
           ].map(({ label, value, icon: Icon }) => (
-            <Card key={label}>
+            <Card key={label} className="hover-lift">
               <CardContent className="flex items-center gap-4 p-5">
                 <div className="rounded-2xl bg-muted p-3">
                   <Icon className="h-6 w-6" />
@@ -292,7 +292,7 @@ export default function Providers() {
           ) : (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((p) => (
-                <Card key={p.id} className="flex flex-col">
+                <Card key={p.id} className="flex flex-col hover-lift">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
