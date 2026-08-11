@@ -28,6 +28,7 @@ import {
 import type { ProviderDocument } from "@/services/providerDocumentService"
 import { getWeddingId } from "@/lib/auth"
 import { toast, toastError } from "@/lib/toast"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -67,6 +68,9 @@ export default function Providers() {
   const [filterStatus, setFilterStatus] = useState<ProviderStatus | "ALL">("ALL")
   const [filterCategory, setFilterCategory] = useState<ProviderCategory | "ALL">("ALL")
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Provider | null>(null)
+  const [pendingDeleteDoc, setPendingDeleteDoc] = useState<ProviderDocument | null>(null)
 
   // Documents (RF-94)
   const [docsProvider, setDocsProvider] = useState<Provider | null>(null)
@@ -113,15 +117,19 @@ export default function Providers() {
     }
   }
 
-  async function handleDeleteDoc(documentId: string) {
-    if (!docsProvider) return
+  async function confirmDeleteDoc() {
+    if (!docsProvider || !pendingDeleteDoc) return
+    setDeleting(true)
     try {
-      await deleteProviderDocument(docsProvider.id, documentId)
-      setDocs((prev) => prev.filter((d) => d.id !== documentId))
+      await deleteProviderDocument(docsProvider.id, pendingDeleteDoc.id)
+      setDocs((prev) => prev.filter((d) => d.id !== pendingDeleteDoc.id))
       toast.success("Documento eliminado")
+      setPendingDeleteDoc(null)
     } catch (e: any) {
       setDocsError(e?.message ?? "No se ha podido eliminar el documento")
       toastError(e)
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -199,13 +207,18 @@ export default function Providers() {
     }
   }
 
-  async function handleDelete(id: string) {
+  async function confirmDelete() {
+    if (!pendingDelete) return
+    setDeleting(true)
     try {
-      await deleteProvider(id)
-      setProviders((prev) => prev.filter((p) => p.id !== id))
+      await deleteProvider(pendingDelete.id)
+      setProviders((prev) => prev.filter((p) => p.id !== pendingDelete.id))
       toast.success("Proveedor eliminado")
+      setPendingDelete(null)
     } catch (e) {
       toastError(e)
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -378,7 +391,7 @@ export default function Providers() {
                     </Button>
                     <Button
                       size="sm" variant="outline" className="rounded-xl text-destructive hover:bg-destructive hover:text-white"
-                      onClick={() => handleDelete(p.id)}
+                      onClick={() => setPendingDelete(p)}
                       aria-label="Eliminar proveedor" title="Eliminar proveedor"
                     >
                       <Trash2 className="size-3.5" />
@@ -573,7 +586,7 @@ export default function Providers() {
                       <Button
                         size="sm" variant="ghost" title="Eliminar"
                         className="text-destructive hover:bg-destructive/10"
-                        onClick={() => handleDeleteDoc(doc.id)}
+                        onClick={() => setPendingDeleteDoc(doc)}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -585,6 +598,28 @@ export default function Providers() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null) }}
+        title="Eliminar proveedor"
+        description={pendingDelete ? `Se eliminará el proveedor "${pendingDelete.name}" y sus documentos. Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDelete}
+      />
+
+      <ConfirmDialog
+        open={pendingDeleteDoc !== null}
+        onOpenChange={(v) => { if (!v) setPendingDeleteDoc(null) }}
+        title="Eliminar documento"
+        description={pendingDeleteDoc ? `Se eliminará el documento "${pendingDeleteDoc.filename}". Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDeleteDoc}
+      />
     </div>
   )
 }

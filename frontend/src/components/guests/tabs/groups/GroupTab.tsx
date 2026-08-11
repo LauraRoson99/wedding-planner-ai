@@ -14,6 +14,7 @@ import type { GroupDto } from "@/features/groups/types"
 import type { GuestDto, CompanionDto } from "@/features/guests/types"
 import { getWeddingId } from "@/lib/auth"
 import { toast, toastError } from "@/lib/toast"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 function GuestPicker({
   ungrouped,
@@ -71,6 +72,8 @@ export default function GroupTab() {
   const [newGroupName, setNewGroupName] = useState("")
   const [editingGroup, setEditingGroup] = useState<GroupDto | null>(null)
   const [selectedGroup, setSelectedGroup] = useState<GroupDto | null>(null)
+  const [pendingDelete, setPendingDelete] = useState<GroupDto | null>(null)
+  const [deleting, setDeleting] = useState(false)
   const [search, setSearch] = useState("")
 
   const [createOpen, setCreateOpen] = useState(false)
@@ -177,17 +180,21 @@ export default function GroupTab() {
     }
   }
 
-  async function handleDeleteGroup(groupId: string) {
-    if (!window.confirm("¿Eliminar este grupo? Los invitados quedarán sin grupo.")) return
-
+  async function confirmDeleteGroup() {
+    if (!pendingDelete) return
+    const groupId = pendingDelete.id
+    setDeleting(true)
     try {
       await apiDelete(`/groups/${encodeURIComponent(groupId)}`)
       if (selectedGroup?.id === groupId) setSelectedGroup(null)
       toast.success("Grupo eliminado")
+      setPendingDelete(null)
       await loadData()
     } catch (e: any) {
       setError(e?.message ?? "Error eliminando grupo")
       toastError(e)
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -377,7 +384,7 @@ export default function GroupTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleDeleteGroup(group.id)}
+                    onClick={() => setPendingDelete(group)}
                     className="text-destructive hover:bg-destructive/10"
                     aria-label="Eliminar grupo" title="Eliminar grupo"
                   >
@@ -525,6 +532,17 @@ export default function GroupTab() {
           </DialogContent>
         </Dialog>
       )}
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null) }}
+        title="Eliminar grupo"
+        description={pendingDelete ? `Se eliminará el grupo "${pendingDelete.name}". Los invitados quedarán sin grupo. Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDeleteGroup}
+      />
     </div>
   )
 }

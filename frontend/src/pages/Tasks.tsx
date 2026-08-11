@@ -31,6 +31,7 @@ import { getWeddingId } from "@/lib/auth";
 import { toast, toastError } from "@/lib/toast";
 import TaskDialog from "@/components/tasks/TaskDialog";
 import AiTaskSuggestions from "@/components/tasks/AiTaskSuggestions";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 
 type SortOption =
   | "dueDateAsc"
@@ -95,6 +96,8 @@ export default function TasksPage() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskDto | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<TaskDto | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority[]>([]);
   const [statusFilter, setStatusFilter] = useState<TaskStatus[]>([]);
@@ -153,17 +156,23 @@ export default function TasksPage() {
     await updateTaskStatus(id, nextStatus);
   }
 
-  async function deleteTask(id: string) {
+  async function confirmDeleteTask() {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
+    setDeleting(true);
     try {
       setError(null);
 
       await apiDelete(`/tasks/${id}`);
       setTasks((prev) => prev.filter((task) => task.id !== id));
       toast.success("Tarea eliminada");
+      setPendingDelete(null);
     } catch (err) {
       console.error(err);
       setError("No se pudo eliminar la tarea");
       toastError(err);
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -664,7 +673,7 @@ export default function TasksPage() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => deleteTask(task.id)}
+                                onClick={() => setPendingDelete(task)}
                                 aria-label="Eliminar tarea" title="Eliminar tarea"
                               >
                                 <Trash2 className="size-4" />
@@ -699,6 +708,17 @@ export default function TasksPage() {
             return [...prev, savedTask];
           });
         }}
+      />
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null); }}
+        title="Eliminar tarea"
+        description={pendingDelete ? `Se eliminará la tarea "${pendingDelete.title}". Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDeleteTask}
       />
     </div>
   );

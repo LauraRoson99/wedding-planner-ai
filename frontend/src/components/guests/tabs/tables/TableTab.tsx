@@ -5,6 +5,7 @@ import { TableMap } from "./TableMap";
 import { GuestList } from "./GuestList";
 import AiSeatingSuggestions from "./AiSeatingSuggestions";
 import { toast, toastError } from "@/lib/toast";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type {
   CreateTableDto,
   TableDto,
@@ -23,6 +24,9 @@ export default function TableTab({ weddingId }: Props) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pendingAction, setPendingAction] = useState<
+    { type: "delete" | "clear"; table: TableDto } | null
+  >(null);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -90,20 +94,9 @@ export default function TableTab({ weddingId }: Props) {
     }
   };
 
-  const handleDeleteTable = async (tableId: string) => {
-    setSaving(true);
-    setError(null);
-
-    try {
-      await apiDelete(`/tables/${tableId}`);
-      toast.success("Mesa eliminada");
-      await loadData();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo borrar la mesa");
-      toastError(err);
-    } finally {
-      setSaving(false);
-    }
+  const handleDeleteTable = (tableId: string) => {
+    const table = tables.find((t) => t.id === tableId);
+    if (table) setPendingAction({ type: "delete", table });
   };
 
   const handleAssignPersonToSeat = async (tableId: string, seatNumber: number) => {
@@ -144,16 +137,30 @@ export default function TableTab({ weddingId }: Props) {
     }
   };
 
-  const handleClearTable = async (tableId: string) => {
+  const handleClearTable = (tableId: string) => {
+    const table = tables.find((t) => t.id === tableId);
+    if (table) setPendingAction({ type: "clear", table });
+  };
+
+  const confirmTableAction = async () => {
+    if (!pendingAction) return;
+    const { type, table } = pendingAction;
     setSaving(true);
     setError(null);
 
     try {
-      await apiDelete(`/tables/${tableId}/guests`);
-      toast.success("Mesa vaciada");
+      if (type === "delete") {
+        await apiDelete(`/tables/${table.id}`);
+        toast.success("Mesa eliminada");
+      } else {
+        await apiDelete(`/tables/${table.id}/guests`);
+        toast.success("Mesa vaciada");
+      }
+      setPendingAction(null);
       await loadData();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo vaciar la mesa");
+      const fallback = type === "delete" ? "No se pudo borrar la mesa" : "No se pudo vaciar la mesa";
+      setError(err instanceof Error ? err.message : fallback);
       toastError(err);
     } finally {
       setSaving(false);
@@ -195,6 +202,23 @@ export default function TableTab({ weddingId }: Props) {
           onClearTable={handleClearTable}
         />
       </div>
+
+      <ConfirmDialog
+        open={pendingAction !== null}
+        onOpenChange={(v) => { if (!v) setPendingAction(null); }}
+        title={pendingAction?.type === "clear" ? "Vaciar mesa" : "Eliminar mesa"}
+        description={
+          pendingAction?.type === "clear"
+            ? `Se quitarán todos los invitados de la mesa "${pendingAction.table.name}". Esta acción no se puede deshacer.`
+            : pendingAction?.type === "delete"
+              ? `Se eliminará la mesa "${pendingAction.table.name}". Esta acción no se puede deshacer.`
+              : undefined
+        }
+        confirmLabel={pendingAction?.type === "clear" ? "Vaciar" : "Eliminar"}
+        destructive
+        loading={saving}
+        onConfirm={confirmTableAction}
+      />
     </div>
   );
 }

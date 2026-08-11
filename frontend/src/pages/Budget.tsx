@@ -53,6 +53,7 @@ import type { Provider } from "@/services/providerService"
 import AiBudgetSuggestions from "@/components/budgets/AiBudgetSuggestions"
 import { getWeddingId } from "@/lib/auth"
 import { toast, toastError } from "@/lib/toast"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 const NO_PROVIDER = "none"
 
@@ -133,6 +134,7 @@ export default function Budget() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [pendingDelete, setPendingDelete] = useState<BudgetItem | null>(null)
 
   const weddingId = getWeddingId() ?? "";
 
@@ -242,12 +244,14 @@ export default function Budget() {
     }
   }
 
-  async function handleDeleteItem(id: string) {
+  async function confirmDeleteItem() {
+    if (!pendingDelete) return
     try {
       setIsSaving(true)
-      await deleteBudgetItem(id)
+      await deleteBudgetItem(pendingDelete.id)
       await loadBudget()
       toast.success("Gasto eliminado")
+      setPendingDelete(null)
     } catch (err) {
       setError(
         err instanceof Error
@@ -919,7 +923,7 @@ export default function Budget() {
                                 size="sm"
                                 variant="destructive"
                                 disabled={isSaving}
-                                onClick={() => handleDeleteItem(item.id)}
+                                onClick={() => setPendingDelete(item)}
                                 className="rounded-xl"
                                 aria-label="Eliminar gasto" title="Eliminar gasto"
                               >
@@ -937,6 +941,17 @@ export default function Budget() {
           </Card>
         </section>
       </div>
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null); }}
+        title="Eliminar gasto"
+        description={pendingDelete ? `Se eliminará el gasto "${pendingDelete.name}". Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={isSaving}
+        onConfirm={confirmDeleteItem}
+      />
     </div>
   )
 }

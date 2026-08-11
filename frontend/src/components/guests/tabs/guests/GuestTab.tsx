@@ -91,7 +91,7 @@ type SendInvitationsResult = {
 
 function parseCsv(raw: string): CsvRow[] {
   return raw
-    .replace(/^﻿/, "") // strip the UTF-8 BOM Excel keeps in the file
+    .replace(new RegExp("^\\uFEFF"), "") // strip the UTF-8 BOM (byte order mark) Excel keeps in the file
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean)
@@ -327,7 +327,7 @@ export default function GuestTab() {
       ["Sofía Ramírez", "sofia@email.com", "", "Amigos novia", "", "Pareja"],
     ];
     // Use ";" as the delimiter (Excel's list separator in Spanish/EU locales) so
-    // each field lands in its own column, and prepend a UTF-8 BOM (﻿) so accents
+    // each field lands in its own column, and prepend a UTF-8 BOM so accents
     // and "ñ" are decoded correctly. (A "sep=;" hint would make Excel ignore the
     // BOM and fall back to ANSI, breaking the accents.)
     const body = rows.map((r) => r.join(";")).join("\r\n");

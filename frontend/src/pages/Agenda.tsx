@@ -18,6 +18,7 @@ import {
 
 import { apiDelete, apiGet, apiPost, apiPut } from "@/lib/api";
 import { toast, toastError } from "@/lib/toast";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { getWeddingId } from "@/lib/auth";
 import type { TaskDto, TaskStatus } from "@/features/tasks/types";
 import type { EventDto } from "@/features/events/types";
@@ -137,6 +138,8 @@ export default function Agenda() {
   const [selectedItem, setSelectedItem] = useState<SelectedCalendarItem | null>(
     null
   );
+  const [pendingDelete, setPendingDelete] = useState<EventDto | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const [editingEvent, setEditingEvent] = useState<EventDto | null>(null);
 
@@ -288,13 +291,17 @@ export default function Agenda() {
     }
   }
 
-  async function handleDeleteEvent(id: string) {
+  async function confirmDeleteEvent() {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
+    setDeleting(true);
     try {
       setError(null);
 
       await apiDelete(`/events/${id}`);
 
       setEvents((prev) => prev.filter((event) => event.id !== id));
+      setPendingDelete(null);
       setDetailDialogOpen(false);
       setSelectedItem(null);
       toast.success("Evento eliminado");
@@ -302,6 +309,8 @@ export default function Agenda() {
       console.error(err);
       setError("No se pudo eliminar el evento");
       toastError(err);
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -675,7 +684,7 @@ export default function Agenda() {
                   <Button
                     variant="destructive"
                     className="rounded-xl"
-                    onClick={() => handleDeleteEvent(selectedItem.event.id)}
+                    onClick={() => setPendingDelete(selectedItem.event)}
                   >
                     Eliminar
                   </Button>
@@ -685,6 +694,17 @@ export default function Agenda() {
           )}
         </DialogContent>
       </Dialog>
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        onOpenChange={(v) => { if (!v) setPendingDelete(null); }}
+        title="Eliminar evento"
+        description={pendingDelete ? `Se eliminará el evento "${pendingDelete.title}". Esta acción no se puede deshacer.` : undefined}
+        confirmLabel="Eliminar"
+        destructive
+        loading={deleting}
+        onConfirm={confirmDeleteEvent}
+      />
     </div>
   );
 }
