@@ -346,7 +346,7 @@ export default function Budget() {
 
               <div>
                 <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
-                  Controla cada gasto sin perder la cabeza.
+                  Control del presupuesto de la boda
                 </h1>
 
                 <p className="mt-4 max-w-2xl text-muted-foreground md:text-lg">

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="210" viewBox="0 0 720 210" font-family="Arial, Helvetica, sans-serif">
+  <rect width="720" height="210" fill="#ffffff"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#000000"/>
+    </marker>
+  </defs>
+
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <rect x="30"  y="40" width="130" height="48"/>
+    <rect x="200" y="40" width="130" height="48"/>
+    <rect x="370" y="40" width="130" height="48"/>
+    <rect x="540" y="40" width="130" height="48"/>
+    <line x1="160" y1="64" x2="198" y2="64" marker-end="url(#arr)"/>
+    <line x1="330" y1="64" x2="368" y2="64" marker-end="url(#arr)"/>
+    <line x1="500" y1="64" x2="538" y2="64" marker-end="url(#arr)"/>
+    <!-- feedback loop -->
+    <path d="M605,88 L605,160 L95,160 L95,90" marker-end="url(#arr)"/>
+  </g>
+
+  <g fill="#000000" text-anchor="middle" font-size="13">
+    <text x="95"  y="69">Análisis</text>
+    <text x="265" y="69">Diseño</text>
+    <text x="435" y="69">Implementación</text>
+    <text x="605" y="69">Prueba</text>
+    <text x="350" y="179" font-size="12">nuevo incremento (siguiente módulo)</text>
+  </g>
+</svg>

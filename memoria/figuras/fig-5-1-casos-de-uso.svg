@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="680" viewBox="0 0 640 680" font-family="Arial, Helvetica, sans-serif">
+  <rect width="640" height="680" fill="#ffffff"/>
+
+  <!-- System boundary -->
+  <rect x="200" y="30" width="250" height="600" fill="none" stroke="#000000" stroke-width="1"/>
+  <text x="325" y="52" text-anchor="middle" font-size="15" font-weight="bold">Wedding Planner</text>
+
+  <!-- Connection lines: Usuario registrado -> use cases -->
+  <g stroke="#000000" stroke-width="1">
+    <line x1="92" y1="326" x2="207" y2="82"/>
+    <line x1="92" y1="326" x2="207" y2="128"/>
+    <line x1="92" y1="326" x2="207" y2="174"/>
+    <line x1="92" y1="326" x2="207" y2="220"/>
+    <line x1="92" y1="326" x2="207" y2="266"/>
+    <line x1="92" y1="326" x2="207" y2="312"/>
+    <line x1="92" y1="326" x2="207" y2="358"/>
+    <line x1="92" y1="326" x2="207" y2="404"/>
+    <line x1="92" y1="326" x2="207" y2="450"/>
+    <line x1="92" y1="326" x2="207" y2="496"/>
+    <line x1="92" y1="326" x2="207" y2="542"/>
+    <!-- Invitado -> RSVP -->
+    <line x1="443" y1="590" x2="527" y2="586"/>
+  </g>
+
+  <!-- Use case ovals -->
+  <g fill="none" stroke="#000000" stroke-width="1">
+    <ellipse cx="325" cy="82"  rx="118" ry="17"/>
+    <ellipse cx="325" cy="128" rx="118" ry="17"/>
+    <ellipse cx="325" cy="174" rx="118" ry="17"/>
+    <ellipse cx="325" cy="220" rx="118" ry="17"/>
+    <ellipse cx="325" cy="266" rx="118" ry="17"/>
+    <ellipse cx="325" cy="312" rx="118" ry="17"/>
+    <ellipse cx="325" cy="358" rx="118" ry="17"/>
+    <ellipse cx="325" cy="404" rx="118" ry="17"/>
+    <ellipse cx="325" cy="450" rx="118" ry="17"/>
+    <ellipse cx="325" cy="496" rx="118" ry="17"/>
+    <ellipse cx="325" cy="542" rx="118" ry="17"/>
+    <ellipse cx="325" cy="590" rx="118" ry="17"/>
+  </g>
+  <g fill="#000000" font-size="13" text-anchor="middle">
+    <text x="325" y="86">Gestionar cuenta</text>
+    <text x="325" y="132">Gestionar boda</text>
+    <text x="325" y="178">Gestionar invitados</text>
+    <text x="325" y="224">Gestionar grupos y mesas</text>
+    <text x="325" y="270">Gestionar tareas</text>
+    <text x="325" y="316">Gestionar agenda</text>
+    <text x="325" y="362">Gestionar presupuesto</text>
+    <text x="325" y="408">Gestionar proveedores</text>
+    <text x="325" y="454">Consultar panel y avisos</text>
+    <text x="325" y="500">Enviar invitaciones</text>
+    <text x="325" y="546">Asistencias con IA</text>
+    <text x="325" y="594">Confirmar asistencia (RSVP)</text>
+  </g>
+
+  <!-- Actor: Usuario registrado -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <circle cx="70" cy="300" r="12"/>
+    <line x1="70" y1="312" x2="70" y2="348"/>
+    <line x1="50" y1="326" x2="90" y2="326"/>
+    <line x1="70" y1="348" x2="56" y2="372"/>
+    <line x1="70" y1="348" x2="84" y2="372"/>
+  </g>
+  <text x="70" y="392" text-anchor="middle" font-size="13">Usuario registrado</text>
+
+  <!-- Actor: Invitado -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <circle cx="545" cy="560" r="12"/>
+    <line x1="545" y1="572" x2="545" y2="608"/>
+    <line x1="525" y1="586" x2="565" y2="586"/>
+    <line x1="545" y1="608" x2="531" y2="632"/>
+    <line x1="545" y1="608" x2="559" y2="632"/>
+  </g>
+  <text x="545" y="652" text-anchor="middle" font-size="13">Invitado</text>
+</svg>

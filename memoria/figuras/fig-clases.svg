@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="360" viewBox="0 0 860 360" font-family="Arial, Helvetica, sans-serif">
+  <rect width="860" height="360" fill="#ffffff"/>
+  <defs>
+    <marker id="dep" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,4 L0,8" fill="none" stroke="#000000" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- GuestController -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <rect x="20" y="70" width="230" height="150"/>
+    <line x1="20" y1="96" x2="250" y2="96"/>
+    <line x1="20" y1="112" x2="250" y2="112"/>
+  </g>
+  <text x="135" y="89" text-anchor="middle" font-size="13" font-weight="bold" fill="#000">GuestController</text>
+  <g fill="#000000" font-size="11.5">
+    <text x="28" y="130">+ postGuest()</text>
+    <text x="28" y="146">+ getGuests()</text>
+    <text x="28" y="162">+ putGuest()</text>
+    <text x="28" y="178">+ deleteGuest()</text>
+    <text x="28" y="194">+ importGuests()</text>
+    <text x="28" y="210">+ bulkDeleteGuests()</text>
+  </g>
+
+  <!-- GuestService -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <rect x="315" y="80" width="230" height="134"/>
+    <line x1="315" y1="106" x2="545" y2="106"/>
+    <line x1="315" y1="122" x2="545" y2="122"/>
+  </g>
+  <text x="430" y="99" text-anchor="middle" font-size="13" font-weight="bold" fill="#000">GuestService</text>
+  <g fill="#000000" font-size="11.5">
+    <text x="323" y="140">+ listGuests()</text>
+    <text x="323" y="156">+ createGuestWithCompanions()</text>
+    <text x="323" y="172">+ updateGuest()</text>
+    <text x="323" y="188">+ deleteGuest()</text>
+    <text x="323" y="204">+ importGuests()</text>
+  </g>
+
+  <!-- Guest (entity) -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <rect x="610" y="56" width="230" height="182"/>
+    <line x1="610" y1="98" x2="840" y2="98"/>
+    <line x1="610" y1="222" x2="840" y2="222"/>
+  </g>
+  <text x="725" y="76" text-anchor="middle" font-size="11" fill="#000">«entity»</text>
+  <text x="725" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#000">Guest</text>
+  <g fill="#000000" font-size="11.5">
+    <text x="618" y="116">- id, name</text>
+    <text x="618" y="132">- rsvp, diet, allergies</text>
+    <text x="618" y="148">- ageGroup, email, phone</text>
+    <text x="618" y="164">- groupId, tableId</text>
+    <text x="618" y="180">- seatNumber</text>
+    <text x="618" y="196">- parentId (acompañantes)</text>
+    <text x="618" y="212">- rsvpToken</text>
+  </g>
+
+  <!-- Dependency arrows (dashed) -->
+  <g stroke="#000000" stroke-width="1" fill="none" stroke-dasharray="6,4">
+    <line x1="250" y1="150" x2="313" y2="150" marker-end="url(#dep)"/>
+    <line x1="545" y1="150" x2="608" y2="150" marker-end="url(#dep)"/>
+  </g>
+  <g fill="#000000" font-size="11" text-anchor="middle">
+    <text x="281" y="143">«usa»</text>
+    <text x="576" y="143">«gestiona»</text>
+  </g>
+</svg>

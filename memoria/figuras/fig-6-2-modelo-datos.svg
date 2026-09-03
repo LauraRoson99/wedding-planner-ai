@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720" font-family="Arial, Helvetica, sans-serif">
+  <rect width="900" height="720" fill="#ffffff"/>
+
+  <!-- ================= Relationship lines ================= -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <!-- User - Wedding -->
+    <line x1="190" y1="340" x2="250" y2="340"/>
+    <!-- Wedding fan to children -->
+    <line x1="400" y1="340" x2="460" y2="68"/>
+    <line x1="400" y1="340" x2="460" y2="164"/>
+    <line x1="400" y1="340" x2="460" y2="242"/>
+    <line x1="400" y1="340" x2="460" y2="340"/>
+    <line x1="400" y1="340" x2="460" y2="453"/>
+    <line x1="400" y1="340" x2="460" y2="557"/>
+    <line x1="400" y1="340" x2="460" y2="655"/>
+    <!-- Guest self relation (companions) -->
+    <path d="M635,50 L658,50 L658,86 L635,86"/>
+    <!-- Guest - Group -->
+    <path d="M635,100 L668,100 L668,164 L635,164"/>
+    <!-- Guest - Table -->
+    <path d="M635,110 L684,110 L684,242 L635,242"/>
+    <!-- Budget - BudgetItem -->
+    <line x1="635" y1="557" x2="710" y2="560"/>
+    <!-- Provider - BudgetItem -->
+    <line x1="635" y1="640" x2="710" y2="582"/>
+    <!-- Provider - ProviderDocument -->
+    <line x1="635" y1="670" x2="710" y2="652"/>
+  </g>
+
+  <!-- ================= Cardinalities ================= -->
+  <g fill="#000000" font-size="11">
+    <text x="198" y="334">1</text>
+    <text x="238" y="334">*</text>
+    <text x="408" y="352">1</text>
+    <text x="448" y="62">*</text>
+    <text x="448" y="158">*</text>
+    <text x="448" y="236">*</text>
+    <text x="448" y="334">*</text>
+    <text x="448" y="447">*</text>
+    <text x="448" y="551">1</text>
+    <text x="448" y="649">*</text>
+    <text x="640" y="556">1</text>
+    <text x="698" y="556">*</text>
+    <text x="640" y="636">1</text>
+    <text x="698" y="586">*</text>
+    <text x="640" y="666">1</text>
+    <text x="698" y="648">*</text>
+    <text x="662" y="46">acompañantes</text>
+  </g>
+
+  <!-- ================= Entity boxes ================= -->
+  <g stroke="#000000" stroke-width="1" fill="none">
+    <rect x="40"  y="300" width="150" height="80"/>
+    <rect x="250" y="300" width="150" height="80"/>
+    <rect x="460" y="20"  width="175" height="96"/>
+    <rect x="460" y="140" width="175" height="48"/>
+    <rect x="460" y="210" width="175" height="64"/>
+    <rect x="460" y="300" width="175" height="80"/>
+    <rect x="460" y="405" width="175" height="96"/>
+    <rect x="460" y="525" width="175" height="64"/>
+    <rect x="460" y="615" width="175" height="80"/>
+    <rect x="710" y="520" width="175" height="80"/>
+    <rect x="710" y="620" width="175" height="64"/>
+    <!-- title underlines -->
+    <line x1="40"  y1="326" x2="190" y2="326"/>
+    <line x1="250" y1="326" x2="400" y2="326"/>
+    <line x1="460" y1="46"  x2="635" y2="46"/>
+    <line x1="460" y1="166" x2="635" y2="166"/>
+    <line x1="460" y1="236" x2="635" y2="236"/>
+    <line x1="460" y1="326" x2="635" y2="326"/>
+    <line x1="460" y1="431" x2="635" y2="431"/>
+    <line x1="460" y1="551" x2="635" y2="551"/>
+    <line x1="460" y1="641" x2="635" y2="641"/>
+    <line x1="710" y1="546" x2="885" y2="546"/>
+    <line x1="710" y1="646" x2="885" y2="646"/>
+  </g>
+
+  <!-- ================= Titles ================= -->
+  <g fill="#000000" text-anchor="middle" font-size="13" font-weight="bold">
+    <text x="115" y="319">Usuario</text>
+    <text x="325" y="319">Boda</text>
+    <text x="547" y="39">Invitado</text>
+    <text x="547" y="159">Grupo</text>
+    <text x="547" y="229">Mesa</text>
+    <text x="547" y="319">Evento</text>
+    <text x="547" y="424">Tarea</text>
+    <text x="547" y="544">Presupuesto</text>
+    <text x="547" y="634">Proveedor</text>
+    <text x="797" y="539">Partida</text>
+    <text x="797" y="639">Documento</text>
+  </g>
+
+  <!-- ================= Attributes ================= -->
+  <g fill="#000000" text-anchor="start" font-size="12">
+    <!-- User -->
+    <text x="50"  y="342">email</text>
+    <text x="50"  y="358">contraseña</text>
+    <text x="50"  y="374">nombre</text>
+    <!-- Wedding -->
+    <text x="260" y="342">nombre</text>
+    <text x="260" y="358">fecha</text>
+    <text x="260" y="374">ownerId</text>
+    <!-- Guest -->
+    <text x="470" y="62">nombre</text>
+    <text x="470" y="78">rsvp</text>
+    <text x="470" y="94">dieta / alergias</text>
+    <text x="470" y="110">parentId</text>
+    <!-- Group -->
+    <text x="470" y="182">nombre</text>
+    <!-- Table -->
+    <text x="470" y="252">nombre</text>
+    <text x="470" y="268">asientos</text>
+    <!-- Event -->
+    <text x="470" y="342">título</text>
+    <text x="470" y="358">fecha</text>
+    <text x="470" y="374">ubicación</text>
+    <!-- Task -->
+    <text x="470" y="447">título</text>
+    <text x="470" y="463">estado</text>
+    <text x="470" y="479">prioridad</text>
+    <text x="470" y="495">categoría</text>
+    <!-- Budget -->
+    <text x="470" y="567">importe total</text>
+    <text x="470" y="583">moneda</text>
+    <!-- Provider -->
+    <text x="470" y="657">nombre</text>
+    <text x="470" y="673">categoría</text>
+    <text x="470" y="689">estado</text>
+    <!-- BudgetItem -->
+    <text x="720" y="562">nombre</text>
+    <text x="720" y="578">importe</text>
+    <text x="720" y="594">estado</text>
+    <!-- ProviderDocument -->
+    <text x="720" y="662">fichero</text>
+    <text x="720" y="678">tipo</text>
+  </g>
+</svg>
