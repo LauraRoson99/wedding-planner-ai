@@ -19,6 +19,7 @@ model User {
   weddings            Wedding[]
   refreshTokens       RefreshToken[]
   passwordResetTokens PasswordResetToken[]
+  notificationReads   NotificationRead[]
 }
 
 model PasswordResetToken {
@@ -59,11 +60,34 @@ model Wedding {
   budget       Budget?
   budgetItems  BudgetItem[]
   providers    Provider[]
+  notificationReads NotificationRead[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([ownerId])
+}
+
+/// Read receipt for a reminder. Reminders are derived from tasks and budget
+/// items, so there is no notification row to flag as read: we store the key of
+/// the reminder that was read (`task:<id>` / `payment:<id>`) along with the due
+/// date it had at that moment, so a rescheduled reminder shows up as unread
+/// again.
+model NotificationRead {
+  id        String    @id @default(cuid())
+  key       String
+  dueDate   DateTime?
+  readAt    DateTime  @default(now())
+
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weddingId String
+  wedding   Wedding   @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weddingId, key])
+  @@index([weddingId])
+  @@index([userId])
 }
 
 enum TaskPriority {

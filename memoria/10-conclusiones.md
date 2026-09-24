@@ -23,6 +23,34 @@ editables bajo la revisión y confirmación del usuario. El sistema se ha constr
 arquitectura en capas, con autenticación basada en tokens y un modelo de autorización por
 propiedad de boda que garantiza el aislamiento entre bodas.
 
+De forma resumida, las **funciones conseguidas** son las siguientes:
+
+- Registro, inicio de sesión y gestión de la cuenta, con recuperación y cambio de contraseña.
+- Gestión de varias bodas por usuario, con selector de boda activa y aislamiento entre ellas.
+- Gestión de invitados y acompañantes, con estado de asistencia (RSVP), dieta y alergias,
+  importación y exportación en CSV, y envío de invitaciones por correo electrónico.
+- Confirmación pública de asistencia por parte del invitado mediante un enlace único, sin
+  necesidad de cuenta.
+- Organización de invitados en grupos y distribución visual en las mesas del banquete.
+- Gestión de tareas (con prioridad, estado y categoría) y de una agenda de eventos con vista
+  de calendario y cuenta atrás.
+- Control del presupuesto con partidas de gasto y gráficas, y gestión de proveedores con
+  documentos adjuntos.
+- Panel de seguimiento que agrega el estado de la boda y avisos de tareas y pagos próximos o
+  vencidos.
+- Tres asistencias de inteligencia artificial —generación de tareas, distribución de mesas y
+  reparto de presupuesto— como propuestas editables bajo control del usuario.
+
+Las **tecnologías empleadas** se resumen en:
+
+- **Cliente:** React, TypeScript, Vite, Tailwind CSS y shadcn/ui.
+- **Servidor:** Node.js, Express, validación con Zod y ORM Prisma.
+- **Base de datos:** PostgreSQL, ejecutada en un contenedor Docker.
+- **Autenticación:** JSON Web Tokens (JWT) con renovación de sesión.
+- **Inteligencia artificial:** API de OpenAI con salida estructurada (*structured outputs*).
+- **Calidad y despliegue:** pruebas con Vitest y supertest, análisis de estilo con ESLint e
+  integración continua con GitHub Actions.
+
 En cuanto a los resultados, se han alcanzado los ocho objetivos específicos planteados y, con
 ellos, el objetivo general. La aplicación se ha validado con un conjunto de datos
 representativo de 64 invitados, y las asistencias de inteligencia artificial se han

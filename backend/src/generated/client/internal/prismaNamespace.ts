@@ -394,6 +394,7 @@ export const ModelName = {
   PasswordResetToken: 'PasswordResetToken',
   RefreshToken: 'RefreshToken',
   Wedding: 'Wedding',
+  NotificationRead: 'NotificationRead',
   Task: 'Task',
   Guest: 'Guest',
   Group: 'Group',
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "passwordResetToken" | "refreshToken" | "wedding" | "task" | "guest" | "group" | "table" | "event" | "provider" | "providerDocument" | "budget" | "budgetItem"
+    modelProps: "user" | "passwordResetToken" | "refreshToken" | "wedding" | "notificationRead" | "task" | "guest" | "group" | "table" | "event" | "provider" | "providerDocument" | "budget" | "budgetItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -715,6 +716,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WeddingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WeddingCountAggregateOutputType> | number
+        }
+      }
+    }
+    NotificationRead: {
+      payload: Prisma.$NotificationReadPayload<ExtArgs>
+      fields: Prisma.NotificationReadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationReadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationReadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationReadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationReadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationReadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationReadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationReadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationReadCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationReadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        update: {
+          args: Prisma.NotificationReadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationReadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationReadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationReadUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationReadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationReadPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationReadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationRead>
+        }
+        groupBy: {
+          args: Prisma.NotificationReadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationReadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationReadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationReadCountAggregateOutputType> | number
         }
       }
     }
@@ -1469,6 +1544,18 @@ export const WeddingScalarFieldEnum = {
 export type WeddingScalarFieldEnum = (typeof WeddingScalarFieldEnum)[keyof typeof WeddingScalarFieldEnum]
 
 
+export const NotificationReadScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  dueDate: 'dueDate',
+  readAt: 'readAt',
+  userId: 'userId',
+  weddingId: 'weddingId'
+} as const
+
+export type NotificationReadScalarFieldEnum = (typeof NotificationReadScalarFieldEnum)[keyof typeof NotificationReadScalarFieldEnum]
+
+
 export const TaskScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -1954,6 +2041,7 @@ export type GlobalOmitConfig = {
   passwordResetToken?: Prisma.PasswordResetTokenOmit
   refreshToken?: Prisma.RefreshTokenOmit
   wedding?: Prisma.WeddingOmit
+  notificationRead?: Prisma.NotificationReadOmit
   task?: Prisma.TaskOmit
   guest?: Prisma.GuestOmit
   group?: Prisma.GroupOmit

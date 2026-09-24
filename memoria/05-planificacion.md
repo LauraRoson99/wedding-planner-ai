@@ -67,22 +67,32 @@ estimación, empleando tarifas de referencia del mercado.
 
 ### 5.2.2. Costes de software
 
-La práctica totalidad de las herramientas empleadas son de código abierto o disponen de una
-versión gratuita, por lo que el coste de software es prácticamente nulo. El único coste
-reseñable corresponde al uso de la API de inteligencia artificial durante el desarrollo,
-facturada por consumo. La Tabla 5.3 detalla esta partida.
+Todas las herramientas de desarrollo empleadas son de código abierto, bajo licencias
+permisivas (MIT, Apache 2.0, etc.), o servicios con un plan gratuito, por lo que su coste de
+adquisición es nulo. El único coste reseñable corresponde al uso de la API de inteligencia
+artificial, facturada por consumo. La Tabla 5.3 detalla cada herramienta, su licencia de uso
+y su coste.
 
-**Tabla 5.3.** Estimación de costes de software.
+**Tabla 5.3.** Herramientas de software, licencia y coste.
 
-| Software | Tipo de licencia | Coste |
+| Herramienta | Licencia | Coste |
 |---|---|---|
-| Visual Studio Code | Gratuita | 0 € |
-| Node.js, React, Express, Prisma | Código abierto | 0 € |
-| PostgreSQL | Código abierto | 0 € |
-| Docker (uso personal) | Gratuita | 0 € |
-| Git y GitHub | Gratuita | 0 € |
-| API de OpenAI (uso en desarrollo) | Pago por consumo | 5 € |
+| Node.js, React, Express, Vite, Tailwind CSS, Zod, Vitest | MIT | 0 € |
+| Prisma, Docker Engine | Apache 2.0 | 0 € |
+| PostgreSQL | PostgreSQL License | 0 € |
+| Git | GPL v2 | 0 € |
+| Visual Studio Code | MIT | 0 € |
+| GitHub (repositorio remoto) | SaaS, plan gratuito | 0 € |
+| API de OpenAI (modelo `gpt-4o-mini`) | Comercial, pago por consumo | 5 € |
 | **Total** | | **5 €** |
+
+El coste de la **API de OpenAI** no corresponde a una suscripción de tarifa plana, sino a un
+modelo de **pago por consumo** en función del número de *tokens* procesados. Con el modelo
+empleado, `gpt-4o-mini`, el precio de referencia es de aproximadamente 0,15 $ por millón de
+*tokens* de entrada y 0,60 $ por millón de *tokens* de salida. Durante el desarrollo se
+realizaron numerosas pruebas de las tres asistencias (tareas, mesas y presupuesto), con un
+consumo estimado del orden de varios millones de *tokens*, lo que se traduce en un coste
+aproximado de 5 €.
 
 ### 5.2.3. Costes de hardware
 

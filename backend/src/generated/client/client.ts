@@ -63,6 +63,15 @@ export type RefreshToken = Prisma.RefreshTokenModel
  */
 export type Wedding = Prisma.WeddingModel
 /**
+ * Model NotificationRead
+ * Read receipt for a reminder. Reminders are derived from tasks and budget
+ * items, so there is no notification row to flag as read: we store the key of
+ * the reminder that was read (`task:<id>` / `payment:<id>`) along with the due
+ * date it had at that moment, so a rescheduled reminder shows up as unread
+ * again.
+ */
+export type NotificationRead = Prisma.NotificationReadModel
+/**
  * Model Task
  * 
  */

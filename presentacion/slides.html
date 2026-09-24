@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Defensa TFM — Laura Rosón Lavín</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --ink:#14181F; --slate:#5B6472; --accent:#A4303F; --accent-soft:#F6ECEE;
+    --line:#D9DCE1; --panel:#F7F5F3; --ok:#2E6B4F;
+  }
+  html,body{ background:#5A5F66; }
+  body{ font-family:"Segoe UI",Arial,Helvetica,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .slide{
+    position:relative; width:1280px; height:720px; background:#fff; overflow:hidden;
+    padding:46px 68px 58px; margin:0 auto 26px; page-break-after:always; display:flex; flex-direction:column;
+  }
+  .slide:last-child{ page-break-after:auto; }
+  .rail{ position:absolute; top:0; left:0; right:0; height:8px; display:flex; }
+  .rail span{ flex:1; background:var(--line); }
+  .rail span.on{ background:var(--accent); }
+  .sec{ font-size:16px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:6px; }
+  h1{ font-size:44px; line-height:1.1; letter-spacing:-.5px; margin-bottom:4px; font-weight:700; }
+  .num{ position:absolute; right:42px; bottom:22px; font-size:16px; color:var(--slate); font-variant-numeric:tabular-nums; }
+  .foot{ position:absolute; left:68px; bottom:22px; font-size:14px; color:#98A0AC; }
+  .body{ flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; }
+  ul{ list-style:none; }
+  li{ font-size:25px; line-height:1.45; padding-left:30px; position:relative; margin-bottom:13px; }
+  li::before{ content:""; position:absolute; left:0; top:14px; width:13px; height:3px; background:var(--accent); }
+  li b{ font-weight:700; }
+  .lead{ font-size:28px; line-height:1.4; }
+  .muted{ color:var(--slate); }
+  .cols{ display:flex; gap:40px; align-items:center; }
+  .cols > *{ flex:1; min-width:0; }
+  figure img{ width:100%; height:auto; display:block; }
+  figure figcaption{ font-size:14px; color:var(--slate); text-align:center; margin-top:6px; }
+  .cover{ align-items:center; text-align:center; justify-content:center; }
+  .cover .esc{ width:92px; margin:0 auto 22px; display:block; }
+  .cover h1{ font-size:46px; max-width:940px; margin:0 auto 20px; }
+  .rule{ width:110px; height:4px; background:var(--accent); margin:0 auto 22px; }
+  .cover .who{ font-size:24px; line-height:1.6; }
+  .cover .inst{ font-size:18px; color:var(--slate); margin-top:18px; line-height:1.5; }
+  .toc{ display:grid; grid-template-columns:1fr 1fr; gap:12px 44px; }
+  .toc div{ display:flex; align-items:baseline; gap:16px; font-size:27px; padding:11px 0; border-bottom:1px solid var(--line); }
+  .toc i{ font-style:normal; font-weight:700; color:var(--accent); font-size:21px; min-width:28px; }
+  .toc small{ font-size:16px; color:var(--slate); margin-left:auto; }
+  .stats{ display:flex; gap:22px; margin-bottom:22px; }
+  .stat{ flex:1; background:var(--panel); border-left:5px solid var(--accent); padding:18px 20px; }
+  .stat b{ display:block; font-size:46px; line-height:1; letter-spacing:-1.5px; }
+  .stat span{ font-size:18px; color:var(--slate); display:block; margin-top:7px; line-height:1.3; }
+  table{ border-collapse:collapse; width:100%; font-size:20px; }
+  th,td{ border-bottom:1px solid var(--line); padding:11px 13px; text-align:left; }
+  th{ font-size:16px; text-transform:uppercase; letter-spacing:.07em; color:var(--slate); font-weight:700; }
+  td.yes{ color:var(--ok); font-weight:700; }
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+  .card{ background:var(--panel); padding:15px 16px 17px; border-top:4px solid var(--accent); }
+  .card b{ display:block; font-size:15px; color:var(--accent); letter-spacing:.06em; margin-bottom:5px; }
+  .card span{ font-size:18px; line-height:1.3; }
+  .chip{ background:var(--ink); color:#fff; font-size:17px; padding:6px 13px; border-radius:16px; font-weight:600; display:inline-block; }
+  .chip.alt{ background:var(--accent); }
+  .chip.soft{ background:var(--panel); color:var(--ink); border:1px solid var(--line); font-weight:600; }
+  .techs{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  /* objetivos agrupados */
+  .goals{ display:flex; gap:20px; }
+  .goal{ flex:1; border:2px solid var(--line); padding:18px 20px; }
+  .goal.key{ border-color:var(--accent); background:#FDFAFB; }
+  .goal h3{ font-size:21px; color:var(--accent); margin-bottom:10px; line-height:1.2; }
+  .goal p{ font-size:18px; line-height:1.4; color:var(--slate); }
+  .goal .oe{ font-size:14px; color:#98A0AC; margin-top:10px; letter-spacing:.05em; }
+  /* arquitectura con flechas */
+  .arch{ display:flex; gap:26px; align-items:stretch; }
+  .archcol{ flex:1.35; display:flex; flex-direction:column; gap:0; }
+  .band{ display:flex; align-items:center; border:2px solid var(--line); }
+  .band .lyr{ background:var(--ink); color:#fff; font-size:19px; font-weight:700; padding:16px 18px; width:250px; line-height:1.25; }
+  .band .eq{ font-size:26px; color:var(--accent); padding:0 16px; font-weight:700; }
+  .band .what{ font-size:20px; padding:16px 16px 16px 0; line-height:1.3; }
+  .band .what small{ display:block; font-size:16px; color:var(--slate); margin-top:3px; }
+  .vlink{ display:flex; align-items:center; justify-content:center; gap:12px; padding:7px 0; }
+  .vlink span{ font-size:15px; color:var(--slate); }
+  .vlink .ar{ font-size:24px; color:var(--accent); line-height:1; }
+  .ext{ flex:.65; border:2px dashed var(--accent); padding:18px 18px; align-self:center; }
+  .ext h3{ font-size:19px; color:var(--accent); margin-bottom:10px; }
+  .ext p{ font-size:17px; line-height:1.4; margin-bottom:8px; }
+  .ext .note{ font-size:15px; color:var(--slate); border-top:1px solid var(--line); padding-top:9px; margin-top:4px; }
+  /* tabla tecnologia -> que es -> por que */
+  .tt{ width:100%; border-collapse:collapse; }
+  .tt th{ font-size:15px; text-transform:uppercase; letter-spacing:.08em; color:var(--slate); padding:0 12px 8px; text-align:left; border-bottom:2px solid var(--accent-soft); }
+  .tt td{ padding:11px 12px; border-bottom:1px solid var(--line); font-size:18px; line-height:1.32; vertical-align:top; }
+  .tt td.n{ font-weight:700; white-space:nowrap; font-size:19px; }
+  .tt tr.hi td{ background:var(--accent-soft); }
+  .tt tr.hi td.n{ color:var(--accent); }
+  .tt td.w{ color:var(--slate); }
+  /* cadena ruta-controlador-servicio */
+  .chain{ display:flex; align-items:stretch; margin-bottom:16px; }
+  .link{ flex:1; background:var(--panel); border-top:4px solid var(--accent); padding:14px 14px; }
+  .link b{ display:block; font-size:19px; margin-bottom:5px; }
+  .link span{ font-size:16px; line-height:1.3; color:var(--slate); display:block; }
+  .chain .ar{ width:30px; display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--accent); }
+  /* flujo IA con ejemplos */
+  .flow{ display:flex; align-items:stretch; margin:4px 0 16px; }
+  .step{ flex:1; background:var(--panel); padding:13px 11px; text-align:center; border-top:4px solid var(--accent); }
+  .step.key{ background:var(--accent); color:#fff; border-top-color:#6E1E29; }
+  .step b{ display:block; font-size:18px; line-height:1.2; margin-bottom:4px; }
+  .step .ex{ font-size:14px; line-height:1.3; color:var(--slate); font-style:italic; }
+  .step.key .ex{ color:#F6DDE1; }
+  .arrow{ width:22px; display:flex; align-items:center; justify-content:center; color:var(--slate); font-size:22px; }
+  .two{ display:flex; gap:22px; }
+  .box{ flex:1; border:2px solid var(--line); padding:18px 20px; }
+  .box.key{ border-color:var(--accent); background:#FDFAFB; }
+  .box h3{ font-size:22px; color:var(--accent); margin-bottom:9px; }
+  .box p{ font-size:19px; line-height:1.4; }
+  pre{ background:#14181F; color:#E8EDF3; font-family:Consolas,"Courier New",monospace; font-size:17px;
+       line-height:1.5; padding:18px 22px; overflow:hidden; }
+  pre .c{ color:#7F8C9B; } pre .k{ color:#FF9BAA; } pre .s{ color:#9CDCAA; } pre .hl{ background:#3A2530; color:#FFD7DE; }
+  .shots{ display:flex; gap:20px; }
+  .shots figure{ flex:1; }
+  .shots img{ border:1px solid var(--line); }
+  .kicker{ background:var(--accent); color:#fff; font-size:21px; padding:14px 20px; line-height:1.4; }
+  .kicker b{ font-weight:700; }
+  .funcs{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px 22px; }
+  .fn{ border-left:4px solid var(--accent); padding:10px 0 10px 14px; }
+  .fn > b{ display:block; font-size:19px; margin-bottom:3px; }
+  .fn span{ font-size:17px; line-height:1.35; color:var(--slate); }
+  .fn.key{ border-left-color:#6E1E29; background:var(--accent-soft); padding:10px 14px; grid-column:span 2; }
+  .fn.key > b{ color:var(--accent); }
+  .fn.key span{ color:var(--ink); }
+  .end{ align-items:center; justify-content:center; text-align:center; }
+  .end h1{ font-size:74px; color:var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide cover">
+  <div class="rail"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <img class="esc" src="../memoria/figuras/ugr-escudo.png" alt="UGR">
+  <div class="sec">Trabajo Fin de Máster</div>
+  <h1>Desarrollo de una aplicación de gestión de planes de boda</h1>
+  <div class="rule"></div>
+  <div class="who"><b>Laura Rosón Lavín</b><br><span class="muted">Tutor: Juan José Ramos Muñoz</span></div>
+  <div class="inst">Máster en Ingeniería Informática · Universidad de Granada<br>Curso 2025/2026</div>
+  <div class="num">1</div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="sec">Índice</div>
+  <h1>Tabla de contenidos</h1>
+  <div class="body">
+    <div class="toc">
+      <div><i>1</i> El problema <small>1 diap.</small></div>
+      <div><i>4</i> Implementación <small>3 diap.</small></div>
+      <div><i>2</i> Estado del arte y objetivos <small>2 diap.</small></div>
+      <div><i>5</i> Evaluación y resultados <small>2 diap.</small></div>
+      <div><i>3</i> Diseño de la solución <small>8 diap.</small></div>
+      <div><i>6</i> Conclusiones y líneas futuras <small>2 diap.</small></div>
+    </div>
+  </div>
+  <div class="foot">El diseño, capa por capa, ocupa la mitad de la exposición</div>
+  <div class="num">2</div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="sec">1 · El problema</div>
+  <h1>Organizar una boda es un proyecto largo y disperso</h1>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><b>117</b><span>invitados de media<br>por boda</span></div>
+      <div class="stat"><b>13</b><span>profesionales<br>contratados</span></div>
+      <div class="stat"><b>8-12 meses</b><span>de coordinación<br>continuada</span></div>
+    </div>
+    <p style="font-size:20px;color:var(--slate);margin-bottom:12px;">Y todo esto hay que controlarlo a la vez:</p>
+    <div class="techs" style="margin-bottom:20px;">
+      <span class="chip soft">Invitados y acompañantes</span>
+      <span class="chip soft">Confirmaciones de asistencia</span>
+      <span class="chip soft">Alergias y menús</span>
+      <span class="chip soft">Grupos</span>
+      <span class="chip soft">Mesas y asientos</span>
+      <span class="chip soft">Tareas con plazos</span>
+      <span class="chip soft">Eventos de la agenda</span>
+      <span class="chip soft">Partidas de gasto</span>
+      <span class="chip soft">Proveedores y contratos</span>
+    </div>
+    <ul>
+      <li>Todo <b>depende de todo</b>: los invitados condicionan las mesas, y las mesas el presupuesto.</li>
+      <li>La información acaba <b>dispersa</b> en hojas de cálculo, cuadernos y apps separadas.</li>
+    </ul>
+  </div>
+  <div class="foot">Fuente: The Knot Worldwide, 2026 Real Weddings Study</div>
+  <div class="num">3</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="rail"><span></span><span class="on"></span><span></span><span></span><span></span><span></span></div>
+  <div class="sec">2 · Estado del arte</div>
+  <h1>Existen plataformas, pero dejan un hueco</h1>
+  <div class="body">
+    <table>
+      <tr><th>&nbsp;</th><th>Bodas.net</th><th>The Knot</th><th>Zola</th><th>Este proyecto</th></tr>
+      <tr><td>Organización (invitados, mesas, presupuesto)</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td></tr>
+      <tr><td>Modelo de negocio</td><td>Marketplace</td><td>Marketplace</td><td>Marketplace</td><td>Autocontenido</td></tr>
+      <tr><td>IA aplicada a…</td><td>Limitada</td><td>Recomendar<br>proveedores</td><td>Redactar<br>textos</td><td class="yes">Decisiones<br>organizativas</td></tr>
+    </table>
+    <div class="kicker" style="margin-top:22px;">Su IA trabaja para <b>su negocio</b> (vender proveedores), no para las decisiones internas de la pareja. <b>Ahí está el hueco.</b></div>
+  </div>
+  <div class="num">4</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="rail"><span></span><span class="on"></span><span></span><span></span><span></span><span></span></div>
+  <div class="sec">2 · Objetivos</div>
+  <h1>Tres objetivos</h1>
+  <div class="body">
+    <p class="lead" style="margin-bottom:22px;">Desarrollar una aplicación que organice <b>todos</b> los aspectos de una boda desde un único panel, con <b>asistencias de IA</b> que automaticen las decisiones más repetitivas.</p>
+    <div class="goals">
+      <div class="goal">
+        <h3>1 · Gestión integral</h3>
+        <p>Cubrir en una sola herramienta todo el ciclo: cuenta y bodas, invitados y confirmaciones, grupos y mesas, tareas y agenda, presupuesto y proveedores, y un panel de seguimiento.</p>
+        <div class="oe">OE-1 a OE-6</div>
+      </div>
+      <div class="goal key">
+        <h3>2 · Asistencias con IA</h3>
+        <p>Automatizar las decisiones organizativas más repetitivas mediante propuestas que el usuario revisa y confirma.</p>
+        <div class="oe">OE-7</div>
+      </div>
+      <div class="goal">
+        <h3>3 · Calidad del producto</h3>
+        <p>Construirla atendiendo a la seguridad, la usabilidad, la robustez frente a errores y la calidad del código.</p>
+        <div class="oe">OE-8</div>
+      </div>
+    </div>
+  </div>
+  <div class="num">5</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño</div>
+  <h1>Tres capas, tres responsabilidades</h1>
+  <div class="body">
+    <div class="arch">
+      <div class="archcol">
+        <div class="band">
+          <div class="lyr">Capa de presentación</div>
+          <div class="eq">=</div>
+          <div class="what">El <b>cliente</b>, en el navegador<small>Lo que el usuario ve y toca · React</small></div>
+        </div>
+        <div class="vlink"><span class="ar">↓</span><span>pide datos por HTTP</span><span class="ar">↓</span></div>
+        <div class="band">
+          <div class="lyr">Capa de aplicación</div>
+          <div class="eq">=</div>
+          <div class="what">El <b>servidor</b>, con la lógica<small>Decide qué se puede hacer · Node.js + Express</small></div>
+        </div>
+        <div class="vlink"><span class="ar">↓</span><span>consulta y guarda</span><span class="ar">↓</span></div>
+        <div class="band">
+          <div class="lyr">Capa de persistencia</div>
+          <div class="eq">=</div>
+          <div class="what">La <b>base de datos</b><small>Donde todo queda guardado · PostgreSQL</small></div>
+        </div>
+      </div>
+      <div class="ext">
+        <h3>Servicios externos</h3>
+        <p>→ Inteligencia artificial</p>
+        <p>→ Envío de correo</p>
+        <div class="note">Se conectan <b>solo</b> con el servidor. El cliente nunca ve sus credenciales.</div>
+      </div>
+    </div>
+    <div class="kicker" style="margin-top:18px;font-size:20px;">A continuación, una transparencia por capa: <b>qué tecnología usa, cómo está diseñada y por qué así.</b></div>
+  </div>
+  <div class="num">6</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Capa 1 de 3</div>
+  <h1>Capa de presentación: el cliente</h1>
+  <div class="body">
+    <table class="tt">
+      <tr><th style="width:170px">Tecnología</th><th style="width:400px">Qué es</th><th>Por qué la elegí</th></tr>
+      <tr><td class="n">React</td><td>Biblioteca para construir la interfaz con piezas reutilizables.</td><td class="w">Modelo sencillo y el ecosistema más amplio: encontré bibliotecas maduras de calendario y gráficas.</td></tr>
+      <tr><td class="n">TypeScript</td><td>JavaScript al que se le añaden tipos de datos.</td><td class="w">Avisa de los errores mientras escribo el código, no cuando ya está en producción.</td></tr>
+      <tr class="hi"><td class="n">Vite</td><td>Herramienta que compila y sirve la aplicación mientras se desarrolla.</td><td class="w">Arranca y refresca los cambios casi al instante, frente a los segundos de las herramientas clásicas.</td></tr>
+      <tr class="hi"><td class="n">Tailwind CSS</td><td>Sistema de estilos mediante clases ya definidas.</td><td class="w">Da coherencia visual sin escribir hojas de estilo a medida para cada pantalla.</td></tr>
+      <tr class="hi"><td class="n">shadcn/ui</td><td>Colección de componentes accesibles que se copian dentro del proyecto.</td><td class="w">Se pueden adaptar libremente, sin depender de una biblioteca externa con estética propia.</td></tr>
+    </table>
+    <div class="kicker" style="margin-top:16px;font-size:20px;">Decisión clave: <b>todas las llamadas de red pasan por un único punto</b>, que añade la sesión, la renueva al caducar y unifica los errores.</div>
+  </div>
+  <div class="num">7</div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Capa 2 de 3</div>
+  <h1>Capa de aplicación: el servidor</h1>
+  <div class="body">
+    <p style="font-size:20px;color:var(--slate);margin-bottom:10px;">Cada petición del cliente recorre siempre el mismo camino:</p>
+    <div class="chain">
+      <div class="link"><b>Rutas de API REST</b><span>Las «puertas» del servidor.<br>Ej.: <code>/api/invitados</code></span></div>
+      <div class="ar">›</div>
+      <div class="link"><b>Controlador</b><span>Comprueba que los datos que llegan son correctos antes de tocar nada.</span></div>
+      <div class="ar">›</div>
+      <div class="link"><b>Servicio</b><span>Aplica las reglas del negocio y habla con la base de datos.</span></div>
+    </div>
+    <table class="tt">
+      <tr><th style="width:170px">Tecnología</th><th style="width:400px">Qué es</th><th>Por qué la elegí</th></tr>
+      <tr><td class="n">Node.js</td><td>Permite ejecutar JavaScript en el servidor.</td><td class="w">Mismo lenguaje en cliente y servidor: menos cambio de contexto al desarrollar sola.</td></tr>
+      <tr><td class="n">Express</td><td>Estructura mínima para crear las rutas de la API.</td><td class="w">Maduro y simple; alternativas como NestJS imponen mucha estructura innecesaria aquí.</td></tr>
+      <tr class="hi"><td class="n">Zod</td><td>Define qué forma deben tener los datos que entran.</td><td class="w">Con una sola definición valida los datos <b>y</b> genera los tipos: no se pueden desincronizar.</td></tr>
+    </table>
+    <div class="kicker" style="margin-top:14px;font-size:19px;">Separar «comprobar» de «hacer» permite <b>probar la lógica sin levantar un servidor</b>.</div>
+  </div>
+  <div class="num">8</div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Capa 3 de 3</div>
+  <h1>Capa de persistencia: los datos</h1>
+  <div class="body">
+    <div class="chain" style="margin-bottom:18px;">
+      <div class="link"><b>Mi código</b><span>«Dame los invitados de esta boda»</span></div>
+      <div class="ar">›</div>
+      <div class="link" style="border-top-color:#6E1E29;background:var(--accent-soft)"><b>Prisma</b><span>Traduce esa orden a lenguaje de base de datos y comprueba que los campos existen.</span></div>
+      <div class="ar">›</div>
+      <div class="link"><b>PostgreSQL</b><span>Guarda la información y garantiza que sea coherente.</span></div>
+    </div>
+    <div class="two">
+      <div class="box">
+        <h3>Qué aporta Prisma</h3>
+        <p>El modelo se declara <b>una sola vez</b> en un fichero. A partir de él genera automáticamente el código de acceso y las <b>migraciones</b>: cada cambio de la base de datos queda registrado y es repetible.</p>
+      </div>
+      <div class="box key">
+        <h3>Por qué así</h3>
+        <p>Si me equivoco en el nombre de un campo, <b>falla al compilar</b>, no delante del usuario. Y las garantías —que un asiento no se repita, que al borrar una boda no queden restos— las impone <b>PostgreSQL</b>, no mi código.</p>
+      </div>
+    </div>
+  </div>
+  <div class="num">9</div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Modelo de datos</div>
+  <h1>Todo cuelga de la boda</h1>
+  <div class="body">
+    <div class="cols" style="gap:26px;">
+      <ul style="flex:.46">
+        <li style="font-size:20px;margin-bottom:16px;">Cada dato sabe a qué boda pertenece: eso permite el <b>aislamiento</b>.</li>
+        <li style="font-size:20px;margin-bottom:16px;"><b>Un asiento, una persona</b>: lo impide la propia base de datos.</li>
+        <li style="font-size:20px;margin-bottom:16px;">Los <b>acompañantes</b> apuntan a su invitado principal.</li>
+        <li style="font-size:20px;">Al borrar una boda <b>no quedan restos</b>.</li>
+      </ul>
+      <figure style="flex:1.54"><img src="../memoria/figuras/fig-6-2-modelo-datos.png" alt="Modelo de datos" style="max-height:530px;width:auto;max-width:100%;margin:0 auto;"></figure>
+    </div>
+  </div>
+  <div class="num">10</div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Integraciones</div>
+  <h1>Servicios externos, aislados</h1>
+  <div class="body">
+    <div class="cols" style="gap:26px;align-items:flex-start;">
+      <div style="flex:1.25">
+        <pre><span class="c">// Única función que habla con la IA (solo en el servidor)</span>
+<span class="k">await</span> openai.chat.completions.create({
+  model: <span class="s">"gpt-4o-mini"</span>,
+  temperature: <span class="s">0.4</span>,        <span class="c">// baja: respuestas consistentes</span>
+  messages: [
+    { role: <span class="s">"system"</span>, content: reglas },
+    { role: <span class="s">"user"</span>,   content: <span class="hl">contextoDeLaBoda</span> },
+  ],
+  response_format: { type: <span class="s">"json_schema"</span>, … },
+});</pre>
+        <p style="font-size:18px;color:var(--slate);margin-top:12px;line-height:1.4;">
+          <b style="color:var(--ink)">Qué se envía:</b> fecha, número de invitados, nombres y grupos.
+          <b style="color:var(--ink)">Qué no:</b> correos, teléfonos ni contraseñas.</p>
+      </div>
+      <div style="flex:.75">
+        <div class="box" style="margin-bottom:14px;"><h3>Correo</h3><p style="font-size:18px">Si hay servidor configurado, envía de verdad; si no, usa una <b>cuenta de pruebas</b> que devuelve un enlace de vista previa.</p></div>
+        <div class="box key"><h3>Por qué aisladas</h3><p style="font-size:18px">Cada servicio externo vive en <b>un único fichero</b>. Cambiar de proveedor no obliga a tocar el resto, y un fallo suyo <b>no tumba la aplicación</b>.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="num">11</div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Transversal</div>
+  <h1>Seguridad, en todas las capas</h1>
+  <div class="body">
+    <p style="font-size:20px;color:var(--slate);margin-bottom:10px;">Al iniciar sesión se entregan <b style="color:var(--ink)">dos credenciales distintas</b>:</p>
+    <div class="two" style="margin-bottom:16px;">
+      <div class="box"><h3>Token de acceso</h3><p style="font-size:18px">Dura minutos. Viaja en cada petición. Si alguien lo robara, <b>caduca enseguida</b>.</p></div>
+      <div class="box"><h3>Token de refresco</h3><p style="font-size:18px">Dura días y se guarda en la base de datos, así que <b>se puede anular</b>: eso es cerrar sesión de verdad.</p></div>
+    </div>
+    <table class="tt">
+      <tr><th style="width:330px">Medida</th><th>Qué consigue</th></tr>
+      <tr><td class="n">Doble comprobación de dueño</td><td class="w">Aunque cambies el identificador en la dirección, no puedes ver la boda de otra persona.</td></tr>
+      <tr class="hi"><td class="n">Responder «no encontrado»</td><td class="w">Si respondiera «prohibido», estaría confirmando que esa boda existe. Diciendo «no encontrado» <b>no revelo nada</b>.</td></tr>
+      <tr><td class="n">Contraseñas cifradas</td><td class="w">Se guardan transformadas y no se pueden recuperar, ni siquiera desde la base de datos.</td></tr>
+      <tr><td class="n">Arranque seguro</td><td class="w">Si las claves del servidor no son seguras, <b>el servidor no arranca</b>. Mejor eso que arrancar mal.</td></tr>
+    </table>
+  </div>
+  <div class="num">12</div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="sec">3 · Diseño · Aportación central</div>
+  <h1>La IA propone, la pareja decide</h1>
+  <div class="body">
+    <div class="flow">
+      <div class="step"><b>1 · Contexto</b><span class="ex">«Boda el 12/06/2027, 64 invitados, 9 mesas, 18 tareas ya creadas»</span></div>
+      <div class="arrow">›</div>
+      <div class="step"><b>2 · Modelo</b><span class="ex">Se le exige la forma exacta: título, categoría, prioridad y fecha</span></div>
+      <div class="arrow">›</div>
+      <div class="step"><b>3 · Validación</b><span class="ex">¿Están todos los campos? ¿Son del tipo correcto? Si no, se descarta</span></div>
+      <div class="arrow">›</div>
+      <div class="step key"><b>4 · Propuesta</b><span class="ex">«Reservar catering · Banquete · Alta · 8 meses antes»</span></div>
+      <div class="arrow">›</div>
+      <div class="step"><b>5 · Confirmación</b><span class="ex">La pareja desmarca lo que no quiere y solo entonces se guarda</span></div>
+    </div>
+    <div class="two">
+      <div class="box"><h3>Fiabilidad del formato</h3><p>Se exige a la IA una respuesta con una <b>forma cerrada</b> y se comprueba antes de usarla. Si no encaja, no se utiliza.</p></div>
+      <div class="box key"><h3>Control del usuario</h3><p>La IA <b>nunca escribe en la base de datos</b>. Devuelve borradores que se guardan solo si la pareja los confirma.</p></div>
+    </div>
+  </div>
+  <div class="num">13</div>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span class="on"></span><span></span><span></span></div>
+  <div class="sec">4 · Implementación</div>
+  <h1>El contrato con la IA</h1>
+  <div class="body">
+    <p style="font-size:20px;color:var(--slate);margin-bottom:12px;"><b style="color:var(--ink)">Contrato</b> = acuerdo cerrado sobre la forma exacta que debe tener la respuesta. Se impone y luego se verifica.</p>
+    <pre><span class="c">// 1) Se le exige al modelo que responda con esa forma exacta</span>
+response_format: { type: <span class="s">"json_schema"</span>, json_schema: { …, <span class="hl">strict: true</span> } }
+
+<span class="c">// 2) Se comprueba la respuesta antes de dársela al usuario</span>
+<span class="k">const</span> resultado = esquema.<span class="hl">safeParse</span>(respuesta);
+<span class="k">if</span> (!resultado.success) <span class="k">throw</span> { status: <span class="s">502</span>, message: <span class="s">"Formato no esperado"</span> };</pre>
+    <ul style="margin-top:16px">
+      <li>Se verifica <b>aunque el proveedor ya lo garantice</b>: no delego mis datos en un servicio externo.</li>
+      <li>Si la IA falla o no está configurada, <b>se avisa con un mensaje claro y el resto de la aplicación sigue funcionando</b> con normalidad.</li>
+    </ul>
+  </div>
+  <div class="num">14</div>
+</section>
+
+<!-- 15 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span class="on"></span><span></span><span></span></div>
+  <div class="sec">4 · Implementación</div>
+  <h1>El caso difícil: distribuir las mesas</h1>
+  <div class="body">
+    <p style="font-size:20px;color:var(--slate);margin-bottom:10px;">Los identificadores de mesas e invitados se generan en cada boda, así que <b style="color:var(--ink)">no se pueden fijar por adelantado</b>: el modelo de lenguaje podría inventarse referencias que no existen.</p>
+    <div class="chain" style="margin-bottom:16px;">
+      <div class="link"><b>Propuesta del modelo</b><span>Asigna cada invitado a una mesa y un asiento</span></div>
+      <div class="ar">›</div>
+      <div class="link" style="border-top-color:#6E1E29;background:var(--accent-soft)"><b>Se depura</b><span>Se descartan mesas que no existen, asientos fuera de capacidad y repetidos</span></div>
+      <div class="ar">›</div>
+      <div class="link"><b>Propuesta limpia</b><span>Solo entonces se le enseña a la pareja</span></div>
+      <div class="ar">›</div>
+      <div class="link"><b>Se aplica entera</b><span>En un solo bloque: o se coloca todo, o no se toca nada</span></div>
+    </div>
+    <div class="kicker">Nunca se confía en la salida del modelo de lenguaje: <b>se contrasta con lo que hay realmente en la base de datos.</b></div>
+  </div>
+  <div class="num">15</div>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span class="on"></span><span></span><span></span></div>
+  <div class="sec">4 · Implementación</div>
+  <h1>La aplicación en funcionamiento</h1>
+  <div class="body">
+    <div class="shots">
+      <figure><img src="../memoria/figuras/capturas/dashboard.png" alt="Panel"><figcaption>Panel de seguimiento: estado global de la boda y cuenta atrás</figcaption></figure>
+      <figure><img src="../memoria/figuras/capturas/ia-tareas.png" alt="Propuesta de IA"><figcaption>Propuesta de tareas generada por la IA, editable antes de confirmar</figcaption></figure>
+    </div>
+  </div>
+  <div class="num">16</div>
+</section>
+
+<!-- 17 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span></span><span class="on"></span><span></span></div>
+  <div class="sec">5 · Evaluación</div>
+  <h1>Cómo se ha verificado</h1>
+  <div class="body">
+    <p style="font-size:19px;color:var(--slate);margin-bottom:12px;"><b style="color:var(--ink)">Entorno:</b> servidor Node.js contra una base de datos PostgreSQL en contenedor · pruebas con Vitest y supertest · 64 invitados de prueba.</p>
+    <table class="tt">
+      <tr><th style="width:250px">Tipo de prueba</th><th>Qué comprueba</th><th style="width:180px">Resultado</th></tr>
+      <tr><td class="n">Unitarias</td><td class="w">Cifrado de contraseñas, credenciales de sesión, plantilla del correo y tratamiento de errores.</td><td>Superadas</td></tr>
+      <tr><td class="n">Integración</td><td class="w">Recorrido completo registro → boda → invitado, con peticiones reales contra la base de datos.</td><td>Superadas</td></tr>
+      <tr class="hi"><td class="n">Aislamiento</td><td class="w">Acceder a una boda ajena devuelve <b>«no encontrado»</b>, sin revelar que existe.</td><td>Superada</td></tr>
+      <tr><td class="n">Estilo y compilación</td><td class="w">Análisis de estilo y compilación de cliente y servidor.</td><td>Sin errores</td></tr>
+      <tr><td class="n">Integración continua</td><td class="w">Todo lo anterior se ejecuta solo con cada cambio del proyecto.</td><td>En verde</td></tr>
+    </table>
+    <div class="kicker" style="margin-top:16px;font-size:20px;"><b>18 pruebas automatizadas</b> en 5 ficheros, todas superadas.</div>
+  </div>
+  <div class="num">17</div>
+</section>
+
+<!-- 18 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span></span><span class="on"></span><span></span></div>
+  <div class="sec">5 · Resultados</div>
+  <h1>Lo que hace la aplicación</h1>
+  <div class="body">
+    <div class="funcs">
+      <div class="fn"><b>Invitados</b><span>Alta con acompañantes, confirmación de asistencia, alergias y menús, invitaciones por correo, página pública de confirmación, importar y exportar en CSV.</span></div>
+      <div class="fn"><b>Organización</b><span>Grupos de invitados, mapa de mesas con asignación de asientos, tareas con prioridad y plazo, y agenda con calendario y cuenta atrás.</span></div>
+      <div class="fn"><b>Economía</b><span>Presupuesto con partidas, importes estimado, real y pagado, gráficas de reparto, y proveedores con documentos adjuntos.</span></div>
+      <div class="fn"><b>Seguimiento</b><span>Panel con el estado global de la boda y avisos de tareas y pagos vencidos o próximos.</span></div>
+      <div class="fn key"><b>Asistencias con inteligencia artificial</b><span>Genera el <b>listado de tareas</b> a partir de la fecha y el número de invitados · Propone la <b>distribución de las mesas</b> respetando grupos y capacidad · Reparte el <b>presupuesto por categorías</b> y sugiere proveedores. Siempre como propuesta editable.</span></div>
+    </div>
+  </div>
+  <div class="num">18</div>
+</section>
+
+<!-- 19 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span></span><span></span><span class="on"></span></div>
+  <div class="sec">6 · Conclusiones</div>
+  <h1>Conclusiones</h1>
+  <div class="body">
+    <ul>
+      <li>Se ha construido una aplicación <b>funcional y autocontenida</b> que cubre el ciclo completo de organización de una boda, sin capa comercial de por medio.</li>
+      <li>La aportación diferencial no es usar IA, sino <b>cómo</b>: un patrón de <b>propuesta verificada y bajo control del usuario</b>, aplicado a las decisiones organizativas.</li>
+      <li>Los <b>ocho objetivos</b> planteados se han alcanzado, respaldados por 18 pruebas automatizadas e integración continua.</li>
+      <li><b>Limitación reconocida:</b> el cliente todavía no cuenta con pruebas automatizadas propias.</li>
+    </ul>
+  </div>
+  <div class="num">19</div>
+</section>
+
+<!-- 20 -->
+<section class="slide">
+  <div class="rail"><span></span><span></span><span></span><span></span><span></span><span class="on"></span></div>
+  <div class="sec">6 · Líneas futuras</div>
+  <h1>Líneas de trabajo futuro</h1>
+  <div class="body">
+    <div class="funcs">
+      <div class="fn"><b>1 · Pruebas del cliente</b><span>Cubrir la interfaz con pruebas automatizadas, la limitación principal del trabajo.</span></div>
+      <div class="fn"><b>2 · IA conversacional</b><span>Permitir refinar las propuestas hablando con el asistente, en lugar de aceptarlas o descartarlas.</span></div>
+      <div class="fn"><b>3 · Aplicación móvil</b><span>Consulta y avisos desde el teléfono en cualquier momento.</span></div>
+      <div class="fn"><b>4 · Exportación a PDF</b><span>Distribución de mesas, agenda y resumen del presupuesto en documento imprimible.</span></div>
+      <div class="fn"><b>5 · Gestión compartida</b><span>Que los dos miembros de la pareja gestionen la misma boda a la vez.</span></div>
+      <div class="fn"><b>6 · Despliegue y cumplimiento</b><span>Puesta en producción con copias de seguridad y cumplimiento formal de protección de datos.</span></div>
+    </div>
+  </div>
+  <div class="num">20</div>
+</section>
+
+<!-- 21 -->
+<section class="slide end">
+  <div class="rail"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div>
+  <h1>Gracias</h1>
+  <div class="rule" style="margin:24px auto"></div>
+  <p class="lead muted">¿Alguna pregunta?</p>
+  <div class="inst" style="margin-top:32px;font-size:18px;color:#5B6472">Laura Rosón Lavín · Máster en Ingeniería Informática · Universidad de Granada</div>
+  <div class="num">21</div>
+</section>
+
+</body>
+</html>

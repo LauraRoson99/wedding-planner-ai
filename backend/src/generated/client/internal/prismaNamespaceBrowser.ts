@@ -53,6 +53,7 @@ export const ModelName = {
   PasswordResetToken: 'PasswordResetToken',
   RefreshToken: 'RefreshToken',
   Wedding: 'Wedding',
+  NotificationRead: 'NotificationRead',
   Task: 'Task',
   Guest: 'Guest',
   Group: 'Group',
@@ -124,6 +125,18 @@ export const WeddingScalarFieldEnum = {
 } as const
 
 export type WeddingScalarFieldEnum = (typeof WeddingScalarFieldEnum)[keyof typeof WeddingScalarFieldEnum]
+
+
+export const NotificationReadScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  dueDate: 'dueDate',
+  readAt: 'readAt',
+  userId: 'userId',
+  weddingId: 'weddingId'
+} as const
+
+export type NotificationReadScalarFieldEnum = (typeof NotificationReadScalarFieldEnum)[keyof typeof NotificationReadScalarFieldEnum]
 
 
 export const TaskScalarFieldEnum = {

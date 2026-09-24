@@ -55,6 +55,8 @@ model Guest {
 }
 ```
 
+**Cuadro 8.1.** Declaración del modelo de invitados (`Guest`) en el esquema de Prisma. _Fuente: elaboración propia._
+
 A partir de esta declaración, el cliente generado ofrece métodos cuyos nombres y tipos se
 derivan del propio modelo (`prisma.guest.findMany`, `create`, `update`…): referirse a un
 campo inexistente o asignar un tipo incorrecto se detecta en **tiempo de compilación**, no en
@@ -91,6 +93,8 @@ wedding-planner-ai/
         ├── services/       # acceso a la API por dominio
         └── lib/            # capa de API, autenticación y utilidades
 ```
+
+**Cuadro 8.2.** Estructura de carpetas del proyecto. _Fuente: elaboración propia._
 
 ## 8.2. Parte del cliente
 
@@ -131,6 +135,8 @@ try {
 }
 ```
 
+**Cuadro 8.3.** Patrón de borrado con aviso y manejo de errores en el cliente. _Fuente: elaboración propia._
+
 De este modo, acciones equivalentes se comportan igual en cualquier pantalla y el usuario
 recibe siempre una respuesta clara de lo que ha ocurrido (RNF-23).
 
@@ -158,6 +164,8 @@ const data = createGuestSchema.parse(req.body); // data queda tipado
 const guest = await guestService.createWithCompanions(weddingId, data);
 ```
 
+**Cuadro 8.4.** Validación de la entrada con Zod en el controlador. _Fuente: elaboración propia._
+
 El siguiente fragmento ilustra el patrón en la capa de servicio con el alta de un invitado y
 sus acompañantes, que debe ser **atómica** (o se crean todos, o no se crea ninguno) y por
 tanto se resuelve en una **transacción**:
@@ -180,6 +188,8 @@ return prisma.$transaction(async (tx) => {
   });
 });
 ```
+
+**Cuadro 8.5.** Alta transaccional de un invitado y sus acompañantes. _Fuente: elaboración propia._
 
 Dos *middlewares* completan la capa de servidor. El de **propiedad de boda** (RNF-01)
 intercepta las operaciones con alcance de boda y rechaza con 404 cualquier `weddingId` que
@@ -313,6 +323,8 @@ if (!validated.success) {
 }
 return validated.data;
 ```
+
+**Cuadro 8.6.** Llamada a la IA con salida estructurada (`json_schema`) y validación con Zod. _Fuente: elaboración propia._
 
 El control del usuario se garantiza porque las funciones de IA **nunca escriben en la base
 de datos directamente**: devuelven **propuestas editables** que el usuario revisa —pudiendo
